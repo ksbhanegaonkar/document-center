@@ -1,0 +1,28 @@
+#task-bar-item {
+    position: relative;
+    padding: 10px;
+    align-self: center;
+    width: 10%;
+    height: 150%;
+    top :0;
+    left :0;
+    font-size: 15px;
+    border-color: rgb(240, 234, 234);
+    white-space: normal;
+    word-wrap: break-word;
+
+        &-block{
+            background-color: rgb(15, 216, 15);
+            color: rgb(2, 0, 0);
+        }
+        &-none{
+            background-color: rgb(233, 218, 13);
+            color: rgb(2, 0, 0);
+        }
+        &-inFocus{
+            background-color: rgb(15, 216, 15);
+            color: rgb(2, 0, 0);
+        }
+    
+    
+ }

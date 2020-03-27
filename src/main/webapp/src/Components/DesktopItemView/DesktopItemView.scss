@@ -1,0 +1,36 @@
+
+ 
+ .desktop-item-view {
+    display:block;
+    position: absolute;
+    top: 0px;
+    //left: 50px;
+    //width: 1270px;
+    //height: 600px;
+    width: 100%;
+    height: 95%;
+    
+    background: #3f3e3e;
+ }
+
+ .top-bar{
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(to bottom, rgb(247, 211, 6), rgb(19, 6, 77));
+    font-size: 18px;
+    color: rgb(16, 223, 27);
+ }
+
+ .top-bar-button-pallet{
+    position: absolute;
+    top: 0px;
+    right:0%;
+    height: 100%;
+ }
+
+ .desktop-item-view-plugin{
+    position: relative;
+ }
