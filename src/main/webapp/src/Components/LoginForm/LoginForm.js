@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import {withRouter} from 'react-router-dom';
 import "./LoginForm.css";
-import {postRequest} from '../Utils/RestUtil';
+import {authPostRequest} from '../Utils/RestUtil';
 
 
 class LoginForm extends Component{
@@ -31,7 +31,7 @@ class LoginForm extends Component{
       
     event.preventDefault();
 
-    postRequest('/authenticate',{username:this.state.userName,password:this.state.pass},
+    authPostRequest({username:this.state.userName,password:this.state.pass},
       (data) =>{
              if(data.token === undefined){
                 this.setState({errorMsg:'Invalid user credential !!!'});
