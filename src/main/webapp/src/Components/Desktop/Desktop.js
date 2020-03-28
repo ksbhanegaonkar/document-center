@@ -383,7 +383,8 @@ class Desktop extends Component{
           onClose={this.onDesktopItemViewClose.bind(this)}
           onMinimize={this.onDesktopItemViewMinimize.bind(this)}
           activeStatus={this.state.taskBarItems[item.appId]}
-          onDoubleClick={this.onDesktopIconDoubleClick.bind(this)}
+          onDoubleClick={this.onDesktopIconDoubleClick.bind(this)} 
+          iconsList={this.state.iconsList}
         ></DesktopItemView>);
        }
 

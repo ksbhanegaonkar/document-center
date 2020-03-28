@@ -6,6 +6,8 @@ import TaskBarItem from './TaskBarItem';
 class TaskBar extends Component{
 
     render() {
+      console.log("taskbar items are ::: ");
+      console.dir(this.props.taskBarItems);
         return (<div className="task-bar">
           <div className="os-info">Vaman-OS</div>
           <div className="developer">Kedar Bhanegaonkar</div>
