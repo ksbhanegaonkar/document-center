@@ -8,13 +8,13 @@ import com.vamanos.util.Image2Base64StringConverter;
 import com.vamanos.util.JsonUtil;
 
 public class IconsList {
-	private static final String FOLDER_ICON = "src/main/resources/static/icons/folder.png";
-	private static final String FILE_ICON = "src/main/resources/static/icons/file.png";
-	private static final String FILE_WORD_ICON = "src/main/resources/static/icons/file_word.png";
-	private static final String FILE_PPT_ICON = "src/main/resources/static/icons/file_ppt.png";
-	private static final String FILE_EXCEL_ICON = "src/main/resources/static/icons/file_excel.png";
-	private static final String FILE_PDF_ICON = "src/main/resources/static/icons/file_pdf.png";
-	private static final String FILE_COMPRESSED_ICON = "src/main/resources/static/icons/file_compressed.jpeg";
+	private static final String FOLDER_ICON = "static/icons/folder.png";
+	private static final String FILE_ICON = "static/icons/file.png";
+	private static final String FILE_WORD_ICON = "static/icons/file_word.png";
+	private static final String FILE_PPT_ICON = "static/icons/file_ppt.png";
+	private static final String FILE_EXCEL_ICON = "static/icons/file_excel.png";
+	private static final String FILE_PDF_ICON = "static/icons/file_pdf.png";
+	private static final String FILE_COMPRESSED_ICON = "static/icons/file_compressed.jpeg";
 	public ObjectNode getIconList(){
 		Map<String,String> iconMap = new HashMap<>();
 		iconMap.put("folder", Image2Base64StringConverter.convert(FOLDER_ICON));
