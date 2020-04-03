@@ -19,7 +19,6 @@ class FolderPlugin extends Component{
 
 
       renderFolderItems(){
-        console.log("Renderring folder content...");
         let desktopItemList = [];
         let rowNo =1;
         let columnNo =1;

@@ -126,6 +126,24 @@ public class DesktopUpdateUtil {
 		}
 	}
 
+	public void uploadFileInFolder(String fileName, MultipartFile file, String folderName) {
+		String fileType = "file";
+
+		if(fileName.contains("txt")) { fileType = "file"; }else
+		if(fileName.contains("doc")) { fileType = "file-word";}else
+		if(fileName.contains("xls")) { fileType = "file-excel"; }else
+		if(fileName.contains("pdf")) { fileType = "file-pdf"; }else
+		if(fileName.contains("ppt")) { fileType = "file-ppt"; }else
+		if(fileName.contains("zip")) { fileType = "file-compressed"; }
+
+		try {
+			appService.createNewApp(fileName,fileType,file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public byte[] getAppPayloadAsFile(int appId) {
 		return appService.getAppPayloadAsFile(appId);
 	}

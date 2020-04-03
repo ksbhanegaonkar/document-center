@@ -96,12 +96,18 @@ public class ActionController {
     
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity uploadFile(@RequestParam MultipartFile file) {
-    	System.out.println("filename is ::::: "+file.getOriginalFilename());
     	util.uploadFile(file.getOriginalFilename(), file);
         return ResponseEntity.ok().build();
     }
-    
-	
+
+	@PostMapping(value = "/uploadforfolder", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity uploadFileForFolder(@RequestParam MultipartFile file, @RequestParam String data) {
+		util.uploadFile(file.getOriginalFilename(), file);
+		return ResponseEntity.ok().build();
+	}
+
+
+
 	@PostMapping("/downloadapp")
 	public ResponseEntity downloadFile1(@RequestBody ObjectNode app) throws IOException {
 		String item = app.get("item").asText();

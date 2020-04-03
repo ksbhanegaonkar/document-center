@@ -42,6 +42,7 @@ class Desktop extends Component{
     mouseButtonType:'',
     clickedComponentClass:'',
     rightClickedAppName:'',
+    currentLiveAppId:0,
     
     iconsList:{},
 
@@ -81,12 +82,12 @@ class Desktop extends Component{
 
 
     handleContextMenu(event){
-      console.log("Handled event is ::::");
-      console.dir(event.target );
+
+
       const componentClicked = event.target.className;
       const xPosition = event.clientX;
       const yPosition = event.clientY;
-      console.log("Component right clicked :::"+componentClicked);
+
       event.preventDefault();
       if(componentClicked === 'start-menu-button' 
         ||componentClicked === 'task-bar'){
@@ -132,7 +133,7 @@ class Desktop extends Component{
             { mouseXposition:xPosition,
               mouseYposition:yPosition,
               clickedComponentClass:'desktop-wallpaper',
-              rightClickedAppName:'desktop-wallpaper',
+              rightClickedAppName:componentClicked,
               mouseButtonType:'right-click',
               contextMenuVisible:true,
               startMenuVisible:false
@@ -206,7 +207,7 @@ class Desktop extends Component{
     }
 
     onContextMenuOptionClick(event){
-      console.log(event.target.childNodes[0].data +" on app "+this.state.rightClickedAppName);
+
       if(event.target.childNodes[0].data.includes("Download")){
 
         downloadFilePostRequest('/downloadapp',{item:this.state.rightClickedAppName,option:"Download File"},
@@ -238,12 +239,12 @@ class Desktop extends Component{
       }else if(event.target.childNodes[0].data.includes("Upload")){
         this.refs.fileUploader.click();
       }else if(event.target.childNodes[0].data.includes("Refresh")){
-
+        for(let i=0;i< this.state.taskBarItems.lenght;i++){
+          console.log("task bar item is :::: "+this.state.taskBarItems[i]);
+        }
       }else{
-        console.log("right clicked target object is :::");
-        console.dir(this.state.rightClickedAppName);
-        console.dir(event.target);
-        postRequest('/oncontextmenuaction',{item:this.state.rightClickedAppName,option:event.target.childNodes[0].data},
+
+        postRequest('/oncontextmenuaction',{item:this.state.rightClickedAppName,option:event.target.childNodes[0].data,taskbardata:this.state.taskBarItems},
         (data) => this.loadDesktopItems()
         );
       }
