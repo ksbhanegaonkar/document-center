@@ -1,12 +1,16 @@
 import React,{Component} from 'react';
 import './FolderPlugin.scss';
 import DesktopItem from '../../DesktopItem/DesktopItem';
+import {getRequest,postRequest} from '../../Utils/RestUtil';
 class FolderPlugin extends Component{
 
   state = {
     desktopItems : [{"appId":41,"appName":"New Folder","appType":"folder"}]
   };
 
+  componentDidMount(){
+    this.getPayload(this.props.item.appId);
+  }
     render() {
 
         // return (<div>
@@ -43,7 +47,13 @@ class FolderPlugin extends Component{
         return desktopItemList;
       }
       
-
+      getPayload(appId){
+        getRequest('/getapppayload/'+appId,(data)=>{
+          console.log("payload is ::::::"+data.payload);
+          this.setState({desktopItems:data.payload});
+        });
+        
+      }
 
 }
 export default FolderPlugin;
