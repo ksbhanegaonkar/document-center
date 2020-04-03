@@ -5,7 +5,7 @@ import {getRequest,postRequest} from '../../Utils/RestUtil';
 class FolderPlugin extends Component{
 
   state = {
-    desktopItems : [{"appId":41,"appName":"New Folder","appType":"folder"}]
+    desktopItems : []
   };
 
   componentDidMount(){
@@ -49,8 +49,8 @@ class FolderPlugin extends Component{
       
       getPayload(appId){
         getRequest('/getapppayload/'+appId,(data)=>{
-          console.log("payload is ::::::"+data.payload);
-          this.setState({desktopItems:data.payload});
+          console.log("payload is for folder ::::::"+data.payload);
+          this.setState({desktopItems:JSON.parse(data.payload)});
         });
         
       }

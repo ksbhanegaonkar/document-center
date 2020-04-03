@@ -10,7 +10,7 @@ class DesktopItemView extends Component{
     };
 
     componentDidMount(){
-      this.getPayload(this.props.item.appId);
+      //this.getPayload(this.props.item.appId);
     }
 
     render() {
@@ -55,8 +55,8 @@ class DesktopItemView extends Component{
               <FolderPlugin 
               item={this.props.item}
               onDoubleClick={this.props.onDoubleClick}
-              getPayload={this.getPayload.bind(this)}
-              updatePayload={this.updatePayload.bind(this)} 
+              //getPayload={this.getPayload.bind(this)}
+             // updatePayload={this.updatePayload.bind(this)} 
               iconsList={this.props.iconsList}
               ></FolderPlugin>
             </div>
