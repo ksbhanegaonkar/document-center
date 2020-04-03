@@ -1,6 +1,7 @@
 package com.vamanos.controller;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vamanos.util.DesktopUpdateUtil;
@@ -16,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/services")
@@ -50,7 +53,9 @@ public class ActionController {
     @GetMapping("/getapppayload/{appId}")
     public ObjectNode getAppPayload(@PathVariable int appId) {
     	ObjectNode node = JsonUtil.getEmptyJsonObject();
-    	node.put("payload", util.getAppPayload(appId));
+    	//node.put("payload", util.getAppPayload(appId));
+    	//[{"appId":41,"appName":"New Folder","appType":"folder"}]
+		node.put("payload", "[{\"appId\":41,\"appName\":\"New Folder\",\"appType\":\"folder\"}]");
         return node;
     }
     
@@ -69,9 +74,14 @@ public class ActionController {
     	String option = app.get("option").asText();
 
     	int appId = 0;
-		if (item == null || "".equals(item) || "desktop-wallpaper".equals(item) || "desktop-item-view".equals(item)) {
+		if (item == null || "".equals(item) || "desktop-wallpaper".equals(item)) {
 			app.put("fileName", "New Folder");
-		} else {
+		} else 	if (item == null || "".equals(item) || "desktop-item-view-folder".equals(item)) {
+			int parentAppId = app.get("parentAppId").asInt();
+			app.put("fileName", "New Folder");
+		}
+
+		else {
 			appId = Integer.parseInt(item.split("/")[2]);
 			app.put("fileName", item.split("/")[3]);
 		}

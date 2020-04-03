@@ -243,8 +243,16 @@ class Desktop extends Component{
           console.log("task bar item is :::: "+this.state.taskBarItems[i]);
         }
       }else{
-
-        postRequest('/oncontextmenuaction',{item:this.state.rightClickedAppName,option:event.target.childNodes[0].data,taskbardata:this.state.taskBarItems},
+        let parentAppId = 0;
+        for (var key in this.state.taskBarItems) {
+          if (this.state.taskBarItems.hasOwnProperty(key)) {
+            var val = this.state.taskBarItems[key];
+            if(val==='block'){
+              parentAppId = key;
+            }
+          }
+        }
+        postRequest('/oncontextmenuaction',{item:this.state.rightClickedAppName,option:event.target.childNodes[0].data,parentAppId:parentAppId},
         (data) => this.loadDesktopItems()
         );
       }

@@ -107,6 +107,24 @@ public class DesktopUpdateUtil {
 		}
 		return payload;
 	}
+
+	public String onContextMenuOptionClick(int appId, String action, int parentAppId) {
+		//System.out.println("app id is :::"+appId+" Action is ::: "+action);
+		String payload = "";
+		if(action.contains("Copy")) {
+			appService.copyApp(appId);
+		}
+		else if(action.contains("Paste")) {
+			appService.pasteApp(appId);
+		}
+		else if(action.contains("Download")) {
+			payload = getAppPayload(appId);
+		}
+		else if(action.contains("New Folder")) {
+			appService.createFolder("New Folder");
+		}
+		return payload;
+	}
 	
 	public void uploadFile(String fileName, MultipartFile file) {
 		String fileType = "file";
