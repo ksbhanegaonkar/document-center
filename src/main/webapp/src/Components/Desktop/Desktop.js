@@ -335,6 +335,12 @@ class Desktop extends Component{
       var newDesktopItemViews = this.state.desktopItemViews;
       delete newTaskBarItems[appId];
       delete newDesktopItemViews[appId]
+      let previousActiveAppId = 0;
+      for(let key in newTaskBarItems){
+        previousActiveAppId = key;
+      }
+      if(previousActiveAppId != 0)
+      newTaskBarItems[previousActiveAppId] = 'block';
       this.setState({desktopItemViews:newDesktopItemViews,taskBarItems:newTaskBarItems});
     }
 
