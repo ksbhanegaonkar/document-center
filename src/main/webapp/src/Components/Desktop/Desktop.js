@@ -239,9 +239,7 @@ class Desktop extends Component{
       }else if(event.target.childNodes[0].data.includes("Upload")){
         this.refs.fileUploader.click();
       }else if(event.target.childNodes[0].data.includes("Refresh")){
-        for(let i=0;i< this.state.taskBarItems.lenght;i++){
-          console.log("task bar item is :::: "+this.state.taskBarItems[i]);
-        }
+
       }else{
         let parentAppId = 0;
         for (var key in this.state.taskBarItems) {
@@ -253,8 +251,17 @@ class Desktop extends Component{
           }
         }
         postRequest('/oncontextmenuaction',{item:this.state.rightClickedAppName,option:event.target.childNodes[0].data,parentAppId:parentAppId},
-        (data) => this.loadDesktopItems()
+        (data) => {
+          this.loadDesktopItems()
+          if(parentAppId != 0){
+            let currentParentFolder = this.state.desktopItemViews[parentAppId];
+            this.onDesktopItemViewClose(parentAppId);
+            this.onDesktopIconDoubleClick(currentParentFolder);
+          }
+        }
         );
+
+
       }
 
     }
