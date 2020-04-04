@@ -53,9 +53,9 @@ public class ActionController {
     @GetMapping("/getapppayload/{appId}")
     public ObjectNode getAppPayload(@PathVariable int appId) {
     	ObjectNode node = JsonUtil.getEmptyJsonObject();
-    	//node.put("payload", util.getAppPayload(appId));
+    	node.put("payload", util.getAppPayload(appId));
     	//[{"appId":41,"appName":"New Folder","appType":"folder"}]
-		node.put("payload", "[{\"appId\":41,\"appName\":\"New Folder\",\"appType\":\"folder\"}]");
+		//node.put("payload", "[{\"appId\":41,\"appName\":\"New Folder\",\"appType\":\"folder\"}]");
         return node;
     }
     
@@ -76,20 +76,25 @@ public class ActionController {
     	int appId = 0;
 		if (item == null || "".equals(item) || "desktop-wallpaper".equals(item)) {
 			app.put("fileName", "New Folder");
+			String payload = util.onContextMenuOptionClick(appId, option);
+			app.put("payload", payload);
 		} else 	if (item == null || "".equals(item) || "desktop-item-view-folder".equals(item)) {
 			int parentAppId = app.get("parentAppId").asInt();
 			app.put("fileName", "New Folder");
+			String payload = util.onContextMenuOptionClick(appId, option,parentAppId);
+			app.put("payload", payload);
 		}
 
 		else {
 			appId = Integer.parseInt(item.split("/")[2]);
 			app.put("fileName", item.split("/")[3]);
+			String payload = util.onContextMenuOptionClick(appId, option);
+			app.put("payload", payload);
 		}
 
 
 
-    	String payload = util.onContextMenuOptionClick(appId, option);
-    	app.put("payload", payload);
+
 
 
     	return app;

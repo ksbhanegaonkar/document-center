@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.vamanos.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -112,7 +113,7 @@ public class AppService {
 		data.setType("folder");
 
 
-		payload.setPayload("".getBytes());
+		payload.setPayload("[]".getBytes());
 
 		appInstanceDataRepository.save(data);
 		payload.setAppId(data.getId());
@@ -123,6 +124,35 @@ public class AppService {
 			app.setAppId(data.getId());
 			globalAppsRepository.save(app);
 		}
+
+
+
+	}
+
+	public void createFolder(String name, int parentAppId) {
+		AppInstanceData data = new AppInstanceData();
+		AppInstancePayload payload = new AppInstancePayload();
+
+
+
+		data.setName(name);
+		data.setType("folder");
+
+
+		payload.setPayload("[]".getBytes());
+
+		appInstanceDataRepository.save(data);
+		payload.setAppId(data.getId());
+		appInstancePayloadRepository.save(payload);
+
+
+
+		AppInstancePayload parentAppPayload = appInstancePayloadRepository.getAppPayloadByAppId(parentAppId);
+		String currentPayload = parentAppPayload.getPayload();
+		String newPayload = JsonUtil.getUpdatedFolderPayload(currentPayload,data.getId(),"New Folder",data.getType());
+
+		parentAppPayload.setPayload(newPayload.getBytes());
+		appInstancePayloadRepository.save(parentAppPayload);
 
 
 

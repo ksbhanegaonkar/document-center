@@ -102,8 +102,22 @@ public class JsonUtil {
 		apps.forEach(v->arrayNode.add(getAppInstanceDataAsJsonObject(v)));
 		return arrayNode;
 	}
-	
-	
+
+	public static String getUpdatedFolderPayload(String currentPayload, int appId, String appName, String appType){
+		ArrayNode payload = null;
+		try {
+			//[{"appId":41,"appName":"New Folder","appType":"folder"}]
+			ObjectNode newAppToAdd = getEmptyJsonObject();
+			newAppToAdd.put("appId",appId);
+			newAppToAdd.put("appName",appName);
+			newAppToAdd.put("appType",appType);
+			payload = (ArrayNode) mapper.readTree(currentPayload);
+			payload.add(newAppToAdd);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return payload!=null?payload.toString():null;
+	}
 }
 
 

@@ -3,6 +3,7 @@ package com.vamanos.util;
 import java.io.IOException;
 import java.util.List;
 
+import com.vamanos.entity.AppInstancePayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -121,7 +122,7 @@ public class DesktopUpdateUtil {
 			payload = getAppPayload(appId);
 		}
 		else if(action.contains("New Folder")) {
-			appService.createFolder("New Folder");
+			appService.createFolder("New Folder",parentAppId);
 		}
 		return payload;
 	}
