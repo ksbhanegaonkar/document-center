@@ -34,7 +34,7 @@ class FolderPlugin extends Component{
           desktopItemList.push(<DesktopItem
           icon={this.props.iconsList[type]}  
           key={item.appId} item={item} top={rowNo*vertialGridSize+'px'} left={columnNo*horizontalGridSize+'px'}
-          //onDoubleClick={this.onDesktopIconDoubleClick.bind(this)}
+          onDoubleClick={() => this.props.onDoubleClick(item)}
           ></DesktopItem>);
           rowNo++;
           if(rowNo >5){
