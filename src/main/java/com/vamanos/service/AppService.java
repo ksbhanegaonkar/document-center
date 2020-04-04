@@ -187,6 +187,24 @@ public class AppService {
 		globalAppsRepository.save(app);
 	}
 
+    public void createNewApp(String fileName, String fileType,MultipartFile file,int parentAppId) throws IOException {
+        AppInstanceData newAppInstanceData = new AppInstanceData();
+        AppInstancePayload newAppInstancePayload = new AppInstancePayload();
+        newAppInstanceData.setName(fileName);
+        newAppInstanceData.setType(fileType);
+        appInstanceDataRepository.save(newAppInstanceData);
+        newAppInstancePayload.setAppId(newAppInstanceData.getId());
+        newAppInstancePayload.setPayload(file.getBytes());
+        appInstancePayloadRepository.save(newAppInstancePayload);
+
+        AppInstancePayload parentAppPayload = appInstancePayloadRepository.getAppPayloadByAppId(parentAppId);
+        String currentPayload = parentAppPayload.getPayload();
+        String newPayload = JsonUtil.getUpdatedFolderPayload(currentPayload,newAppInstanceData);
+
+        parentAppPayload.setPayload(newPayload.getBytes());
+        appInstancePayloadRepository.save(parentAppPayload);
+    }
+
 	public byte[] getAppPayloadAsFile(int appId) {
 		AppInstancePayload app = appInstancePayloadRepository.getAppPayloadByAppId(appId);
 		return app.getPayloadAsBytes();

@@ -438,10 +438,26 @@ class Desktop extends Component{
   
     uploadFile = async e => {
       e.preventDefault();
+      let parentAppId = 0;
+      for (var key in this.state.taskBarItems) {
+        if (this.state.taskBarItems.hasOwnProperty(key)) {
+          var val = this.state.taskBarItems[key];
+          if(val==='block'){
+            parentAppId = key;
+          }
+        }
+      }
+
       const formData = new FormData();
       formData.append('file', e.target.files[0]);
+      formData.append('parentAppId', parentAppId);
       uploadFilePostRequest("/upload",formData,(data)=>{
         this.loadDesktopItems()
+        if(parentAppId != 0){
+          let currentParentFolder = this.state.desktopItemViews[parentAppId];
+          this.onDesktopItemViewClose(parentAppId);
+          this.onDesktopIconDoubleClick(currentParentFolder);
+        }
       })
     };
 

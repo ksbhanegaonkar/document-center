@@ -110,8 +110,11 @@ public class ActionController {
 	 */
     
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity uploadFile(@RequestParam MultipartFile file) {
-    	util.uploadFile(file.getOriginalFilename(), file);
+    public ResponseEntity uploadFile(@RequestParam MultipartFile file, @RequestParam int parentAppId) {
+    	if(parentAppId != 0)
+    		util.uploadFile(file.getOriginalFilename(), file,parentAppId);
+    	else
+			util.uploadFile(file.getOriginalFilename(), file);
         return ResponseEntity.ok().build();
     }
 

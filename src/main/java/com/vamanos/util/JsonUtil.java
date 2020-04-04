@@ -118,6 +118,23 @@ public class JsonUtil {
 		}
 		return payload!=null?payload.toString():null;
 	}
+
+
+	public static String getUpdatedFolderPayload(String currentPayload, AppInstanceData app){
+		ArrayNode payload = null;
+		try {
+			//[{"appId":41,"appName":"New Folder","appType":"folder"}]
+			ObjectNode newAppToAdd = getEmptyJsonObject();
+			newAppToAdd.put("appId",app.getId());
+			newAppToAdd.put("appName",app.getName());
+			newAppToAdd.put("appType",app.getType());
+			payload = (ArrayNode) mapper.readTree(currentPayload);
+			payload.add(newAppToAdd);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return payload!=null?payload.toString():null;
+	}
 }
 
 
