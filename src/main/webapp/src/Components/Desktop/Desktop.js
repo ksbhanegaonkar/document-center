@@ -312,12 +312,18 @@ class Desktop extends Component{
           // );
           if(this.state.taskBarItems[item.appId]===undefined){
             var newTaskBarItems = this.state.taskBarItems;
+            for(let key in newTaskBarItems){
+              newTaskBarItems[key] = 'none';
+            }
             newTaskBarItems[item.appId] = 'block';
             var newDesktopItemViews = this.state.desktopItemViews;
             newDesktopItemViews[item.appId] = item;
             this.setState({desktopItemViews:newDesktopItemViews,taskBarItems:newTaskBarItems,dataloding:false});
           }else{
             var newTaskBarItems = this.state.taskBarItems;
+            for(let key in newTaskBarItems){
+              newTaskBarItems[key] = 'none';
+            }
             newTaskBarItems[item.appId] = 'block';
             this.setState({taskBarItems:newTaskBarItems,dataloding:false});
           }
@@ -337,6 +343,7 @@ class Desktop extends Component{
       newTaskBarItems[appId] = 'none';
       this.setState({taskBarItems:newTaskBarItems});    
     }
+
 
     onDesktopItemViewActive(appId){
       var newTaskBarItems = this.state.taskBarItems;
