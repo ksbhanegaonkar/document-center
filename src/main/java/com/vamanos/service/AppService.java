@@ -116,6 +116,8 @@ public class AppService {
 		payload.setPayload("[]".getBytes());
 
 		appInstanceDataRepository.save(data);
+		data.setName(data.getName()+" "+data.getId());
+		appInstanceDataRepository.save(data);
 		payload.setAppId(data.getId());
 		appInstancePayloadRepository.save(payload);
 
@@ -142,6 +144,8 @@ public class AppService {
 		payload.setPayload("[]".getBytes());
 
 		appInstanceDataRepository.save(data);
+		data.setName(data.getName()+" "+data.getId());
+		appInstanceDataRepository.save(data);
 		payload.setAppId(data.getId());
 		appInstancePayloadRepository.save(payload);
 
@@ -149,7 +153,7 @@ public class AppService {
 
 		AppInstancePayload parentAppPayload = appInstancePayloadRepository.getAppPayloadByAppId(parentAppId);
 		String currentPayload = parentAppPayload.getPayload();
-		String newPayload = JsonUtil.getUpdatedFolderPayload(currentPayload,data.getId(),"New Folder",data.getType());
+		String newPayload = JsonUtil.getUpdatedFolderPayload(currentPayload,data.getId(),data.getName(),data.getType());
 
 		parentAppPayload.setPayload(newPayload.getBytes());
 		appInstancePayloadRepository.save(parentAppPayload);
