@@ -210,6 +210,25 @@ class Desktop extends Component{
 
     doneRename(){
       this.setState({rename:false});
+      let parentAppId = 0;
+      for (var key in this.state.taskBarItems) {
+        if (this.state.taskBarItems.hasOwnProperty(key)) {
+          var val = this.state.taskBarItems[key];
+          if(val==='block'){
+            parentAppId = key;
+          }
+        }
+      }
+
+        this.loadDesktopItems()
+        if(parentAppId != 0){
+          let currentParentFolder = this.state.desktopItemViews[parentAppId];
+          this.onDesktopItemViewClose(parentAppId);
+          this.onDesktopIconDoubleClick(currentParentFolder);
+        }
+
+
+     
     }
 
     onContextMenuOptionClick(event){
@@ -299,6 +318,7 @@ class Desktop extends Component{
        return desktopItemList;
 
     }
+
 
     onDesktopIconDoubleClick(item){
            this.setState({dataloding:true});
@@ -475,7 +495,7 @@ class Desktop extends Component{
         <LoadingScreen isLoading={this.state.dataloding}></LoadingScreen>
         <RenameScreen isRename={this.state.rename} 
         appToRename={this.state.rightClickedAppName}
-        doneRename={this.doneRename.bind(this)}
+        doneRename={this.doneRename.bind(this)} 
         ></RenameScreen>
         <MyContextMenu visible={this.state.contextMenuVisible} 
               xPosition={this.state.mouseXposition}
