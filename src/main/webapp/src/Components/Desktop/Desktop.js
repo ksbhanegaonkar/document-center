@@ -14,6 +14,7 @@ import { delay } from 'q';
 import {withRouter} from 'react-router-dom';
 import {postRequest,getRequest,downloadFilePostRequest,uploadFilePostRequest} from '../Utils/RestUtil';
 import { conditionalExpression } from '@babel/types';
+import RenameScreen from '../RenameScreen/RenameScreen';
 class Desktop extends Component{
   
   constructor(props){
@@ -52,6 +53,7 @@ class Desktop extends Component{
     taskBarItems:{},
 
     dataloding:false,
+    rename:false,
 
     jwtToken:'',
 
@@ -239,7 +241,9 @@ class Desktop extends Component{
       }else if(event.target.childNodes[0].data.includes("Upload")){
         this.refs.fileUploader.click();
       }else if(event.target.childNodes[0].data.includes("Refresh")){
-
+         
+      }else if(event.target.childNodes[0].data.includes("Rename")){
+        this.setState({rename:true});
       }else{
         let parentAppId = 0;
         for (var key in this.state.taskBarItems) {
@@ -464,7 +468,8 @@ class Desktop extends Component{
     render() {
         return (<div 
         className="desktop-wallpaper">
-          <LoadingScreen isLoading={this.state.dataloding}></LoadingScreen>
+        <LoadingScreen isLoading={this.state.dataloding}></LoadingScreen>
+        <RenameScreen isRename={this.state.rename} appToRename={this.state.rightClickedAppName}></RenameScreen>
         <MyContextMenu visible={this.state.contextMenuVisible} 
               xPosition={this.state.mouseXposition}
               yPosition={this.state.mouseYposition} 
