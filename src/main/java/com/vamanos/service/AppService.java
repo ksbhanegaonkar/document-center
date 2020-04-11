@@ -3,19 +3,13 @@ package com.vamanos.service;
 import java.io.IOException;
 import java.util.*;
 
+import com.vamanos.entity.*;
+import com.vamanos.repo.*;
 import com.vamanos.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.vamanos.entity.AppInstanceData;
-import com.vamanos.entity.AppInstancePayload;
-import com.vamanos.entity.ContextMenuOptions;
-import com.vamanos.entity.GlobalApps;
-import com.vamanos.repo.AppInstanceDataRepository;
-import com.vamanos.repo.AppInstancePayloadRepository;
-import com.vamanos.repo.ContextMenuOptionRepository;
-import com.vamanos.repo.GlobalAppsRepository;
 
 @Service
 public class AppService {
@@ -31,6 +25,10 @@ public class AppService {
 	AppInstancePayloadRepository appInstancePayloadRepository;
 	@Autowired
 	ContextMenuOptionRepository contextMenuOptionRepository;
+	@Autowired
+	PersonalAppsRepository personalAppsRepository;
+	@Autowired
+	UserRepository userRepository;
 	
 	public Map<String, String> getGlobalAppsOld(){
 		Map<String,String> desktopItemList = new HashMap<>();
@@ -155,6 +153,26 @@ public class AppService {
 
 
 	}
+
+	public AppInstanceData createPersonalFolder(String name) {
+		AppInstanceData data = new AppInstanceData();
+		AppInstancePayload payload = new AppInstancePayload();
+
+
+
+		data.setName(name);
+		data.setType("folder");
+
+
+		payload.setPayload("[]".getBytes());
+
+		appInstanceDataRepository.save(data);
+		data.setName(data.getName()+" "+data.getId());
+		appInstanceDataRepository.save(data);
+		payload.setAppId(data.getId());
+		appInstancePayloadRepository.save(payload);
+		return data;
+	}
 	
 	public void pasteApp(int appId) {
 		if(copiedAppInstanceData != null && copiedAppInstancePayload != null) {
@@ -234,4 +252,23 @@ public class AppService {
 			return true;
 		}
 	}
+
+	public AppInstanceData getPersonalFolder() {
+		Users user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		PersonalApps app = null;
+		AppInstanceData folder;
+		if(personalAppsRepository.existsByUserId(user.getId())){
+			app = personalAppsRepository.getPersonalAppsByUserId(user.getId());
+			folder = appInstanceDataRepository.getAppById(app.getAppId());
+		}else{
+			folder = createPersonalFolder("Personal Data "+user.getId());
+			app = new PersonalApps();
+			app.setUserId(user.getId());
+			app.setAppId(folder.getId());
+			personalAppsRepository.save(app);
+		}
+
+		return folder;
+	}
+
 }

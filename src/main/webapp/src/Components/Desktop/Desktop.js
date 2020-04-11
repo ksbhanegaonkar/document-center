@@ -432,8 +432,11 @@ class Desktop extends Component{
         this.props.history.push("/");
         
       }else if(clickedButton==='My Folder'){
-        console.log("My folder clidked");
-        this.onDesktopIconDoubleClick({appId:26,appName:"My Folder",appType:"folder"});
+        console.log("My folder clidked ::: ");
+        getRequest("/getpersonalapps",(data) =>{
+          console.dir(data);
+          this.onDesktopIconDoubleClick(data);
+        });
       }else if(clickedButton==='My Notes'){
         console.log("My Notes clidked");
         

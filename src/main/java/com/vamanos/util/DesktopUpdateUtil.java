@@ -192,4 +192,8 @@ public class DesktopUpdateUtil {
 	public boolean renameApp(int appId, String newName, int parentAppId) {
 		return appService.renameApp(appId,newName,parentAppId);
 	}
+
+	public AppInstanceData getPersonalFolder(){
+		return appService.getPersonalFolder();
+	}
 }

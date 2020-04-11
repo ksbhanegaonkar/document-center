@@ -4,6 +4,7 @@ package com.vamanos.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.vamanos.entity.AppInstanceData;
 import com.vamanos.util.DesktopUpdateUtil;
 import com.vamanos.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,7 +162,19 @@ public class ActionController {
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + appName)
 				.contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(filePayload.length).body(resource);
 	}
-    
+
+
+	@GetMapping("/getpersonalapps")
+	public ObjectNode getPersonalApps() {
+	//{appId:26,appName:"My Folder",appType:"folder"}
+        AppInstanceData data = util.getPersonalFolder();
+		ObjectNode node = JsonUtil.getEmptyJsonObject();
+		node.put("appId",data.getId());
+		node.put("appName","My Personal Folder");
+		node.put("appType","folder");
+
+		return node;
+	}
 	/*
 	 * @PostMapping("/downloadapp") public ResponseEntity<byte[]>
 	 * downloadFile1(@RequestBody ObjectNode app) throws IOException { String item =
