@@ -208,6 +208,10 @@ class Desktop extends Component{
     mouseUp(event) {
     }
 
+    doneRename(){
+      this.setState({rename:false});
+    }
+
     onContextMenuOptionClick(event){
 
       if(event.target.childNodes[0].data.includes("Download")){
@@ -469,7 +473,10 @@ class Desktop extends Component{
         return (<div 
         className="desktop-wallpaper">
         <LoadingScreen isLoading={this.state.dataloding}></LoadingScreen>
-        <RenameScreen isRename={this.state.rename} appToRename={this.state.rightClickedAppName}></RenameScreen>
+        <RenameScreen isRename={this.state.rename} 
+        appToRename={this.state.rightClickedAppName}
+        doneRename={this.doneRename.bind(this)}
+        ></RenameScreen>
         <MyContextMenu visible={this.state.contextMenuVisible} 
               xPosition={this.state.mouseXposition}
               yPosition={this.state.mouseYposition} 
