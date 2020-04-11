@@ -431,6 +431,15 @@ class Desktop extends Component{
         localStorage.removeItem("jwtToken");
         this.props.history.push("/");
         
+      }else if(clickedButton==='My Folder'){
+        console.log("My folder clidked");
+        this.onDesktopIconDoubleClick({appId:26,appName:"My Folder",appType:"folder"});
+      }else if(clickedButton==='My Notes'){
+        console.log("My Notes clidked");
+        
+      }else if(clickedButton==='My Bookmarks'){
+        console.log("My Bookmarks clidked");
+        
       }
     }
 
