@@ -10,10 +10,13 @@ class RenameScreen extends Component{
         var style={
           display:this.props.isRename?'block':'none',
         };
-
+        const [app, type, id, name] = this.props.appToRename.split("/");
         return (<div className="rename-screen" style={style}>
             <div className="rename-pannel">
-                <input type="text" value={this.state.newName}></input>
+            <div>Renaming {name}
+                <button onClick={() => this.copyCurrentName(name)}>Copy current name</button>
+            </div> 
+                <input type="text" value={this.state.newName} onChange={this.updateName.bind(this)}></input>
                 <button onClick={this.rename.bind(this)}>Rename</button>
             </div>
 
@@ -36,6 +39,13 @@ class RenameScreen extends Component{
             // //this.state.newName=name;
         }
 
+        copyCurrentName(name){
+            this.setState({newName:name});
+        }
+
+        updateName(e){
+            this.setState({newName:e.target.value});
+        }
 
 }
 export default RenameScreen;
