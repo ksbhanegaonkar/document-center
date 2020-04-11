@@ -213,7 +213,16 @@ public class AppService {
 		AppInstancePayload app = appInstancePayloadRepository.getAppPayloadByAppId(appId);
 		return app.getPayloadAsBytes();
 	}
-	
 
-	
+
+    public boolean renameApp(int appId, String newName) {
+	    if(appInstanceDataRepository.existsByName(newName)){
+	        return false;
+        }else {
+            AppInstanceData data = appInstanceDataRepository.getAppById(appId);
+            data.setName(newName);
+            appInstanceDataRepository.save(data);
+            return true;
+        }
+    }
 }

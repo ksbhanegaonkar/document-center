@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import './RenameScreen.scss';
+import {postRequest,getRequest} from '../Utils/RestUtil';
 class RenameScreen extends Component{
 
     state={
@@ -17,7 +18,7 @@ class RenameScreen extends Component{
                 <button onClick={() => this.copyCurrentName(name)}>Copy current name</button>
             </div> 
                 <input type="text" value={this.state.newName} onChange={this.updateName.bind(this)}></input>
-                <button onClick={this.rename.bind(this)}>Rename</button>
+                <button onClick={()=>this.rename(id,this.state.newName)}>Rename</button>
             </div>
 
         </div>)
@@ -29,9 +30,13 @@ class RenameScreen extends Component{
         }
     
 
-      rename(){
+      rename(appId,newName){
             this.setState({newName:""});
-            this.props.doneRename();
+            postRequest("/renameapp",{appId:appId,newName:newName},(data)=>{
+                console.log("rename returned data is ::: "+data);
+                this.props.doneRename();
+            });
+            
         }
 
         componentWillUpdate(){

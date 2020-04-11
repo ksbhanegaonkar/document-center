@@ -99,7 +99,22 @@ public class ActionController {
 
     	return app;
     }
-    
+
+	@PostMapping("/renameapp")
+	public ObjectNode renameApp(@RequestBody ObjectNode app) {
+		System.out.println(app);
+		int appId = app.get("appId").asInt();
+		String newName = app.get("newName").asText();
+		boolean updateSuccess = util.renameApp(appId,newName);
+
+		app.put("isSuccess",updateSuccess);
+
+
+
+
+		return app;
+	}
+
 	/*
 	 * @PostMapping("/uploadfile") public ObjectNode
 	 * uploadFileAndCreateApp(@RequestBody ObjectNode app) { String fileName =

@@ -184,4 +184,8 @@ public class DesktopUpdateUtil {
 	public byte[] getAppPayloadAsFile(int appId) {
 		return appService.getAppPayloadAsFile(appId);
 	}
+
+	public boolean renameApp(int appId, String newName){
+		return appService.renameApp(appId,newName);
+	}
 }
