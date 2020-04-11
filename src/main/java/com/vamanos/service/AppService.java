@@ -219,4 +219,19 @@ public class AppService {
             return true;
         }
     }
+
+	public boolean renameApp(int appId, String newName, int parentAppId) {
+		if(appInstanceDataRepository.existsByName(newName)){
+			return false;
+		}else {
+			AppInstanceData data = appInstanceDataRepository.getAppById(appId);
+			AppInstancePayload parentPayload = appInstancePayloadRepository.getAppPayloadByAppId(parentAppId);
+			String newPayload = parentPayload.getPayload().replace(data.getName(),newName);
+			parentPayload.setPayload(newPayload.getBytes());
+			data.setName(newName);
+			appInstanceDataRepository.save(data);
+			appInstancePayloadRepository.save(parentPayload);
+			return true;
+		}
+	}
 }

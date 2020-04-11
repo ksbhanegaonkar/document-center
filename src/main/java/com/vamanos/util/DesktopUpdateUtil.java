@@ -188,4 +188,8 @@ public class DesktopUpdateUtil {
 	public boolean renameApp(int appId, String newName){
 		return appService.renameApp(appId,newName);
 	}
+
+	public boolean renameApp(int appId, String newName, int parentAppId) {
+		return appService.renameApp(appId,newName,parentAppId);
+	}
 }

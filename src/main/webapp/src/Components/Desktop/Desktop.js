@@ -231,6 +231,19 @@ class Desktop extends Component{
      
     }
 
+    getParentAppId(){
+      let parentAppId = 0;
+      for (var key in this.state.taskBarItems) {
+        if (this.state.taskBarItems.hasOwnProperty(key)) {
+          var val = this.state.taskBarItems[key];
+          if(val==='block'){
+            parentAppId = key;
+          }
+        }
+      }
+      return parentAppId;
+    }
+
     onContextMenuOptionClick(event){
 
       if(event.target.childNodes[0].data.includes("Download")){
@@ -496,6 +509,7 @@ class Desktop extends Component{
         <RenameScreen isRename={this.state.rename} 
         appToRename={this.state.rightClickedAppName}
         doneRename={this.doneRename.bind(this)} 
+        parentAppId={this.getParentAppId()}
         ></RenameScreen>
         <MyContextMenu visible={this.state.contextMenuVisible} 
               xPosition={this.state.mouseXposition}

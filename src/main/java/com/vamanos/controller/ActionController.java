@@ -104,8 +104,14 @@ public class ActionController {
 	public ObjectNode renameApp(@RequestBody ObjectNode app) {
 		System.out.println(app);
 		int appId = app.get("appId").asInt();
+		int parentAppId = app.get("parentAppId").asInt();
 		String newName = app.get("newName").asText();
-		boolean updateSuccess = util.renameApp(appId,newName);
+		boolean updateSuccess = false;
+		if(parentAppId==0){
+			updateSuccess = util.renameApp(appId,newName);
+		}else{
+			updateSuccess = util.renameApp(appId,newName,parentAppId);
+		}
 
 		app.put("isSuccess",updateSuccess);
 

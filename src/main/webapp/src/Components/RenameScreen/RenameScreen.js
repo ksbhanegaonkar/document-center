@@ -18,7 +18,7 @@ class RenameScreen extends Component{
                 <button onClick={() => this.copyCurrentName(name)}>Copy current name</button>
             </div> 
                 <input type="text" value={this.state.newName} onChange={this.updateName.bind(this)}></input>
-                <button onClick={()=>this.rename(id,this.state.newName)}>Rename</button>
+                <button onClick={()=>this.rename(id,this.state.newName,this.props.parentAppId)}>Rename</button>
             </div>
 
         </div>)
@@ -30,9 +30,9 @@ class RenameScreen extends Component{
         }
     
 
-      rename(appId,newName){
+      rename(appId,newName,parentAppId){
             this.setState({newName:""});
-            postRequest("/renameapp",{appId:appId,newName:newName},(data)=>{
+            postRequest("/renameapp",{appId:appId,newName:newName,parentAppId:parentAppId},(data)=>{
                 console.log("rename returned data is ::: "+data);
                 this.props.doneRename();
             });
