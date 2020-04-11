@@ -1,11 +1,7 @@
 package com.vamanos.service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.vamanos.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,18 +48,16 @@ public class AppService {
 	}
 	
 	public List<AppInstanceData> getGlobalApps(){
-		List<AppInstanceData> desktopItems = new ArrayList<>();
+
 		List<GlobalApps> globalApps = globalAppsRepository.findAll();
 		List<Integer> globalAppIds = new ArrayList<>();
 		globalApps.stream().forEach(app ->{
 			globalAppIds.add(app.getAppId());
 		});
-		List<AppInstanceData> appInstanceData = appInstanceDataRepository.findAllById(globalAppIds);
-		appInstanceData.forEach(data ->{
-			desktopItems.add(data);
-		});
-		
-		return desktopItems;
+		List<AppInstanceData> destktopItems= appInstanceDataRepository.findAllById(globalAppIds);
+
+		Collections.sort(destktopItems);
+		return destktopItems;
 	}
 	
 	public String getAppPayload(int appId) {

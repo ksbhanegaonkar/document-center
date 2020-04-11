@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name = "APP_INSTANCE_DATA")
-public class AppInstanceData extends BaseIdEntity{
+public class AppInstanceData extends BaseIdEntity implements Comparable<AppInstanceData>{
 
 	@Column(name="APP_NAME")
 	String name;
@@ -26,8 +26,9 @@ public class AppInstanceData extends BaseIdEntity{
 		this.type = type;
 	}
 
-	
-	
-	
 
+	@Override
+	public int compareTo(AppInstanceData o) {
+		return this.id - o.getId();
+	}
 }
