@@ -30,6 +30,7 @@ class RenameScreen extends Component{
     
 
       rename(){
+            this.setState({newName:""});
             this.props.doneRename();
         }
 
