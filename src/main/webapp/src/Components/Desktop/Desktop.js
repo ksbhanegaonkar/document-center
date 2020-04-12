@@ -15,6 +15,7 @@ import {withRouter} from 'react-router-dom';
 import {postRequest,getRequest,downloadFilePostRequest,uploadFilePostRequest} from '../Utils/RestUtil';
 import { conditionalExpression } from '@babel/types';
 import RenameScreen from '../RenameScreen/RenameScreen';
+import UpdateAppScreen from '../UpdateAppScreen/UpdateAppScreen';
 class Desktop extends Component{
   
   constructor(props){
@@ -54,6 +55,7 @@ class Desktop extends Component{
 
     dataloding:false,
     rename:false,
+    updateApp:false,
 
     jwtToken:'',
 
@@ -231,6 +233,9 @@ class Desktop extends Component{
      
     }
 
+    cancleAppUpdate(){
+      this.setState({updateApp:false});
+    }
     getParentAppId(){
       let parentAppId = 0;
       for (var key in this.state.taskBarItems) {
@@ -279,7 +284,7 @@ class Desktop extends Component{
       }else if(event.target.childNodes[0].data.includes("Refresh")){
          
       }else if(event.target.childNodes[0].data.includes("Update")){
-         
+        this.setState({updateApp:true});
       }else if(event.target.childNodes[0].data.includes("History")){
          
       }else if(event.target.childNodes[0].data.includes("Rename")){
@@ -527,6 +532,11 @@ class Desktop extends Component{
         doneRename={this.doneRename.bind(this)} 
         parentAppId={this.getParentAppId()}
         ></RenameScreen>
+        <UpdateAppScreen isAppUpdate={this.state.updateApp} 
+        appToUpdate={this.state.rightClickedAppName}
+        cancleAppUpdate={this.cancleAppUpdate.bind(this)} 
+        parentAppId={this.getParentAppId()}
+        ></UpdateAppScreen>
         <MyContextMenu visible={this.state.contextMenuVisible} 
               xPosition={this.state.mouseXposition}
               yPosition={this.state.mouseYposition} 

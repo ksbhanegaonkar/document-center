@@ -5,7 +5,8 @@ import {getRequest,postRequest} from '../../Utils/RestUtil';
 class FolderPlugin extends Component{
 
   state = {
-    desktopItems : []
+    desktopItems : [],
+    loading:true
   };
 
   componentDidMount(){
@@ -16,9 +17,16 @@ class FolderPlugin extends Component{
         // return (<div>
         //     {this.renderFolderItems()}
         // </div>);
-        return <div className="desktop-item-view-folder">
-          {this.renderFolderItems()}
-        </div>
+        if(this.state.loading){
+            return (<div className='loading-message'>
+            <span>Loading items...</span>
+     </div>);
+        }else{
+            return <div className="desktop-item-view-folder">
+            {this.renderFolderItems()}
+            </div>
+        }
+
       }
 
 
@@ -50,7 +58,7 @@ class FolderPlugin extends Component{
       getPayload(appId){
         getRequest('/getapppayload/'+appId,(data)=>{
           console.log("payload is for folder ::::::"+data.payload);
-          this.setState({desktopItems:JSON.parse(data.payload)});
+          this.setState({desktopItems:JSON.parse(data.payload),loading:false});
         });
         
       }
