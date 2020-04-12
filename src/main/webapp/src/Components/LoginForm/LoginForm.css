@@ -11,3 +11,11 @@
 .error-message{
   color: red;
 }  
+
+.loading-message{
+  color: green;
+  position: absolute;
+  top:45% ;
+  left: 45%;
+  font-size: large;
+}  

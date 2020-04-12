@@ -9,7 +9,9 @@ class LoginForm extends Component{
   state={
     userName:'',
     pass:'',
-    errorMsg:''
+    errorMsg:'',
+    loadingMsg:'',
+    loading:false
   }
   constructor(props){
     super(props);
@@ -30,7 +32,7 @@ class LoginForm extends Component{
   handleSubmit(event) {
       
     event.preventDefault();
-
+    this.setState({loading:true,loadingMsg:"Logging in..."});
     authPostRequest({username:this.state.userName,password:this.state.pass},
       (data) =>{
              if(data.token === undefined){
@@ -43,6 +45,7 @@ class LoginForm extends Component{
                 console.log('redirecting to destkop');
                 this.props.history.push("/desktop");
               }
+              this.setState({loading:false,loadingMsg:""});
       }
       );
 
@@ -79,39 +82,48 @@ class LoginForm extends Component{
     // });
   }
   render(){
-    return (
-      <div className="Login">
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <FormGroup controlId="email" >
-            <FormLabel>Username</FormLabel>
-            <FormControl
-              autoFocus
-              type="text"
-             // value={this.state.userName == null?this.state.userName:''}
-              onChange={e => this.setUsername(e.target.value)}
-            />
-          </FormGroup>
-          <FormGroup controlId="password" >
-            <FormLabel>Password</FormLabel>
-            <FormControl
-              //value={this.state.pass?this.state.pass:''}
-              onChange={e => this.setPassword(e.target.value)}
-              type="password"
-            />
-          </FormGroup>
-          <Button block 
-          //disabled={!this.validateForm()} 
-          type="submit">
-            Login
-          </Button>
-          <div className='error-message'>
-          <span>{this.state.errorMsg}</span>
-          </div>
+    if(!this.state.loading){
+      return (
+        <div className="Login">
+          <form onSubmit={this.handleSubmit.bind(this)}>
+            <FormGroup controlId="email" >
+              <FormLabel>Username</FormLabel>
+              <FormControl
+                autoFocus
+                type="text"
+               // value={this.state.userName == null?this.state.userName:''}
+                onChange={e => this.setUsername(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup controlId="password" >
+              <FormLabel>Password</FormLabel>
+              <FormControl
+                //value={this.state.pass?this.state.pass:''}
+                onChange={e => this.setPassword(e.target.value)}
+                type="password"
+              />
+            </FormGroup>
+            <Button block 
+            //disabled={!this.validateForm()} 
+            type="submit">
+              Login
+            </Button>
+            <div className='error-message'>
+            <span>{this.state.errorMsg}</span>
+            </div>
+  
 
-        </form>
-
-      </div>
-    );
+  
+          </form>
+  
+        </div>
+      );
+    }else{
+      return(<div className='loading-message'>
+                 <span>{this.state.loadingMsg}</span>
+             </div>);
+    }
+    
   }
 
   
