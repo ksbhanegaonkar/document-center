@@ -88,14 +88,9 @@ APP_ID INTEGER NOT NULL
 insert into CONTEXT_MENU_OPTIONS values (1,'desktop-wallpaper','New Sprint 1,New User Story,Refresh,Copy,Paste');
 insert into CONTEXT_MENU_OPTIONS values (2,'task-bar','Task bar option 1,Task bar option 2,Task bar option 3,Task bar option 4');
 insert into CONTEXT_MENU_OPTIONS values (3,'start-menu-button','My Folder,My Bookmarks,My Notes,Logout');
-insert into CONTEXT_MENU_OPTIONS values (4,'file','Open file,Open file in new window,Bookmark file,Copy file,Rename File,Delete file');
+insert into CONTEXT_MENU_OPTIONS values (4,'file','Download,Update,Bookmark,Copy,Rename,Delete');
 insert into CONTEXT_MENU_OPTIONS values (5,'folder','Open folder,Open folder in new window,Bookmark folder,Copy folder,Rename folder,Delete folder');
-insert into CONTEXT_MENU_OPTIONS values (6,'desktop-item-view','New Sprint 1,New User Story,Refresh,Copy,Paste');
-
-update CONTEXT_MENU_OPTIONS set option_list = 'Open file,Open file in new window,Bookmark file,Download File,Copy file,Rename File,Delete file' 
-where type='file';
-update CONTEXT_MENU_OPTIONS set option_list = 'New Sprint 1,New User Story,Refresh,Copy,Paste,Upload' 
-where type='desktop-wallpaper';
+insert into CONTEXT_MENU_OPTIONS values (6,'desktop-item-view','New Sprint 1,New User Story,Refresh,Copy,Paste,Upload');
 
 
 drop table PERMISSIONS;
