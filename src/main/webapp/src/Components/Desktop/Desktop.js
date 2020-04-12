@@ -278,6 +278,10 @@ class Desktop extends Component{
         this.refs.fileUploader.click();
       }else if(event.target.childNodes[0].data.includes("Refresh")){
          
+      }else if(event.target.childNodes[0].data.includes("Update")){
+         
+      }else if(event.target.childNodes[0].data.includes("History")){
+         
       }else if(event.target.childNodes[0].data.includes("Rename")){
         this.setState({rename:true});
       }else{

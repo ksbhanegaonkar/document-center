@@ -88,7 +88,7 @@ APP_ID INTEGER NOT NULL
 insert into CONTEXT_MENU_OPTIONS values (1,'desktop-wallpaper','New Sprint 1,New User Story,Refresh,Copy,Paste');
 insert into CONTEXT_MENU_OPTIONS values (2,'task-bar','Task bar option 1,Task bar option 2,Task bar option 3,Task bar option 4');
 insert into CONTEXT_MENU_OPTIONS values (3,'start-menu-button','My Folder,My Bookmarks,My Notes,Logout');
-insert into CONTEXT_MENU_OPTIONS values (4,'file','Download,Update,Bookmark,Copy,Rename,Delete');
+insert into CONTEXT_MENU_OPTIONS values (4,'file','Download,Update,Bookmark,Copy,Rename,Delete,History');
 insert into CONTEXT_MENU_OPTIONS values (5,'folder','Open folder,Open folder in new window,Bookmark folder,Copy folder,Rename folder,Delete folder');
 insert into CONTEXT_MENU_OPTIONS values (6,'desktop-item-view','New Sprint 1,New User Story,Refresh,Copy,Paste,Upload');
 
