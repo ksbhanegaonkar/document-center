@@ -559,6 +559,7 @@ class Desktop extends Component{
           this.onDesktopItemViewClose(parentAppId);
           this.onDesktopIconDoubleClick(currentParentFolder);
         }
+        this.refs.fileUploader.value=null;
       });
     }
 
