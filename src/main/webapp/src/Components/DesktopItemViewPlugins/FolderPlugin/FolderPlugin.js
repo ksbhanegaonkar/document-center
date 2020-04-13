@@ -32,7 +32,7 @@ class FolderPlugin extends Component{
 
       renderFolderItems(){
         let desktopItemList = [];
-        let rowNo =1;
+        let rowNo =0.4;
         let columnNo =1;
         let horizontalGridSize=100;
         let vertialGridSize=120;

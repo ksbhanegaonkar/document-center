@@ -1,6 +1,6 @@
 .desktop-wallpaper {
     background-color: #140101de;
-    min-height: 100vh;
+    min-height: 500vh;
     display: flex;
     flex-direction: column;
     align-items: center;

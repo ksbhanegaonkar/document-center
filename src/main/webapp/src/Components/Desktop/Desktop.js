@@ -318,7 +318,7 @@ class Desktop extends Component{
     renderDesktopItems(){
       if(this.getParentAppId()===0){
         let desktopItemList = [];
-        let rowNo =1;
+        let rowNo =0.7;
         let columnNo =1;
         let horizontalGridSize=100;
         let vertialGridSize=120;
