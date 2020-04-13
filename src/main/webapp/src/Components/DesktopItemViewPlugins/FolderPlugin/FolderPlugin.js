@@ -34,8 +34,8 @@ class FolderPlugin extends Component{
         let desktopItemList = [];
         let rowNo =1;
         let columnNo =1;
-        let horizontalGridSize=120;
-        let vertialGridSize=130;
+        let horizontalGridSize=100;
+        let vertialGridSize=120;
          for(let i=0;i<this.state.desktopItems.length;i++){
            let item = this.state.desktopItems[i];
            let type = item.appType;
