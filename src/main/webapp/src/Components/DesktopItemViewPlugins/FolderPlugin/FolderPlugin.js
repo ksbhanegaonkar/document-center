@@ -56,6 +56,7 @@ class FolderPlugin extends Component{
       }
       
       getPayload(appId){
+        this.setState({loading:true});
         getRequest('/getapppayload/'+appId,(data)=>{
           console.log("payload is for folder ::::::"+data.payload);
           this.setState({desktopItems:JSON.parse(data.payload),loading:false});
