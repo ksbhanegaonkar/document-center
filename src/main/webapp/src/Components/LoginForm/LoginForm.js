@@ -119,7 +119,7 @@ class LoginForm extends Component{
         </div>
       );
     }else{
-      return(<div className='loading-message'>
+      return(<div className='logging-in-message'>
                  <span>{this.state.loadingMsg}</span>
              </div>);
     }

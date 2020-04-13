@@ -18,7 +18,7 @@ class FolderPlugin extends Component{
         //     {this.renderFolderItems()}
         // </div>);
         if(this.state.loading){
-            return (<div className='loading-message'>
+            return (<div className='folder-loading-message'>
             <span>Loading items...</span>
      </div>);
         }else{
