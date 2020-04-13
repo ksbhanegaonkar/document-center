@@ -1,11 +1,12 @@
 .rename-screen{
     position: fixed;
-    align-content: center;
+    //align-content: center;
+    top:0%;
     height: 100%;
     width: 100%;
-    background: rgba(12, 7, 7, 0.37);
+    background: rgba(12, 7, 7, 0.856);
 
-    z-index: 3;
+    z-index: 10;
 }
 
 .rename-pannel{

@@ -12,6 +12,7 @@ class RenameScreen extends Component{
         var style={
           display:this.props.isRename?'block':'none',
         };
+        console.log("inside rename screen..."+this.props.isRename);
         const [app, type, id, name] = this.props.appToRename.split("/");
         return (<div className="rename-screen" style={style}>
             <div className="rename-pannel">

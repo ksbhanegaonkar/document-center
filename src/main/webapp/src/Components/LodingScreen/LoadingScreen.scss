@@ -1,18 +1,18 @@
 .loading-screen{
     position: fixed;
     align-content: center;
+    top: 0%;
     height: 100%;
     width: 100%;
     background: rgba(12, 7, 7, 0.37);
 
-    z-index: 9999;
+    z-index: 10;
 }
 
 #loading-text{
     position: relative;
-    top:10%;
+    top: 45%;
     text-align: center;
     color: rgb(238, 255, 0);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    z-index: 999;
 }
