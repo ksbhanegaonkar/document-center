@@ -533,6 +533,7 @@ class Desktop extends Component{
 
     uploadMultipleFile = async e => {
       e.preventDefault();
+      this.setState({dataloding:true});
       let parentAppId = 0;
       for (var key in this.state.taskBarItems) {
         if (this.state.taskBarItems.hasOwnProperty(key)) {
