@@ -316,34 +316,36 @@ class Desktop extends Component{
     }
 
     renderDesktopItems(){
-      let desktopItemList = [];
-      let rowNo =1;
-      let columnNo =1;
-      let horizontalGridSize=120;
-      let vertialGridSize=130;
-       for(let i=0;i<this.state.desktopItems.length;i++){
-         let item = this.state.desktopItems[i];
-         let type = item.appType;
-        desktopItemList.push(<DesktopItem
-        icon={this.state.iconsList[type]}  
-        key={item.appId} item={item} top={rowNo*vertialGridSize+'px'} left={columnNo*horizontalGridSize+'px'}
-        onDoubleClick={this.onDesktopIconDoubleClick.bind(this)}
-        ></DesktopItem>);
-        // rowNo++;
-        // if(rowNo >5){
-        //   rowNo=1;
-        //   columnNo++;
-        // }
-
-        columnNo++;
-        if(columnNo >12){
-          columnNo=1;
-          rowNo++;
-        }
-        
-       }
-
-       return desktopItemList;
+      if(this.getParentAppId()===0){
+        let desktopItemList = [];
+        let rowNo =1;
+        let columnNo =1;
+        let horizontalGridSize=120;
+        let vertialGridSize=130;
+         for(let i=0;i<this.state.desktopItems.length;i++){
+           let item = this.state.desktopItems[i];
+           let type = item.appType;
+          desktopItemList.push(<DesktopItem
+          icon={this.state.iconsList[type]}  
+          key={item.appId} item={item} top={rowNo*vertialGridSize+'px'} left={columnNo*horizontalGridSize+'px'}
+          onDoubleClick={this.onDesktopIconDoubleClick.bind(this)}
+          ></DesktopItem>);
+          // rowNo++;
+          // if(rowNo >5){
+          //   rowNo=1;
+          //   columnNo++;
+          // }
+  
+          columnNo++;
+          if(columnNo >12){
+            columnNo=1;
+            rowNo++;
+          }
+          
+         }
+  
+         return desktopItemList;
+      }
 
     }
 
