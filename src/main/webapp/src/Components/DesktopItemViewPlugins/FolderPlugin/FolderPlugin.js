@@ -34,8 +34,8 @@ class FolderPlugin extends Component{
         let desktopItemList = [];
         let rowNo =1;
         let columnNo =1;
-        let horizontalGridSize=90;
-        let vertialGridSize=100;
+        let horizontalGridSize=120;
+        let vertialGridSize=130;
          for(let i=0;i<this.state.desktopItems.length;i++){
            let item = this.state.desktopItems[i];
            let type = item.appType;
@@ -44,10 +44,16 @@ class FolderPlugin extends Component{
           key={item.appId} item={item} top={rowNo*vertialGridSize+'px'} left={columnNo*horizontalGridSize+'px'}
           onDoubleClick={() => this.props.onDoubleClick(item)}
           ></DesktopItem>);
-          rowNo++;
-          if(rowNo >5){
-            rowNo=1;
-            columnNo++;
+          // rowNo++;
+          // if(rowNo >5){
+          //   rowNo=1;
+          //   columnNo++;
+          // }
+
+          columnNo++;
+          if(columnNo >12){
+            columnNo=1;
+            rowNo++;
           }
           
          
