@@ -7,6 +7,10 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vamanos.entity.AppInstanceData;
 import com.vamanos.util.DesktopUpdateUtil;
 import com.vamanos.util.JsonUtil;
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -16,9 +20,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -137,6 +143,22 @@ public class ActionController {
     		util.uploadFile(file.getOriginalFilename(), file,parentAppId);
     	else
 			util.uploadFile(file.getOriginalFilename(), file);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(value = "/uploadmultiple", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity uploadMultipleFile(@RequestParam("files") MultipartFile [] files, @RequestParam int parentAppId) {
+
+		if(parentAppId != 0){
+			for(MultipartFile file : files) {
+				util.uploadFile(file.getOriginalFilename(), file, parentAppId);
+			}
+		}
+		else{
+			for(MultipartFile file : files) {
+				util.uploadFile(file.getOriginalFilename(), file);
+			}
+		}
         return ResponseEntity.ok().build();
     }
 

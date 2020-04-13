@@ -528,8 +528,39 @@ class Desktop extends Component{
           this.onDesktopItemViewClose(parentAppId);
           this.onDesktopIconDoubleClick(currentParentFolder);
         }
-      })
-    };
+      });
+    }
+
+    uploadMultipleFile = async e => {
+      e.preventDefault();
+      let parentAppId = 0;
+      for (var key in this.state.taskBarItems) {
+        if (this.state.taskBarItems.hasOwnProperty(key)) {
+          var val = this.state.taskBarItems[key];
+          if(val==='block'){
+            parentAppId = key;
+          }
+        }
+      }
+
+      const formData = new FormData();
+      
+      console.dir(e.target);
+      let fileListArray = Array.from(e.target.files);
+      let len = fileListArray.length;
+      for(let i=0;i<len;i++){
+        formData.append('files',fileListArray[i]);
+      }  
+      formData.append('parentAppId', parentAppId);
+      uploadFilePostRequest("/uploadmultiple",formData,(data)=>{
+        this.loadDesktopItems()
+        if(parentAppId != 0){
+          let currentParentFolder = this.state.desktopItemViews[parentAppId];
+          this.onDesktopItemViewClose(parentAppId);
+          this.onDesktopIconDoubleClick(currentParentFolder);
+        }
+      });
+    }
 
     render() {
         return (<div 
@@ -562,7 +593,7 @@ class Desktop extends Component{
          </StartMenu> 
          {this.renderDesktopItems()}
          {this.renderDesktopItemView()}
-         <input type="file" id="FileUpload" ref="fileUploader" style={{display: "none"}} onChange={this.uploadFile.bind(this)}/>
+         <input type="file"  id="FileUpload" ref="fileUploader" style={{display: "none"}} onChange={this.uploadMultipleFile.bind(this)} multiple/>
         </div>)
       }
 
