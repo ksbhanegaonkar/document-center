@@ -8,7 +8,8 @@ class UpdateAppScreen extends Component{
         errorMsg:'',
         newFile:'',
         comment:'',
-        successMsg:''
+        successMsg:'',
+        loadingMsg:''
     };
 
     render() {
@@ -22,13 +23,13 @@ class UpdateAppScreen extends Component{
             return (<div className="update-app-screen" style={style}>
                 <div className="update-app-pannel">
                 <div>Updating Version for  {name}</div> 
-                    <input type="file" ref="fileUpdator" onChange={this.addFile.bind(this)}></input>
+                    <input type="file" disabled={this.state.successMsg || this.state.loadingMsg} ref="fileUpdator" onChange={this.addFile.bind(this)}></input>
                     <br></br>
                     Add Comment :
                     <br></br>
-                    <textarea rows="4" cols="50" name="comment" value={this.state.comment} onChange={this.addComment.bind(this)}/>
+                    <textarea disabled={this.state.successMsg || this.state.loadingMsg} rows="4" cols="50" name="comment" value={this.state.comment} onChange={this.addComment.bind(this)}/>
                     <br></br>
-                    <button disabled={this.state.successMsg}
+                    <button disabled={this.state.successMsg || this.state.loadingMsg}
                      onClick={()=>this.uploadFile(id,name,this.state.newName,this.state.newFile,this.state.comment)}>Update</button>
                     <button onClick={()=>this.close()}>Close</button>
                     
@@ -38,6 +39,10 @@ class UpdateAppScreen extends Component{
 
                     <div className='update-app-success-message'>
                          <span>{this.state.successMsg}</span>
+                    </div>
+
+                    <div className='update-app-loading-message'>
+                         <span>{this.state.loadingMsg}</span>
                     </div>
                 </div>
     
@@ -73,13 +78,13 @@ class UpdateAppScreen extends Component{
             }else if(comment === ''){
                 this.setState({errorMsg:"Please add comment...!"});
             }else{
-                this.setState({errorMsg:'',updating:true});
+                this.setState({errorMsg:'',loadingMsg:"Updating..."});
                 const formData = new FormData();
                 formData.append('file',newFile);
                 formData.append('appId', appId);
                 formData.append('comment', comment);
                 uploadFilePostRequest("/updateappversion",formData,(data)=>{
-                    this.setState({successMsg:"Updated Successfully...!"});
+                    this.setState({successMsg:"Updated Successfully...!",loadingMsg:""});
                 });
             }
           }

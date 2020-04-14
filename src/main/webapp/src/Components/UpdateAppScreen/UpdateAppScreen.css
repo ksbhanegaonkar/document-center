@@ -22,7 +22,13 @@
   }  
   .update-app-success-message{
     position: absolute;
-    color: green;
+    color: rgb(10, 190, 10);
+    font-size: medium;
+  }  
+
+  .update-app-loading-message{
+    position: absolute;
+    color: rgb(240, 236, 3);
     font-size: medium;
   }  
 
