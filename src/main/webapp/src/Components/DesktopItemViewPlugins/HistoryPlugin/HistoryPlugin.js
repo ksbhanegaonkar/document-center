@@ -50,7 +50,7 @@ state={
                         <td>{row.updated_user}</td>
                         <td>{row.timestamp}</td>
                         <td>{row.comment}</td>
-                        <td><botton>Download</botton></td>
+                        <td><button>Download</button></td>
                     </tr>
                 );
           });

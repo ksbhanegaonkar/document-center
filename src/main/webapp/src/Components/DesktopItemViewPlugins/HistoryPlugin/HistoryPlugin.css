@@ -1,0 +1,26 @@
+.history-plugin{
+    position: absolute;
+    top: 10%;
+    width: 100%;
+    min-height: 500vh;
+    background: #3f3e3e;
+}
+
+table {
+    position: absolute;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    font-size: medium;
+    left: 5%;
+    width: 90%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #755a5a;
+  }
