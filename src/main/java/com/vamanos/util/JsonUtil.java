@@ -93,7 +93,7 @@ public class JsonUtil {
 		node.put("version", app.getVersionNumber());
 		node.put("updated_user", app.getUpdatedUserName());
 		node.put("timestamp", app.getUpdatedTimestamp().toString());
-		node.put("timestamp", app.getUpdatedTimestamp().toString());
+		node.put("comment", app.getUpdateComment());
 		return node;
 	}
 	

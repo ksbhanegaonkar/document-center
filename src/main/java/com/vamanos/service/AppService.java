@@ -346,6 +346,8 @@ public class AppService {
 	}
 
 	public List<AppInstancePayload> getAppPayloadHistory(int appId) {
-		return appInstancePayloadRepository.getAppPayloadByAppId(appId);
+		List<AppInstancePayload> payloadHistory = appInstancePayloadRepository.getAppPayloadByAppId(appId);
+		Collections.sort(payloadHistory);
+		return payloadHistory;
 	}
 }
