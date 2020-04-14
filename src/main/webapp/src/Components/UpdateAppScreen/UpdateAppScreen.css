@@ -20,6 +20,11 @@
     color: red;
     font-size: medium;
   }  
+  .update-app-success-message{
+    position: absolute;
+    color: green;
+    font-size: medium;
+  }  
 
 
   

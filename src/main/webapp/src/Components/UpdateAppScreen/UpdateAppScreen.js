@@ -7,44 +7,59 @@ class UpdateAppScreen extends Component{
         newName:'',
         errorMsg:'',
         newFile:'',
-        comment:''
+        comment:'',
+        successMsg:''
     };
 
     render() {
         var style={
           display:this.props.isAppUpdate?'block':'none',
         };
-        const [app, type, id, name] = this.props.appToUpdate.split("/");
-        return (<div className="update-app-screen" style={style}>
-            <div className="update-app-pannel">
-            <div>Updating Version for  {name}</div> 
-                <input type="file" ref="fileUpdator" onChange={this.addFile.bind(this)}></input>
-                <br></br>
-                Add Comment :
-                <br></br>
-                <textarea rows="4" cols="50" name="comment" value={this.state.comment} onChange={this.addComment.bind(this)}/>
-                <br></br>
-                <button onClick={()=>this.uploadFile(id,name,this.state.newName,this.state.newFile,this.state.comment)}>Update</button>
-                <button onClick={()=>this.cancel()}>Cancel</button>
-                
-                <div className='update-app-error-message'>
-                     <span>{this.state.errorMsg}</span>
+
+
+
+            const [app, type, id, name] = this.props.appToUpdate.split("/");
+            return (<div className="update-app-screen" style={style}>
+                <div className="update-app-pannel">
+                <div>Updating Version for  {name}</div> 
+                    <input type="file" ref="fileUpdator" onChange={this.addFile.bind(this)}></input>
+                    <br></br>
+                    Add Comment :
+                    <br></br>
+                    <textarea rows="4" cols="50" name="comment" value={this.state.comment} onChange={this.addComment.bind(this)}/>
+                    <br></br>
+                    <button disabled={this.state.successMsg}
+                     onClick={()=>this.uploadFile(id,name,this.state.newName,this.state.newFile,this.state.comment)}>Update</button>
+                    <button onClick={()=>this.close()}>Close</button>
+                    
+                    <div className='update-app-error-message'>
+                         <span>{this.state.errorMsg}</span>
+                    </div>
+
+                    <div className='update-app-success-message'>
+                         <span>{this.state.successMsg}</span>
+                    </div>
                 </div>
-            </div>
+    
+    
+    
+            </div>);
+            
+        
 
+      }
 
+      renderButtons(){
 
-        </div>)
       }
 
 
 
 
 
-
-        cancel(){
+      close(){
             this.refs.fileUpdator.value=null;
-            this.setState({newName:"",errorMsg:"",newFile:"",comment:""});
+            this.setState({newName:"",errorMsg:"",newFile:"",comment:"",successMsg:""});
             this.props.cancleAppUpdate();
         }
 
@@ -58,13 +73,13 @@ class UpdateAppScreen extends Component{
             }else if(comment === ''){
                 this.setState({errorMsg:"Please add comment...!"});
             }else{
-                this.setState({errorMsg:''});
+                this.setState({errorMsg:'',updating:true});
                 const formData = new FormData();
                 formData.append('file',newFile);
                 formData.append('appId', appId);
                 formData.append('comment', comment);
                 uploadFilePostRequest("/updateappversion",formData,(data)=>{
-                    this.cancel();
+                    this.setState({successMsg:"Updated Successfully...!"});
                 });
             }
           }
