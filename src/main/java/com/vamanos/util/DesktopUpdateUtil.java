@@ -85,6 +85,13 @@ public class DesktopUpdateUtil {
 	public String getAppPayload(int appId) {
 		 return appService.getAppPayload(appId);
 	}
+	public String getActiveVersionAppPayload(int appId) {
+		return appService.getActiveVersionAppPayload(appId);
+	}
+
+	public String getSpecificVersionAppPayload(int appId,int version) {
+		return appService.getSpecificVersionAppPayload(appId,version);
+	}
 	
 	public String updatePayload(int appId,String payload) {
 		 return appService.updateAppPayload(appId, payload);
@@ -100,7 +107,8 @@ public class DesktopUpdateUtil {
 			appService.pasteApp(appId);
 		}
 		else if(action.contains("Download")) {
-			payload = getAppPayload(appId);
+			//payload = getAppPayload(appId);
+			payload = getActiveVersionAppPayload(appId);
 		}
 		else if(action.contains("New Folder")) {
 			appService.createFolder("New Folder");
@@ -118,7 +126,7 @@ public class DesktopUpdateUtil {
 			appService.pasteApp(appId);
 		}
 		else if(action.contains("Download")) {
-			payload = getAppPayload(appId);
+			payload = getActiveVersionAppPayload(appId);
 		}
 		else if(action.contains("New Folder")) {
 			appService.createFolder("New Folder",parentAppId);
@@ -182,6 +190,14 @@ public class DesktopUpdateUtil {
 
 	public byte[] getAppPayloadAsFile(int appId) {
 		return appService.getAppPayloadAsFile(appId);
+	}
+
+	public byte[] getActiveVersionAppPayloadAsFile(int appId) {
+		return appService.getActiveVersionAppPayloadAsFile(appId);
+	}
+
+	public byte[] getSpecificVersionAppPayloadAsFile(int appId, int version) {
+		return appService.getSpecificVersionAppPayloadAsFile(appId, version);
 	}
 
 	public boolean renameApp(int appId, String newName){

@@ -1,10 +1,5 @@
 package com.vamanos.service;
 
-import java.io.IOException;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.*;
-
 import com.vamanos.entity.*;
 import com.vamanos.repo.*;
 import com.vamanos.util.JsonUtil;
@@ -12,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.*;
 
 @Service
 public class AppService {
@@ -63,6 +62,19 @@ public class AppService {
 	public String getAppPayload(int appId) {
 		AppInstancePayload app = appInstancePayloadRepository.getAppPayloadByAppId(appId);
 		return app.getPayload();
+	}
+	public String getActiveVersionAppPayload(int appId) {
+		List<AppInstancePayload> app = appInstancePayloadRepository.getAppPayloadByAppIdAndIsActiveVersion(appId,true);
+		if(app != null && !app.isEmpty())
+		return app.get(0).getPayload();
+		else return "[]";
+	}
+
+	public String getSpecificVersionAppPayload(int appId,int version) {
+		List<AppInstancePayload> app = appInstancePayloadRepository.getAppPayloadByAppIdAndVersionNumber(appId,version);
+		if(app != null && !app.isEmpty())
+			return app.get(0).getPayload();
+		else return "[]";
 	}
 	
 	public String updateAppPayload(int appId,String payload) {
@@ -251,6 +263,21 @@ public class AppService {
 	public byte[] getAppPayloadAsFile(int appId) {
 		AppInstancePayload app = appInstancePayloadRepository.getAppPayloadByAppId(appId);
 		return app.getPayloadAsBytes();
+	}
+
+	public byte[] getActiveVersionAppPayloadAsFile(int appId) {
+		List<AppInstancePayload> app = appInstancePayloadRepository.getAppPayloadByAppIdAndIsActiveVersion(appId,true);
+		if(app != null && !app.isEmpty())
+			return app.get(0).getPayloadAsBytes();
+		else return null;
+
+	}
+
+	public byte[] getSpecificVersionAppPayloadAsFile(int appId, int version) {
+		List<AppInstancePayload> app = appInstancePayloadRepository.getAppPayloadByAppIdAndVersionNumber(appId,version);
+		if(app != null && !app.isEmpty())
+			return app.get(0).getPayloadAsBytes();
+		else return null;
 	}
 
 
