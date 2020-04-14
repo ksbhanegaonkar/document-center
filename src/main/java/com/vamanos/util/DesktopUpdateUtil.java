@@ -212,7 +212,7 @@ public class DesktopUpdateUtil {
 		return appService.getPersonalFolder();
 	}
 
-	public String updateAppVersion(int appId, MultipartFile file, String payload) {
+	public String updateAppVersion(int appId, MultipartFile file, String payload){
 		return appService.updateAppVersion(appId, file, payload);
 	}
 }

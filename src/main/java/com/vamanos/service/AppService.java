@@ -325,7 +325,23 @@ public class AppService {
 		return folder;
 	}
 
-	public String updateAppVersion(int appId, MultipartFile file, String payload) {
+	public String updateAppVersion(int appId, MultipartFile file, String comment)  {
+		AppInstancePayload existingVersion = appInstancePayloadRepository.getAppPayloadByAppIdAndIsActiveVersion(appId,true).get(0);
+		existingVersion.setActiveVersion(false);
+		AppInstancePayload newVersion = new AppInstancePayload();
+		newVersion.setAppId(appId);
+		newVersion.setActiveVersion(true);
+		newVersion.setUpdateComment(comment);
+		newVersion.setUpdatedUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+		try {
+			newVersion.setPayload(file.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		newVersion.setVersionNumber(existingVersion.getVersionNumber()+1);
+		newVersion.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
+		appInstancePayloadRepository.save(existingVersion);
+		appInstancePayloadRepository.save(newVersion);
 		return null;
 	}
 }

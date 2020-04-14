@@ -63,7 +63,7 @@ class UpdateAppScreen extends Component{
                 formData.append('appId', appId);
                 formData.append('comment', comment);
                 uploadFilePostRequest("/updateappversion",formData,(data)=>{
-                    console.log("hello");
+                    this.cancel();
                 });
             }
           }
