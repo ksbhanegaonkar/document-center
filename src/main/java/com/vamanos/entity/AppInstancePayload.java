@@ -3,6 +3,7 @@ package com.vamanos.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity(name = "APP_INSTANCE_PAYLOAD")
 public class AppInstancePayload extends BaseIdEntity implements Comparable<AppInstancePayload>{
@@ -16,7 +17,7 @@ public class AppInstancePayload extends BaseIdEntity implements Comparable<AppIn
 	@Column(name = "IS_ACTIVE_VERSION")
 	boolean isActiveVersion;
 	@Column(name = "UPDATED_TIMESTAMP", columnDefinition = "timestamp with time zone")// not null")
-	Date updatedTimestamp;
+	Timestamp updatedTimestamp;
 	@Column(name = "UPDATED_USER_NAME")
 	String updatedUserName;
 	@Column(name = "UPDATE_COMMENT")
@@ -58,11 +59,11 @@ public class AppInstancePayload extends BaseIdEntity implements Comparable<AppIn
 		isActiveVersion = activeVersion;
 	}
 
-	public Date getUpdatedTimestamp() {
+	public Timestamp getUpdatedTimestamp() {
 		return updatedTimestamp;
 	}
 
-	public void setUpdatedTimestamp(Date updatedTimestamp) {
+	public void setUpdatedTimestamp(Timestamp updatedTimestamp) {
 		this.updatedTimestamp = updatedTimestamp;
 	}
 

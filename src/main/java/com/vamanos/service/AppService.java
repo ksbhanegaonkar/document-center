@@ -2,6 +2,7 @@ package com.vamanos.service;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.*;
 
 import com.vamanos.entity.*;
@@ -111,7 +112,7 @@ public class AppService {
 		payload.setUpdateComment("Initial Create...");
 		payload.setActiveVersion(true);
 		payload.setUpdatedUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-		payload.setUpdatedTimestamp(new Date(System.currentTimeMillis()));
+		payload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
 
 		appInstanceDataRepository.save(data);
 		data.setName(data.getName()+" "+data.getId());
@@ -144,7 +145,7 @@ public class AppService {
 		payload.setUpdateComment("Initial Create...");
 		payload.setActiveVersion(true);
 		payload.setUpdatedUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-		payload.setUpdatedTimestamp(new Date(System.currentTimeMillis()));
+		payload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
 
 		appInstanceDataRepository.save(data);
 		data.setName(data.getName()+" "+data.getId());
@@ -180,7 +181,7 @@ public class AppService {
 		payload.setUpdateComment("Initial Create...");
 		payload.setActiveVersion(true);
 		payload.setUpdatedUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-		payload.setUpdatedTimestamp(new Date(System.currentTimeMillis()));
+		payload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
 
 		appInstanceDataRepository.save(data);
 		data.setName(data.getName()+" "+data.getId());
@@ -217,7 +218,7 @@ public class AppService {
 		newAppInstancePayload.setUpdateComment("Initial Create...");
 		newAppInstancePayload.setActiveVersion(true);
 		newAppInstancePayload.setUpdatedUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-		newAppInstancePayload.setUpdatedTimestamp(new Date(System.currentTimeMillis()));
+		newAppInstancePayload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
 		appInstancePayloadRepository.save(newAppInstancePayload);
 		GlobalApps app = new GlobalApps();
 		app.setAppId(newAppInstanceData.getId());
@@ -236,7 +237,7 @@ public class AppService {
 		newAppInstancePayload.setUpdateComment("Initial Create...");
 		newAppInstancePayload.setActiveVersion(true);
 		newAppInstancePayload.setUpdatedUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-		newAppInstancePayload.setUpdatedTimestamp(new Date(System.currentTimeMillis()));
+		newAppInstancePayload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
         appInstancePayloadRepository.save(newAppInstancePayload);
 
         AppInstancePayload parentAppPayload = appInstancePayloadRepository.getAppPayloadByAppId(parentAppId);
