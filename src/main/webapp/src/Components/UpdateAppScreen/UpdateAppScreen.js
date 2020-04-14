@@ -1,11 +1,13 @@
 import React,{Component} from 'react';
 import './UpdateAppScreen.css';
-import {postRequest,getRequest} from '../Utils/RestUtil';
+import {postRequest,getRequest,downloadFilePostRequest,uploadFilePostRequest} from '../Utils/RestUtil';
 class UpdateAppScreen extends Component{
 
     state={
         newName:'',
-        errorMsg:''
+        errorMsg:'',
+        newFile:'',
+        comment:''
     };
 
     render() {
@@ -16,13 +18,13 @@ class UpdateAppScreen extends Component{
         return (<div className="update-app-screen" style={style}>
             <div className="update-app-pannel">
             <div>Updating Version for  {name}</div> 
-                <input type="file"></input>
+                <input type="file" onChange={this.addFile.bind(this)}></input>
                 <br></br>
                 Add Comment :
                 <br></br>
-                <textarea rows="4" cols="50" name="comment"/>
+                <textarea rows="4" cols="50" name="comment" onChange={this.addComment.bind(this)}/>
                 <br></br>
-                <button onClick={()=>this.rename(id,this.state.newName,this.props.parentAppId)}>Update</button>
+                <button onClick={()=>this.uploadFile(id,this.state.newFile,this.state.comment)}>Update</button>
                 <button onClick={()=>this.cancel()}>Cancel</button>
                 
                 <div className='update-app-error-message'>
@@ -76,6 +78,26 @@ class UpdateAppScreen extends Component{
             //this.setState({newName:"",errorMsg:""});
         }
 
+
+        uploadFile = async (appId,newFile,comment) => {
+            const formData = new FormData();
+            formData.append('file',newFile);
+            formData.append('appId', appId);
+            formData.append('comment', comment);
+            uploadFilePostRequest("/updateappversion",formData,(data)=>{
+                console.log("hello");
+            });
+          }
+
+          addFile(e){
+              console.dir(e.target.files[0]);
+              this.setState({newFile:e.target.files[0]});
+          }
+
+          addComment(e){
+              console.log(e.target.value);
+              this.setState({comment:e.target.value});
+          }
 
 }
 export default UpdateAppScreen;

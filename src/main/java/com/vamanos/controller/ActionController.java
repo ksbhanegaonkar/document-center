@@ -75,11 +75,10 @@ public class ActionController {
     }
 
     @PostMapping("/updateappversion")
-    public ObjectNode updateAppVersion(@RequestBody ObjectNode app) {
-        int appId = app.get("appId").asInt();
-        String payload = app.get("payload").asText();
-        util.updateAppVersion(appId, payload);
-        return app;
+    public ObjectNode updateAppVersion(@RequestParam int appId, @RequestParam MultipartFile file, @RequestParam String comment) {
+		ObjectNode node = JsonUtil.getEmptyJsonObject();
+		String s = "test";
+        return node;
     }
     
     @PostMapping("/oncontextmenuaction")
