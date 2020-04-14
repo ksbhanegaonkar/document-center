@@ -271,4 +271,7 @@ public class AppService {
 		return folder;
 	}
 
+	public String updateAppVersion(int appId, String payload) {
+		return null;
+	}
 }

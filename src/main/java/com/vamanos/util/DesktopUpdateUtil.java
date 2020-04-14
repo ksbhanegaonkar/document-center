@@ -3,7 +3,6 @@ package com.vamanos.util;
 import java.io.IOException;
 import java.util.List;
 
-import com.vamanos.entity.AppInstancePayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -195,5 +194,9 @@ public class DesktopUpdateUtil {
 
 	public AppInstanceData getPersonalFolder(){
 		return appService.getPersonalFolder();
+	}
+
+	public String updateAppVersion(int appId, String payload) {
+		return appService.updateAppVersion(appId, payload);
 	}
 }

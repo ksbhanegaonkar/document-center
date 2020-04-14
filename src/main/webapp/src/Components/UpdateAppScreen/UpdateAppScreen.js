@@ -15,11 +15,14 @@ class UpdateAppScreen extends Component{
         const [app, type, id, name] = this.props.appToUpdate.split("/");
         return (<div className="update-app-screen" style={style}>
             <div className="update-app-pannel">
-            <div>Renaming {name}
-                <button onClick={() => this.copyCurrentName(name)}>Copy current name</button>
-            </div> 
-                <input type="text" value={this.state.newName} onChange={this.updateName.bind(this)}></input>
-                <button onClick={()=>this.rename(id,this.state.newName,this.props.parentAppId)}>Rename</button>
+            <div>Updating Version for  {name}</div> 
+                <input type="file"></input>
+                <br></br>
+                Add Comment :
+                <br></br>
+                <textarea rows="4" cols="50" name="comment"/>
+                <br></br>
+                <button onClick={()=>this.rename(id,this.state.newName,this.props.parentAppId)}>Update</button>
                 <button onClick={()=>this.cancel()}>Cancel</button>
                 
                 <div className='update-app-error-message'>

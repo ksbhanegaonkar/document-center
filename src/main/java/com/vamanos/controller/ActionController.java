@@ -73,6 +73,14 @@ public class ActionController {
     	util.updatePayload(appId, payload);
     	return app;
     }
+
+    @PostMapping("/updateappversion")
+    public ObjectNode updateAppVersion(@RequestBody ObjectNode app) {
+        int appId = app.get("appId").asInt();
+        String payload = app.get("payload").asText();
+        util.updateAppVersion(appId, payload);
+        return app;
+    }
     
     @PostMapping("/oncontextmenuaction")
     public ObjectNode onContextMenuOption(@RequestBody ObjectNode app) {

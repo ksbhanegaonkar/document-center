@@ -1,17 +1,17 @@
 .update-app-screen{
-    position: fixed;
-    align-content: center;
-    height: 100%;
-    width: 100%;
-    background: rgba(12, 7, 7, 0.37);
+  position: fixed;
+  top:0%;
+  height: 100%;
+  width: 100%;
+  background: rgba(12, 7, 7, 0.856);
 
-    z-index: 3;
+  z-index: 10;
 }
 
 .update-app-pannel{
     position: absolute;
-    left: 41%;
-    top: 42%;
+    left: 37%;
+    top: 40%;
     font-size: medium;
 }
 
