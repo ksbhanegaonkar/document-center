@@ -2,6 +2,7 @@ package com.vamanos.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.sql.Date;
 
 @Entity(name = "APP_INSTANCE_PAYLOAD")
 public class AppInstancePayload extends BaseIdEntity{
@@ -10,6 +11,16 @@ public class AppInstancePayload extends BaseIdEntity{
 	int appId;
 	@Column(name="PAYLOAD")
 	byte [] payload;
+	@Column(name = "VERSION_NUMBER")
+	int versionNumber;
+	@Column(name = "IS_ACTIVE_VERSION")
+	boolean isActiveVersion;
+	@Column(name = "UPDATED_TIMESTAMP", columnDefinition = "timestamp with time zone")// not null")
+	Date updatedTimestamp;
+	@Column(name = "UPDATED_USER_ID")
+	int updatedUserId;
+	@Column(name = "UPDATE_COMMENT")
+	String updateComment;
 
 	public int getAppId() {
 		return appId;
@@ -30,9 +41,44 @@ public class AppInstancePayload extends BaseIdEntity{
 	public void setPayload(byte[] payload) {
 		this.payload = payload;
 	}
-	
-	
-	
-	
 
+	public int getVersionNumber() {
+		return versionNumber;
+	}
+
+	public void setVersionNumber(int versionNumber) {
+		this.versionNumber = versionNumber;
+	}
+
+	public boolean isActiveVersion() {
+		return isActiveVersion;
+	}
+
+	public void setActiveVersion(boolean activeVersion) {
+		isActiveVersion = activeVersion;
+	}
+
+	public Date getUpdatedTimestamp() {
+		return updatedTimestamp;
+	}
+
+	public void setUpdatedTimestamp(Date updatedTimestamp) {
+		this.updatedTimestamp = updatedTimestamp;
+	}
+
+	public int getUpdatedUserId() {
+		return updatedUserId;
+	}
+
+	public void setUpdatedUserId(int updatedUserId) {
+		this.updatedUserId = updatedUserId;
+	}
+
+	public String getUpdateComment() {
+		return updateComment;
+	}
+
+	public void setUpdateComment(String updateComment) {
+		this.updateComment = updateComment;
+	}
 }
