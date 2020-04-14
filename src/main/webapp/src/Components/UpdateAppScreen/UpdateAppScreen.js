@@ -18,11 +18,11 @@ class UpdateAppScreen extends Component{
         return (<div className="update-app-screen" style={style}>
             <div className="update-app-pannel">
             <div>Updating Version for  {name}</div> 
-                <input type="file" onChange={this.addFile.bind(this)}></input>
+                <input type="file" ref="fileUpdator" onChange={this.addFile.bind(this)}></input>
                 <br></br>
                 Add Comment :
                 <br></br>
-                <textarea rows="4" cols="50" name="comment" onChange={this.addComment.bind(this)}/>
+                <textarea rows="4" cols="50" name="comment" value={this.state.comment} onChange={this.addComment.bind(this)}/>
                 <br></br>
                 <button onClick={()=>this.uploadFile(id,name,this.state.newName,this.state.newFile,this.state.comment)}>Update</button>
                 <button onClick={()=>this.cancel()}>Cancel</button>
@@ -43,8 +43,9 @@ class UpdateAppScreen extends Component{
 
 
         cancel(){
+            this.refs.fileUpdator.value=null;
+            this.setState({newName:"",errorMsg:"",newFile:"",comment:""});
             this.props.cancleAppUpdate();
-            this.setState({newName:"",errorMsg:""});
         }
 
 
