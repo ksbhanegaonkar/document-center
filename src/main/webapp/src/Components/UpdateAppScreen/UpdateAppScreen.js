@@ -24,7 +24,7 @@ class UpdateAppScreen extends Component{
                 <br></br>
                 <textarea rows="4" cols="50" name="comment" onChange={this.addComment.bind(this)}/>
                 <br></br>
-                <button onClick={()=>this.uploadFile(id,this.state.newFile,this.state.comment)}>Update</button>
+                <button onClick={()=>this.uploadFile(id,name,this.state.newName,this.state.newFile,this.state.comment)}>Update</button>
                 <button onClick={()=>this.cancel()}>Cancel</button>
                 
                 <div className='update-app-error-message'>
@@ -38,60 +38,40 @@ class UpdateAppScreen extends Component{
       }
 
 
-      componentDidMount(){
 
-        }
-    
 
-      rename(appId,newName,parentAppId){
 
-            postRequest("/renameapp",{appId:appId,newName:newName,parentAppId:parentAppId},(data)=>{
-                console.log("rename returned data is ::: "+data.isSuccess);
-                console.dir(data);
-                if(data.isSuccess){
-                    this.props.doneRename();
-                    this.setState({newName:"",errorMsg:""});
-                }else{
-                    this.setState({errorMsg:"Name already exist, please use different name !!!"})
-                }
-                
-            });
-            
-        }
-
-        componentWillUpdate(){
-            // const [app, type, id, name] = this.props.appToUpdate.split("/");
-            // console.log("name is ::::  "+name);
-            // //this.state.newName=name;
-        }
-
-        copyCurrentName(name){
-            this.setState({newName:name});
-        }
-
-        updateName(e){
-            this.setState({newName:e.target.value});
-        }
 
         cancel(){
             this.props.cancleAppUpdate();
-            //this.setState({newName:"",errorMsg:""});
+            this.setState({newName:"",errorMsg:""});
         }
 
 
-        uploadFile = async (appId,newFile,comment) => {
-            const formData = new FormData();
-            formData.append('file',newFile);
-            formData.append('appId', appId);
-            formData.append('comment', comment);
-            uploadFilePostRequest("/updateappversion",formData,(data)=>{
-                console.log("hello");
-            });
+        uploadFile = async (appId,currentFileName,newFileName,newFile,comment) => {
+            console.dir(newFile);
+            if(newFile === ''){
+                this.setState({errorMsg:"Please add new file...!"});
+            }else if(currentFileName !== newFileName){
+                this.setState({errorMsg:"Newly added file is not same as existing...!"});
+            }else if(comment === ''){
+                this.setState({errorMsg:"Please add comment...!"});
+            }else{
+                this.setState({errorMsg:''});
+                const formData = new FormData();
+                formData.append('file',newFile);
+                formData.append('appId', appId);
+                formData.append('comment', comment);
+                uploadFilePostRequest("/updateappversion",formData,(data)=>{
+                    console.log("hello");
+                });
+            }
           }
 
           addFile(e){
-              console.dir(e.target.files[0]);
-              this.setState({newFile:e.target.files[0]});
+              if(e.target.files.length != 0){
+                this.setState({newFile:e.target.files[0],newName:e.target.files[0].name});
+              }
           }
 
           addComment(e){
