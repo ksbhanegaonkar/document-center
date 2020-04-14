@@ -17,8 +17,8 @@ public class AppInstancePayload extends BaseIdEntity{
 	boolean isActiveVersion;
 	@Column(name = "UPDATED_TIMESTAMP", columnDefinition = "timestamp with time zone")// not null")
 	Date updatedTimestamp;
-	@Column(name = "UPDATED_USER_ID")
-	int updatedUserId;
+	@Column(name = "UPDATED_USER_NAME")
+	String updatedUserName;
 	@Column(name = "UPDATE_COMMENT")
 	String updateComment;
 
@@ -66,19 +66,19 @@ public class AppInstancePayload extends BaseIdEntity{
 		this.updatedTimestamp = updatedTimestamp;
 	}
 
-	public int getUpdatedUserId() {
-		return updatedUserId;
-	}
-
-	public void setUpdatedUserId(int updatedUserId) {
-		this.updatedUserId = updatedUserId;
-	}
-
 	public String getUpdateComment() {
 		return updateComment;
 	}
 
 	public void setUpdateComment(String updateComment) {
 		this.updateComment = updateComment;
+	}
+
+	public String getUpdatedUserName() {
+		return updatedUserName;
+	}
+
+	public void setUpdatedUserName(String updatedUserName) {
+		this.updatedUserName = updatedUserName;
 	}
 }
