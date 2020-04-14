@@ -4,7 +4,8 @@ import {getRequest,postRequest} from '../../Utils/RestUtil';
 class HistoryPlugin extends Component{
 
 state={
- historyData:[]
+ historyData:[],
+ loading:true
 };
 
   componentDidMount(){
@@ -13,33 +14,44 @@ state={
 
 
   getPayload(appId){
+      this.setState({loading:true});
     getRequest('/getapphistory/'+appId,(data)=>{
         console.log("History data is...");
         console.dir(data);
-      this.setState({historyData:data});
+      this.setState({historyData:data,loading:false});
     });
     
   }
 
 
     render() {
-      
-        return <div className="history-plugin">
 
-        <table>
-            <tbody>
-                <tr>
-                    <th>Version</th>
-                    <th>Updated By</th>
-                    <th>Updated On</th>
-                    <th>Comment</th>
-                    <th>Download Link</th>
-                </tr>
-                {this.renderTableData()}
-            </tbody>
-        </table>
-            
-        </div>
+
+        if(this.state.loading){
+            return (<div className='history-loading-message'>
+                    <span>Loading history items...</span>
+            </div>);
+        }else{
+           return (<div className="history-plugin">
+
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Version</th>
+                        <th>Updated By</th>
+                        <th>Updated On</th>
+                        <th>Comment</th>
+                        <th>Download Link</th>
+                    </tr>
+                    {this.renderTableData()}
+                </tbody>
+            </table>
+                
+            </div>);
+        }
+
+      
+
       }
 
       renderTableData(){
