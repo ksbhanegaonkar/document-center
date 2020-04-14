@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import java.sql.Date;
 
 @Entity(name = "APP_INSTANCE_PAYLOAD")
-public class AppInstancePayload extends BaseIdEntity{
+public class AppInstancePayload extends BaseIdEntity implements Comparable<AppInstancePayload>{
 	
 	@Column(name="APP_ID")
 	int appId;
@@ -80,5 +80,10 @@ public class AppInstancePayload extends BaseIdEntity{
 
 	public void setUpdatedUserName(String updatedUserName) {
 		this.updatedUserName = updatedUserName;
+	}
+
+	@Override
+	public int compareTo(AppInstancePayload o) {
+		return o.getVersionNumber() - this.versionNumber;
 	}
 }
