@@ -65,7 +65,16 @@ public class ActionController {
 		//node.put("payload", "[{\"appId\":41,\"appName\":\"New Folder\",\"appType\":\"folder\"}]");
         return node;
     }
-    
+
+    @GetMapping("/getapphistory/{appId}")
+    public ArrayNode getAppHistory(@PathVariable int appId) {
+        ObjectNode node = JsonUtil.getEmptyJsonObject();
+        node.put("payload", util.getAppPayload(appId));
+        //[{"appId":41,"appName":"New Folder","appType":"folder"}]
+        //node.put("payload", "[{\"appId\":41,\"appName\":\"New Folder\",\"appType\":\"folder\"}]");
+        return JsonUtil.getAppHistoryAsJsonArray(util.getAppPayloadHistory(appId));
+    }
+
     @PostMapping("/updateapppayload")
     public ObjectNode updatePayload(@RequestBody ObjectNode app) {
     	int appId = app.get("appId").asInt();

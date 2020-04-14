@@ -3,6 +3,7 @@ import './DesktopItemView.scss';
 import FolderPlugin from '../DesktopItemViewPlugins/FolderPlugin/FolderPlugin';
 import FilePlugin from '../DesktopItemViewPlugins/FilePlugin/FilePlugin';
 import {getRequest,postRequest} from '../Utils/RestUtil';
+import HistoryPlugin from '../DesktopItemViewPlugins/HistoryPlugin/HistoryPlugin';
 class DesktopItemView extends Component{
 
     state={
@@ -66,6 +67,12 @@ class DesktopItemView extends Component{
               <FilePlugin item={this.props.item}
               updatePayload={this.updatePayload.bind(this)}
               ></FilePlugin>
+            </div>
+            );
+        }else if(this.props.item.appType === 'history'){
+              return(<div className="desktop-item-view-file">
+              <HistoryPlugin item={this.props.item}
+              ></HistoryPlugin>
             </div>
             );
         }

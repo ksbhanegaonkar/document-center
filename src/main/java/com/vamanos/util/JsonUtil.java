@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vamanos.entity.AppInstanceData;
+import com.vamanos.entity.AppInstancePayload;
 import com.vamanos.model.ContextMenuList;
 import com.vamanos.model.DesktopItemList;
 import com.vamanos.model.StartMenuList;
@@ -86,6 +87,15 @@ public class JsonUtil {
 		System.out.println(util.updateDesktop("{\"state\":\"init\"}"));
 		
 	}
+
+	public static ObjectNode getPayloadHistoryAsJsonObject(AppInstancePayload app){
+		ObjectNode node = getEmptyJsonObject();
+		node.put("version", app.getVersionNumber());
+		node.put("updated_user", app.getUpdatedUserName());
+		node.put("timestamp", app.getUpdatedTimestamp().toString());
+		node.put("timestamp", app.getUpdatedTimestamp().toString());
+		return node;
+	}
 	
 	
 	public static ObjectNode getAppInstanceDataAsJsonObject(AppInstanceData app) {
@@ -100,6 +110,12 @@ public class JsonUtil {
 	public static ArrayNode getAppListAsJsonArray(List<AppInstanceData> apps) {
 		ArrayNode arrayNode = mapper.createArrayNode();
 		apps.forEach(v->arrayNode.add(getAppInstanceDataAsJsonObject(v)));
+		return arrayNode;
+	}
+
+	public static ArrayNode getAppHistoryAsJsonArray(List<AppInstancePayload> apps) {
+		ArrayNode arrayNode = mapper.createArrayNode();
+		apps.forEach(v->arrayNode.add(getPayloadHistoryAsJsonObject(v)));
 		return arrayNode;
 	}
 

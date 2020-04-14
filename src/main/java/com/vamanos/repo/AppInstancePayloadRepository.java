@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface AppInstancePayloadRepository extends JpaRepository<AppInstancePayload,Integer>{
-	AppInstancePayload getAppPayloadByAppId(int appId);
+	List<AppInstancePayload> getAppPayloadByAppId(int appId);
 	List<AppInstancePayload> getAppPayloadByAppIdAndIsActiveVersion(int appId, boolean isActiveVersion);
 	List<AppInstancePayload> getAppPayloadByAppIdAndVersionNumber(int appId, int versionNumber);
 }

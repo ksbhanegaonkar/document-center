@@ -60,7 +60,7 @@ public class AppService {
 	}
 	
 	public String getAppPayload(int appId) {
-		AppInstancePayload app = appInstancePayloadRepository.getAppPayloadByAppId(appId);
+		AppInstancePayload app = appInstancePayloadRepository.getAppPayloadByAppIdAndIsActiveVersion(appId,true).get(0);
 		return app.getPayload();
 	}
 	public String getActiveVersionAppPayload(int appId) {
@@ -78,7 +78,7 @@ public class AppService {
 	}
 	
 	public String updateAppPayload(int appId,String payload) {
-		AppInstancePayload app = appInstancePayloadRepository.getAppPayloadByAppId(appId);
+		AppInstancePayload app = appInstancePayloadRepository.getAppPayloadByAppIdAndIsActiveVersion(appId,true).get(0);
 		app.setPayload(payload.getBytes());
 		appInstancePayloadRepository.save(app);
 		return app.getPayload();
@@ -97,7 +97,7 @@ public class AppService {
 		copiedAppInstancePayload = new AppInstancePayload();
 		
 		AppInstanceData appDataToCopy = appInstanceDataRepository.getAppById(appId);
-		AppInstancePayload appPayloadToCopy = appInstancePayloadRepository.getAppPayloadByAppId(appId);
+		AppInstancePayload appPayloadToCopy = appInstancePayloadRepository.getAppPayloadByAppIdAndIsActiveVersion(appId,true).get(0);
 		
 		copiedAppInstanceData.setName("Copy of - "+appDataToCopy.getName());
 		copiedAppInstanceData.setType(appDataToCopy.getType());
@@ -167,7 +167,7 @@ public class AppService {
 
 
 
-		AppInstancePayload parentAppPayload = appInstancePayloadRepository.getAppPayloadByAppId(parentAppId);
+		AppInstancePayload parentAppPayload = appInstancePayloadRepository.getAppPayloadByAppIdAndIsActiveVersion(parentAppId,true).get(0);
 		String currentPayload = parentAppPayload.getPayload();
 		String newPayload = JsonUtil.getUpdatedFolderPayload(currentPayload,data.getId(),data.getName(),data.getType());
 
@@ -252,7 +252,7 @@ public class AppService {
 		newAppInstancePayload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
         appInstancePayloadRepository.save(newAppInstancePayload);
 
-        AppInstancePayload parentAppPayload = appInstancePayloadRepository.getAppPayloadByAppId(parentAppId);
+        AppInstancePayload parentAppPayload = appInstancePayloadRepository.getAppPayloadByAppIdAndIsActiveVersion(parentAppId,true).get(0);
         String currentPayload = parentAppPayload.getPayload();
         String newPayload = JsonUtil.getUpdatedFolderPayload(currentPayload,newAppInstanceData);
 
@@ -261,7 +261,7 @@ public class AppService {
     }
 
 	public byte[] getAppPayloadAsFile(int appId) {
-		AppInstancePayload app = appInstancePayloadRepository.getAppPayloadByAppId(appId);
+		AppInstancePayload app = appInstancePayloadRepository.getAppPayloadByAppIdAndIsActiveVersion(appId,true).get(0);
 		return app.getPayloadAsBytes();
 	}
 
@@ -297,7 +297,7 @@ public class AppService {
 			return false;
 		}else {
 			AppInstanceData data = appInstanceDataRepository.getAppById(appId);
-			AppInstancePayload parentPayload = appInstancePayloadRepository.getAppPayloadByAppId(parentAppId);
+			AppInstancePayload parentPayload = appInstancePayloadRepository.getAppPayloadByAppIdAndIsActiveVersion(parentAppId,true).get(0);
 			String newPayload = parentPayload.getPayload().replace(data.getName(),newName);
 			parentPayload.setPayload(newPayload.getBytes());
 			data.setName(newName);
@@ -343,5 +343,9 @@ public class AppService {
 		appInstancePayloadRepository.save(existingVersion);
 		appInstancePayloadRepository.save(newVersion);
 		return null;
+	}
+
+	public List<AppInstancePayload> getAppPayloadHistory(int appId) {
+		return appInstancePayloadRepository.getAppPayloadByAppId(appId);
 	}
 }

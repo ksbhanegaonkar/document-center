@@ -286,7 +286,8 @@ class Desktop extends Component{
       }else if(event.target.childNodes[0].data.includes("Update")){
         this.setState({updateApp:true});
       }else if(event.target.childNodes[0].data.includes("History")){
-         
+        const [app, type, id, name] = this.state.rightClickedAppName.split("/");
+        this.onDesktopIconDoubleClick({appId:id,appName:name+"_history",appType:"history"});
       }else if(event.target.childNodes[0].data.includes("Rename")){
         this.setState({rename:true});
       }else{
