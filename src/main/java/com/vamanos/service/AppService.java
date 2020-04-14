@@ -298,7 +298,7 @@ public class AppService {
 		return folder;
 	}
 
-	public String updateAppVersion(int appId, String payload) {
+	public String updateAppVersion(int appId, MultipartFile file, String payload) {
 		return null;
 	}
 }

@@ -77,7 +77,7 @@ public class ActionController {
     @PostMapping("/updateappversion")
     public ObjectNode updateAppVersion(@RequestParam int appId, @RequestParam MultipartFile file, @RequestParam String comment) {
 		ObjectNode node = JsonUtil.getEmptyJsonObject();
-		String s = "test";
+		util.updateAppVersion(appId,file,comment);
         return node;
     }
     
