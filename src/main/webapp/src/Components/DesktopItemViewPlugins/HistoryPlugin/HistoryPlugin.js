@@ -73,7 +73,7 @@ state={
         (response) => {                
                   
                   const [r, e] = this.props.item.fileName.split(".");
-                  let filename = r+"_v"+version+e;
+                  let filename = r+"_v"+version+"."+e;
                   //let disposition = response.headers.get('Content-Disposition');
                   //console.log("Disposition is ::: "+disposition);
                       // let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
