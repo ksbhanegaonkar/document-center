@@ -21,13 +21,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 public class Users extends BaseIdEntity implements UserDetails {
 
-	public List<Roles> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Roles> roles) {
-		this.roles = roles;
-	}
 
 	public void setUsername(String username) {
 		this.username = username;
@@ -67,23 +60,6 @@ public class Users extends BaseIdEntity implements UserDetails {
 
 	@Column(name = "credentials_expired")
 	private boolean credentialsNonExpired;
-
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "role_user", 
-			joinColumns = {
-							@JoinColumn(name = "user_id", referencedColumnName = "id") }, 
-			inverseJoinColumns = {
-							@JoinColumn(name = "role_id", referencedColumnName = "id") })
-	private List<Roles> roles = new ArrayList<Roles>();
-	
-	/*
-	 * @OneToMany(fetch = FetchType.LAZY)
-	 * 
-	 * @JoinTable(name = "USER_TEAM_RELATION",joinColumns = {
-	 * 
-	 * @JoinColumn(name = "USER_ID",referencedColumnName = "id")}) private
-	 * List<UserTeamRelation> userTeams = new ArrayList<>();
-	 */
 	
 	@Override
 	public boolean isEnabled() {
@@ -105,22 +81,10 @@ public class Users extends BaseIdEntity implements UserDetails {
 		return !accountNonLocked;
 	}
 
-	/*
-	 * Get roles and permissions and add them as a Set of GrantedAuthority
-	 */
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-
-		roles.forEach(r -> {
-			authorities.add(new SimpleGrantedAuthority(r.getName()));
-			r.getPermissions().forEach(p -> {
-				authorities.add(new SimpleGrantedAuthority(p.getName()));
-			});
-		});
-		System.out.println("Authorities are below :::::::::::::");
-		System.out.println(authorities);
-
 		return authorities;
 	}
 
@@ -146,7 +110,7 @@ public class Users extends BaseIdEntity implements UserDetails {
 	public String toString() {
 		return "Users [email=" + email + ", username=" + username + ", password=" + password + ", enabled=" + enabled
 				+ ", accountNonLocked=" + accountNonLocked + ", accountNonExpired=" + accountNonExpired
-				+ ", credentialsNonExpired=" + credentialsNonExpired + ", roles=" + roles + "]";
+				+ ", credentialsNonExpired=" + credentialsNonExpired + ", roles=" + "]";
 	}
 	
 
