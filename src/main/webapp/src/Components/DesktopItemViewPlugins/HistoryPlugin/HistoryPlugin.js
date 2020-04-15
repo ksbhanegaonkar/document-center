@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import './HistoryPlugin.css';
-import {getRequest,postRequest} from '../../Utils/RestUtil';
+import {getRequest,postRequest,downloadFilePostRequest} from '../../Utils/RestUtil';
 class HistoryPlugin extends Component{
 
 state={
@@ -62,10 +62,39 @@ state={
                         <td>{row.updated_user}</td>
                         <td>{row.timestamp}</td>
                         <td>{row.comment}</td>
-                        <td><button>Download</button></td>
+                        <td><button onClick={()=>this.downloadFile(row.version)}>Download</button></td>
                     </tr>
                 );
           });
+      }
+
+      downloadFile(version){
+        downloadFilePostRequest('/downloadapp',{appId: this.props.item.appId,version:version,appName:this.props.item.appName,option:"Download File"},
+        (response) => {                
+                  
+                  const [r, e] = this.props.item.fileName.split(".");
+                  let filename = r+"_v"+version+e;
+                  //let disposition = response.headers.get('Content-Disposition');
+                  //console.log("Disposition is ::: "+disposition);
+                      // let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                      // let matches = filenameRegex.exec(disposition);
+                      // if (matches != null && matches[1]) { 
+                      //   filename = matches[1].replace(/['"]/g, '');
+                      // }
+
+        
+        
+                  response.blob().then(blob => {
+                    let url = window.URL.createObjectURL(blob);
+                    let a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    a.click();
+                    });
+             
+
+        }
+        );
       }
 
 }
