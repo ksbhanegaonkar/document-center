@@ -188,14 +188,24 @@ public class ActionController {
 
 	@PostMapping("/downloadapp")
 	public ResponseEntity downloadFile1(@RequestBody ObjectNode app) throws IOException {
-		String item = app.get("item").asText();
-		String appName = item.split("/")[3];
-		int appId = Integer.parseInt(item.split("/")[2]);
+//		String item = app.get("item").asText();
+//		String appName = item.split("/")[3];
+//		int appId = Integer.parseInt(item.split("/")[2]);
+
+		int appId = app.get("appId").asInt();
+		int appVersion = app.get("version").asInt();
+		String appName= app.get("appName").asText();
 		/*
 		 * File file = new File(appName); try (FileOutputStream fileOuputStream = new
 		 * FileOutputStream(file)) { fileOuputStream.write(); }
 		 */
-		byte[] filePayload = util.getActiveVersionAppPayloadAsFile(appId);
+        byte[] filePayload = null;
+		if(appVersion == 0){
+            filePayload  = util.getActiveVersionAppPayloadAsFile(appId);
+        }else{
+            filePayload = util.getSpecificVersionAppPayloadAsFile(appId,appVersion);
+        }
+
 		InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(filePayload));
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + appName)
 				.contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(filePayload.length).body(resource);

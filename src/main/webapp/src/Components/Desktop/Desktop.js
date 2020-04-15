@@ -252,10 +252,9 @@ class Desktop extends Component{
     onContextMenuOptionClick(event){
 
       if(event.target.childNodes[0].data.includes("Download")){
-
-        downloadFilePostRequest('/downloadapp',{item:this.state.rightClickedAppName,option:"Download File"},
-        (response) => {
-                  const [app, type, id, name] = this.state.rightClickedAppName.split("/");
+        const [app, type, id, name] = this.state.rightClickedAppName.split("/");
+        downloadFilePostRequest('/downloadapp',{appId:id,version:0,appName:name,option:"Download File"},
+        (response) => {                
                   let filename = name;
                   //let disposition = response.headers.get('Content-Disposition');
                   //console.log("Disposition is ::: "+disposition);
