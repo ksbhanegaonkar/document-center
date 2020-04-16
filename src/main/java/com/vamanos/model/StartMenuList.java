@@ -10,10 +10,9 @@ public class StartMenuList {
 	List<String> startMenuList = new ArrayList<String>();
 	
 	public StartMenuList() {
-		
-		startMenuList.add("My Folder");
+
 		startMenuList.add("My Bookmarks");
-		startMenuList.add("My Notes a");
+		startMenuList.add("My Notes");
 		startMenuList.add("Logout");
 		
 	}
