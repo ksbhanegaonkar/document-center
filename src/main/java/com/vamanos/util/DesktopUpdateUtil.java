@@ -79,7 +79,7 @@ public class DesktopUpdateUtil {
 	}
 	
 	public ArrayNode getDesktopApps() {
-		 List<AppInstanceData> globalApps = appService.getGlobalApps();
+		 List<AppInstanceData> globalApps = appService.getAllAppsForUser();
 		 return JsonUtil.getAppListAsJsonArray(globalApps);
 	}
 	

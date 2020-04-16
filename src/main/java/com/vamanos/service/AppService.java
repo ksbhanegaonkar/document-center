@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AppService {
@@ -30,6 +31,12 @@ public class AppService {
 	PersonalAppsRepository personalAppsRepository;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	TeamsRepository teamsRepository;
+	@Autowired
+	UserTeamRelationRepository userTeamRelationRepository;
+	@Autowired
+	TeamAppsRepository teamAppsRepository;
 	
 	public Map<String, String> getGlobalAppsOld(){
 		Map<String,String> desktopItemList = new HashMap<>();
@@ -45,19 +52,42 @@ public class AppService {
 		
 		return desktopItemList;
 	}
-	
-	public List<AppInstanceData> getGlobalApps(){
 
-		List<GlobalApps> globalApps = globalAppsRepository.findAll();
-		List<Integer> globalAppIds = new ArrayList<>();
-		globalApps.stream().forEach(app ->{
-			globalAppIds.add(app.getAppId());
-		});
-		List<AppInstanceData> destktopItems= appInstanceDataRepository.findAllById(globalAppIds);
-
+	public List<AppInstanceData> getAllAppsForUser(){
+		List<Integer> allAppIds = new ArrayList<>();
+		allAppIds.addAll(getGlobalApps());
+		allAppIds.addAll(getTeamApps());
+		allAppIds.addAll(getPersonalApps());
+		List<AppInstanceData> destktopItems= appInstanceDataRepository.findAllById(allAppIds);
 		Collections.sort(destktopItems);
 		return destktopItems;
 	}
+
+	public List<Integer> getGlobalApps(){
+		List<GlobalApps> globalApps = globalAppsRepository.findAll();
+		List<Integer> globalAppIds = globalApps.stream().map(GlobalApps::getAppId).collect(Collectors.toList());
+		return globalAppIds;
+	}
+
+	public List<Integer> getPersonalApps(){
+		List<PersonalApps> personalApps = personalAppsRepository.getPersonalAppsByUserId(getUserId());
+		List<Integer> personalAppIds = personalApps.stream().map(PersonalApps::getAppId).collect(Collectors.toList());
+		return personalAppIds;
+	}
+
+	public List<Integer> getTeamApps(){
+		List<UserTeamRelation> assignedTeams = userTeamRelationRepository.getUserTeamRelatiionByUserId(getUserId());
+		List<Integer> teamIds = assignedTeams.stream().map(UserTeamRelation::getTeamId).collect(Collectors.toList());
+		List<TeamApps> teamApps = teamAppsRepository.findTeamAppsByTeamId(teamIds);
+		List<Integer> allTeamApps = teamApps.stream().map(TeamApps::getAppId).collect(Collectors.toList());
+		return allTeamApps;
+	}
+
+	public int getUserId(){
+		Users user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		return user.getId();
+	}
+
 	
 	public String getAppPayload(int appId) {
 		AppInstancePayload app = appInstancePayloadRepository.getAppPayloadByAppIdAndIsActiveVersion(appId,true).get(0);
@@ -312,7 +342,7 @@ public class AppService {
 		PersonalApps app = null;
 		AppInstanceData folder;
 		if(personalAppsRepository.existsByUserId(user.getId())){
-			app = personalAppsRepository.getPersonalAppsByUserId(user.getId());
+			app = personalAppsRepository.getPersonalAppsByUserId(user.getId()).get(0);
 			folder = appInstanceDataRepository.getAppById(app.getAppId());
 		}else{
 			folder = createPersonalFolder("Personal Data "+user.getId());
