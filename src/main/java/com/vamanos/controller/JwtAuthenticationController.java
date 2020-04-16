@@ -1,5 +1,6 @@
 package com.vamanos.controller;
 
+import com.vamanos.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -7,11 +8,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
 import com.vamanos.model.JwtRequest;
 import com.vamanos.model.JwtResponse;
@@ -36,6 +34,9 @@ public class JwtAuthenticationController {
 
 	private CustomUserDetailsService userDetailsService;
 
+	@Autowired
+	PasswordEncoder encoder;
+
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
@@ -53,6 +54,18 @@ public class JwtAuthenticationController {
 		} catch (BadCredentialsException e) {
 			throw new Exception("INVALID_CREDENTIALS", e);
 		}
+	}
+
+	@RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
+	public ResponseEntity<?> resetPassword(@RequestParam("username") String userName, @RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) throws Exception {
+		Users user = userDetailsService.getUserByUserName(userName);
+		if(encoder.matches(user.getPassword(),encoder.encode(oldPassword))){
+			user.setPassword(encoder.encode(newPassword));
+			userDetailsService.updateUser(user);
+		}else{
+			throw new Exception("Old password is incorrect.");
+		}
+		return ResponseEntity.ok("Password reset successfully...!");
 	}
 
 }

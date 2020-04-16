@@ -27,4 +27,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 		return user;
 	}
+
+	public void updateUser(Users user){
+		userRepository.save(user);
+	}
+
+	public Users getUserByUserName(String userName) {
+		return userRepository.findByUsername(userName);
+	}
 }

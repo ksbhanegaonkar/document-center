@@ -84,7 +84,7 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 				contextMenuOptionRepository.save(desktopItemView);
 
 				Users user = new Users();
-				user.setCredentialsNonExpired(false);
+				user.setCredentialsNonExpired(true);
 				user.setAccountNonExpired(false);
 				user.setAccountNonLocked(false);
 				user.setUsername("Admin");
