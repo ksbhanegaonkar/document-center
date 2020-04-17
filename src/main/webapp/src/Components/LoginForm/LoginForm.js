@@ -10,6 +10,7 @@ class LoginForm extends Component{
     userName:'',
     pass:'',
     errorMsg:'',
+    successMsg:'',
     loadingMsg:'',
     loading:false,
     passwordReset:false,
@@ -43,7 +44,7 @@ class LoginForm extends Component{
   handleSubmit(event) {
       
     event.preventDefault();
-    this.setState({loading:true,loadingMsg:"Logging in..."});
+    this.setState({loading:true,loadingMsg:"Logging in...",errorMsg:"",successMsg:""});
     authPostRequest({username:this.state.userName,password:this.state.pass},
       (data) =>{
              if(data.status === 401){
@@ -112,25 +113,15 @@ class LoginForm extends Component{
     this.setState({loading:true,loadingMsg:"Resetting password..."});
     passwordResetPostRequest({username:this.state.userName,oldPassword:this.state.pass,newPassword:this.state.newPassword},
       (data) =>{
-            //  if(data.status === 401){
-            //    console.log("Login data object is :::::"+data.status);
-            //    console.dir(data);
 
-            //    if(data.trace.includes("User credentials have expired")){
-            //      console.log("Reset password logic here");
-            //    }else{
-            //     this.setState({errorMsg:'Invalid user credential !!!'});
-            //     localStorage.removeItem("jwtToken");
-            //     console.log('user is not valid...');
-            //     this.props.history.push("/");
-            //    }
-            //    this.setState({loading:false,loadingMsg:"",errorMsg:"Failed to reset password...!"});
-            //    this.props.history.push("/");
-            //   }else{
-                console.log("return meeage is  ::::"+data);
-                this.setState({loading:false,loadingMsg:"",passwordReset:false,errorMsg:"Password reseted successfully...!"});
+             if(data.message === "success"){
+                  this.setState({loading:false,loadingMsg:"",passwordReset:false,errorMsg:"",successMsg:"Password reset successfully...!"});
+                  this.props.history.push("/");
+              }else{
+                
+                this.setState({loading:false,loadingMsg:"",passwordReset:false,errorMsg:"Failed to reset password, current password is not matching...!"});
                 this.props.history.push("/");
-              // }
+               }
              
       }
       );
@@ -167,7 +158,9 @@ class LoginForm extends Component{
             <div className='error-message'>
             <span>{this.state.errorMsg}</span>
             </div>
-  
+            <div className='success-message'>
+            <span>{this.state.successMsg}</span>
+            </div>
 
   
           </form>

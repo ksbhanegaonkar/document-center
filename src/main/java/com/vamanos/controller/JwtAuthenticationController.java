@@ -61,15 +61,17 @@ public class JwtAuthenticationController {
 	@RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
 	public ResponseEntity<?> resetPassword(@RequestBody PasswordResetRequest passwordResetRequest) throws Exception {
 		Users user = userDetailsService.getUserByUserName(passwordResetRequest.getUsername());
+		ObjectNode node = JsonUtil.getEmptyJsonObject();
 		if(encoder.matches(user.getPassword(),encoder.encode(passwordResetRequest.getOldPassword()))){
 			user.setPassword(encoder.encode(passwordResetRequest.getNewPassword()));
 			user.setCredentialsNonExpired(false);
 			userDetailsService.updateUser(user);
+			node.put("message","success");
 		}else{
-			throw new Exception("Old password is incorrect.");
+			node.put("message","failed");
 		}
-		ObjectNode node = JsonUtil.getEmptyJsonObject();
-		node.put("message","Password reset successfully...!");
+
+
 		return ResponseEntity.ok(node);
 	}
 

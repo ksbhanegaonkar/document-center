@@ -12,6 +12,10 @@
   color: red;
 }  
 
+.success-message{
+  color: rgb(43, 255, 0);
+}  
+
 .logging-in-message{
   color: rgb(65, 252, 8);
   position: absolute;
