@@ -61,6 +61,7 @@ public class JwtAuthenticationController {
 		Users user = userDetailsService.getUserByUserName(userName);
 		if(encoder.matches(user.getPassword(),encoder.encode(oldPassword))){
 			user.setPassword(encoder.encode(newPassword));
+			user.setCredentialsNonExpired(false);
 			userDetailsService.updateUser(user);
 		}else{
 			throw new Exception("Old password is incorrect.");
