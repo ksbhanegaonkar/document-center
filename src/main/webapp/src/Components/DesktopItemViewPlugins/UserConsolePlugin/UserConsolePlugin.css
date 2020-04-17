@@ -1,0 +1,16 @@
+.user-console{
+    position: absolute;
+    top: 10%;
+    left: 10%;
+}
+.user-console-label{
+    color: green;
+}
+
+.user-console-input{
+    margin-left: 20px;
+}
+
+.user-added-success-message{
+    color: green;
+}
