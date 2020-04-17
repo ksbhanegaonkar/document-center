@@ -220,4 +220,8 @@ public class DesktopUpdateUtil {
 	public List<AppInstancePayload> getAppPayloadHistory(int appId) {
 		return appService.getAppPayloadHistory(appId);
 	}
+
+	public void addUser(String userName, String email) {
+		appService.addUser(userName,email);
+	}
 }

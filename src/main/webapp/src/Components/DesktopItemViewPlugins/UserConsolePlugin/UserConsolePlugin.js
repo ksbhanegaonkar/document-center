@@ -1,12 +1,14 @@
 import React,{Component} from 'react';
 import './UserConsolePlugin.css';
+import {getRequest,postRequest} from '../../Utils/RestUtil';
 
 class UserConsolePlugin extends Component{
 
     state={
         userName:"",
         email:"",
-        successMsg:''
+        successMsg:'',
+        errorMsg:''
     }
   componentDidMount(){
     //this.getPayload(this.props.item.appId);
@@ -27,6 +29,9 @@ class UserConsolePlugin extends Component{
                         <div className="user-added-success-message">
                             <span>{this.state.successMsg}</span>
                         </div>
+                         <div className="user-added-error-message">
+                            <span>{this.state.errorMsg}</span>
+                        </div>
                      </div>);
         }
 
@@ -40,7 +45,17 @@ class UserConsolePlugin extends Component{
         }
 
         addUser(){
-            this.setState({successMsg:"User added successfully...!"});
+            if(this.state.userName===""){
+                this.setState({errorMsg:"Please add user name...!"});
+            }else if(this.state.email===""){
+                this.setState({errorMsg:"Please add email name...!"});
+            }else{
+            postRequest("/adduser",{username:this.state.userName,email:this.state.email},
+            (data)=>{
+                this.setState({successMsg:"User added successfully...!"});
+            });
+         }
+           
         }
 
 

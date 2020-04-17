@@ -77,10 +77,19 @@ public class ActionController {
 
     @PostMapping("/updateapppayload")
     public ObjectNode updatePayload(@RequestBody ObjectNode app) {
-    	int appId = app.get("appId").asInt();
-    	String payload = app.get("payload").asText();
-    	util.updatePayload(appId, payload);
-    	return app;
+        int appId = app.get("appId").asInt();
+        String payload = app.get("payload").asText();
+        util.updatePayload(appId, payload);
+        return app;
+    }
+
+    @PostMapping("/adduser")
+    public ObjectNode addUser(@RequestBody ObjectNode app) {
+
+        String userName = app.get("username").asText();
+        String email = app.get("email").asText();
+        util.addUser(userName,email);
+        return app;
     }
 
     @PostMapping("/updateappversion")

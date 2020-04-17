@@ -5,6 +5,7 @@ import com.vamanos.repo.*;
 import com.vamanos.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,6 +38,8 @@ public class AppService {
 	UserTeamRelationRepository userTeamRelationRepository;
 	@Autowired
 	TeamAppsRepository teamAppsRepository;
+	@Autowired
+	PasswordEncoder encoder;
 	
 	public Map<String, String> getGlobalAppsOld(){
 		Map<String,String> desktopItemList = new HashMap<>();
@@ -379,5 +382,17 @@ public class AppService {
 		List<AppInstancePayload> payloadHistory = appInstancePayloadRepository.getAppPayloadByAppId(appId);
 		Collections.sort(payloadHistory);
 		return payloadHistory;
+	}
+
+	public void addUser(String userName, String email) {
+		Users user = new Users();
+		user.setCredentialsNonExpired(true);
+		user.setAccountNonExpired(false);
+		user.setAccountNonLocked(false);
+		user.setUsername(userName);
+		user.setPassword(encoder.encode("Welcome@01"));
+		user.setEmail(email);
+		user.setEnabled(true);
+		userRepository.save(user);
 	}
 }
