@@ -62,7 +62,7 @@ public class JwtAuthenticationController {
 	public ResponseEntity<?> resetPassword(@RequestBody PasswordResetRequest passwordResetRequest) throws Exception {
 		Users user = userDetailsService.getUserByUserName(passwordResetRequest.getUsername());
 		ObjectNode node = JsonUtil.getEmptyJsonObject();
-		if(encoder.matches(user.getPassword(),encoder.encode(passwordResetRequest.getOldPassword()))){
+		if(encoder.matches(passwordResetRequest.getOldPassword(),user.getPassword())){
 			user.setPassword(encoder.encode(passwordResetRequest.getNewPassword()));
 			user.setCredentialsNonExpired(false);
 			userDetailsService.updateUser(user);

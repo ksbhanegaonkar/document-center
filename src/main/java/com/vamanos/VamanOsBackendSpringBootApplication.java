@@ -11,6 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.servlet.Filter;
 import java.io.IOException;
@@ -34,6 +35,8 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 	  private AppInstancePayloadRepository appInstancePayloadRepository;
 	  @Autowired
 	  private PersonalAppsRepository personalAppsRepository;
+	  @Autowired
+	  private PasswordEncoder encoder;
 	 
 
 	public static void main(String[] args) {
@@ -88,7 +91,7 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 				user.setAccountNonExpired(false);
 				user.setAccountNonLocked(false);
 				user.setUsername("Admin");
-				user.setPassword("Welcome@01");
+				user.setPassword(encoder.encode("Welcome@01"));
 				user.setEmail("admin@organization.com");
 				user.setEnabled(true);
 
