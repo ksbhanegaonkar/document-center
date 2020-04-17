@@ -214,22 +214,14 @@ public class AppService {
 	public AppInstanceData createPersonalFolder(String name) {
 		AppInstanceData data = new AppInstanceData();
 		AppInstancePayload payload = new AppInstancePayload();
-
-
-
 		data.setName(name);
 		data.setType("folder-personal");
-
-
 		payload.setPayload("[]".getBytes());
 		payload.setVersionNumber(1);
 		payload.setUpdateComment("Initial Create...");
 		payload.setActiveVersion(true);
 		payload.setUpdatedUserName(SecurityContextHolder.getContext().getAuthentication().getName());
 		payload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
-
-		appInstanceDataRepository.save(data);
-		data.setName(data.getName()+" "+data.getId());
 		appInstanceDataRepository.save(data);
 		payload.setAppId(data.getId());
 		appInstancePayloadRepository.save(payload);
