@@ -51,7 +51,7 @@ class DesktopItemView extends Component{
       }
 
       renderDesktopItemViewPlugin(){
-        if(this.props.item.appType==='folder'){
+        if(this.props.item.appType==='folder'  || this.props.item.appType==='folder-personal'){
           return(
             <div className="desktop-item-view-folder">
               <FolderPlugin 
@@ -63,7 +63,7 @@ class DesktopItemView extends Component{
               ></FolderPlugin>
             </div>
           );
-        }else if(this.props.item.appType==='file' || this.props.item.appType==='file-personal'){
+        }else if(this.props.item.appType==='file'){
             return(<div className="desktop-item-view-file">
               <FilePlugin item={this.props.item}
               updatePayload={this.updatePayload.bind(this)}
