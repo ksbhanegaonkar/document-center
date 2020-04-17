@@ -9,15 +9,11 @@ class IconConsolePlugin extends Component{
   }
     render() {
 
-        // return (<div>
-        //     {this.renderFolderItems()}
-        // </div>);
-        if(this.state.loading){
+  
             return (<div className='icon-console'>
          Icon app
             </div>);
-        }
-
+      
       }
 
 

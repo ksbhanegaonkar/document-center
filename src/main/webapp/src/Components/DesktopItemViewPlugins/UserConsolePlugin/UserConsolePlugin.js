@@ -9,16 +9,13 @@ class UserConsolePlugin extends Component{
   }
     render() {
 
-        // return (<div>
-        //     {this.renderFolderItems()}
-        // </div>);
-        if(this.state.loading){
+
             return (<div className='user-console'>
          User app
             </div>);
         }
 
-      }
+    
 
 
 
