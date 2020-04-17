@@ -1,7 +1,13 @@
 package com.vamanos.controller;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vamanos.entity.Users;
+import com.vamanos.model.JwtRequest;
+import com.vamanos.model.JwtResponse;
 import com.vamanos.model.PasswordResetRequest;
+import com.vamanos.service.CustomUserDetailsService;
+import com.vamanos.util.JsonUtil;
+import com.vamanos.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,11 +17,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import com.vamanos.model.JwtRequest;
-import com.vamanos.model.JwtResponse;
-import com.vamanos.service.CustomUserDetailsService;
-import com.vamanos.util.JwtTokenUtil;
 
 @RestController
 
@@ -67,7 +68,9 @@ public class JwtAuthenticationController {
 		}else{
 			throw new Exception("Old password is incorrect.");
 		}
-		return ResponseEntity.ok("Password reset successfully...!");
+		ObjectNode node = JsonUtil.getEmptyJsonObject();
+		node.put("message","Password reset successfully...!");
+		return ResponseEntity.ok(node);
 	}
 
 }

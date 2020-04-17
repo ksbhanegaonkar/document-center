@@ -112,22 +112,25 @@ class LoginForm extends Component{
     this.setState({loading:true,loadingMsg:"Resetting password..."});
     passwordResetPostRequest({username:this.state.userName,oldPassword:this.state.pass,newPassword:this.state.newPassword},
       (data) =>{
-             if(data.status === 401){
-               console.log("Login data object is :::::"+data.status);
-               console.dir(data);
+            //  if(data.status === 401){
+            //    console.log("Login data object is :::::"+data.status);
+            //    console.dir(data);
 
-               if(data.trace.includes("User credentials have expired")){
-                 console.log("Reset password logic here");
-               }else{
-                this.setState({errorMsg:'Invalid user credential !!!'});
-                localStorage.removeItem("jwtToken");
-                console.log('user is not valid...');
+            //    if(data.trace.includes("User credentials have expired")){
+            //      console.log("Reset password logic here");
+            //    }else{
+            //     this.setState({errorMsg:'Invalid user credential !!!'});
+            //     localStorage.removeItem("jwtToken");
+            //     console.log('user is not valid...');
+            //     this.props.history.push("/");
+            //    }
+            //    this.setState({loading:false,loadingMsg:"",errorMsg:"Failed to reset password...!"});
+            //    this.props.history.push("/");
+            //   }else{
+                console.log("return meeage is  ::::"+data);
+                this.setState({loading:false,loadingMsg:"",passwordReset:false,errorMsg:"Password reseted successfully...!"});
                 this.props.history.push("/");
-               }
-               this.setState({loading:false,loadingMsg:"",errorMsg:"Failed to reset password...!"});
-              }else{
-                this.setState({loading:false,loadingMsg:"",errorMsg:"Password reseted successfully...!"});
-              }
+              // }
              
       }
       );
