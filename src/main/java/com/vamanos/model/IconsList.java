@@ -17,6 +17,9 @@ public class IconsList {
 	private static final String FILE_COMPRESSED_ICON = "static/icons/file_compressed.jpeg";
 	private static final String ADMIN_ICON = "static/icons/admin.jpg";
 	private static final String FOLDER_PERSONAL_ICON = "static/icons/personal_folder.jpg";
+	private static final String USER_CONSOLE_ICON = "static/icons/user_console.png";
+	private static final String TEAM_CONSOLE_ICON = "static/icons/team_console.png";
+	private static final String ICON_CONSOLE_ICON = "static/icons/icon_console.jpg";
 	public ObjectNode getIconList(){
 		Map<String,String> iconMap = new HashMap<>();
 		iconMap.put("folder", Image2Base64StringConverter.convert(FOLDER_ICON));
@@ -28,6 +31,9 @@ public class IconsList {
 		iconMap.put("file-compressed", Image2Base64StringConverter.convert(FILE_COMPRESSED_ICON));
 		iconMap.put("admin", Image2Base64StringConverter.convert(ADMIN_ICON));
 		iconMap.put("folder-personal", Image2Base64StringConverter.convert(FOLDER_PERSONAL_ICON));
+		iconMap.put("user-console", Image2Base64StringConverter.convert(USER_CONSOLE_ICON));
+		iconMap.put("team-console", Image2Base64StringConverter.convert(TEAM_CONSOLE_ICON));
+		iconMap.put("icon-console", Image2Base64StringConverter.convert(ICON_CONSOLE_ICON));
 		return JsonUtil.getJsonObjectFromMap(iconMap);
 	}
 }

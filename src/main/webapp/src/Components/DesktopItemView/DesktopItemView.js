@@ -5,6 +5,9 @@ import FilePlugin from '../DesktopItemViewPlugins/FilePlugin/FilePlugin';
 import {getRequest,postRequest} from '../Utils/RestUtil';
 import HistoryPlugin from '../DesktopItemViewPlugins/HistoryPlugin/HistoryPlugin';
 import AdminPlugin from '../DesktopItemViewPlugins/AdminPlugin/AdminPlugin';
+import UserConsolePlugin from '../DesktopItemViewPlugins/UserConsolePlugin/UserConsolePlugin';
+import TeamConsolePlugin from '../DesktopItemViewPlugins/TeamConsolePlugin/TeamConsolePlugin';
+import IconConsolePlugin from '../DesktopItemViewPlugins/IconConsolePlugin/IconConsolePlugin';
 class DesktopItemView extends Component{
 
     state={
@@ -82,7 +85,25 @@ class DesktopItemView extends Component{
           ></AdminPlugin>
         </div>
         );
-    }
+        }else if(this.props.item.appType === 'user-console'){
+          return(<div className="desktop-item-view-user-console">
+          <UserConsolePlugin item={this.props.item}
+          ></UserConsolePlugin>
+        </div>
+        );
+        }else if(this.props.item.appType === 'team-console'){
+          return(<div className="desktop-item-view-team-console">
+          <TeamConsolePlugin item={this.props.item}
+          ></TeamConsolePlugin>
+        </div>
+        );
+        }else if(this.props.item.appType === 'icon-console'){
+          return(<div className="desktop-item-view-icon-console">
+          <IconConsolePlugin item={this.props.item}
+          ></IconConsolePlugin>
+        </div>
+        );
+        }
 
       }
 

@@ -135,7 +135,7 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 
 				Teams adminTeam = new Teams();
 				adminTeam.setTeamDL("Admin Team");
-				adminTeam.setTeamDL("Doc Center Admin");
+				adminTeam.setTeamName("Doc Center Admin");
 				teamsRepository.save(adminTeam);
 
 				UserTeamRelation userTeamRelation = new UserTeamRelation();
@@ -158,10 +158,71 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 				payload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
 				appInstancePayloadRepository.save(payload);
 
-				TeamApps adminTeamApps = new TeamApps();
-				adminTeamApps.setTeamId(adminTeam.getId());
-				adminTeamApps.setAppId(adminApp.getId());
-				teamAppsRepository.save(adminTeamApps);
+				AppInstanceData userConsole = new AppInstanceData();
+				userConsole.setName("User Console");
+				userConsole.setType("user-console");
+				appInstanceDataRepository.save(userConsole);
+
+				AppInstancePayload userConsolePayload = new AppInstancePayload();
+				userConsolePayload.setAppId(userConsole.getId());
+				userConsolePayload.setPayload("[]".getBytes());
+				userConsolePayload.setVersionNumber(1);
+				userConsolePayload.setUpdateComment("Application first time startup create.");
+				userConsolePayload.setActiveVersion(true);
+				userConsolePayload.setUpdatedUserName("Admin");
+				userConsolePayload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
+				appInstancePayloadRepository.save(userConsolePayload);
+
+
+				AppInstanceData teamConsole = new AppInstanceData();
+				teamConsole.setName("Team Console");
+				teamConsole.setType("team-console");
+				appInstanceDataRepository.save(teamConsole);
+
+				AppInstancePayload teamConsolePayload = new AppInstancePayload();
+				teamConsolePayload.setAppId(teamConsole.getId());
+				teamConsolePayload.setPayload("[]".getBytes());
+				teamConsolePayload.setVersionNumber(1);
+				teamConsolePayload.setUpdateComment("Application first time startup create.");
+				teamConsolePayload.setActiveVersion(true);
+				teamConsolePayload.setUpdatedUserName("Admin");
+				teamConsolePayload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
+				appInstancePayloadRepository.save(teamConsolePayload);
+
+				AppInstanceData iconConsole = new AppInstanceData();
+				iconConsole.setName("Icon Console");
+				iconConsole.setType("icon-console");
+				appInstanceDataRepository.save(iconConsole);
+
+				AppInstancePayload iconConsolePayload = new AppInstancePayload();
+				iconConsolePayload.setAppId(iconConsole.getId());
+				iconConsolePayload.setPayload("[]".getBytes());
+				iconConsolePayload.setVersionNumber(1);
+				iconConsolePayload.setUpdateComment("Application first time startup create.");
+				iconConsolePayload.setActiveVersion(true);
+				iconConsolePayload.setUpdatedUserName("Admin");
+				iconConsolePayload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
+				appInstancePayloadRepository.save(iconConsolePayload);
+
+				TeamApps app1 = new TeamApps();
+				app1.setTeamId(adminTeam.getId());
+				app1.setAppId(adminApp.getId());
+				teamAppsRepository.save(app1);
+
+				TeamApps app2 = new TeamApps();
+				app2.setTeamId(adminTeam.getId());
+				app2.setAppId(userConsole.getId());
+				teamAppsRepository.save(app2);
+
+				TeamApps app3 = new TeamApps();
+				app3.setTeamId(adminTeam.getId());
+				app3.setAppId(teamConsole.getId());
+				teamAppsRepository.save(app3);
+
+				TeamApps app4 = new TeamApps();
+				app4.setTeamId(adminTeam.getId());
+				app4.setAppId(iconConsole.getId());
+				teamAppsRepository.save(app4);
 
 
 			}
