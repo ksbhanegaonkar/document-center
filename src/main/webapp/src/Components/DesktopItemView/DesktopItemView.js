@@ -4,6 +4,7 @@ import FolderPlugin from '../DesktopItemViewPlugins/FolderPlugin/FolderPlugin';
 import FilePlugin from '../DesktopItemViewPlugins/FilePlugin/FilePlugin';
 import {getRequest,postRequest} from '../Utils/RestUtil';
 import HistoryPlugin from '../DesktopItemViewPlugins/HistoryPlugin/HistoryPlugin';
+import AdminPlugin from '../DesktopItemViewPlugins/AdminPlugin/AdminPlugin';
 class DesktopItemView extends Component{
 
     state={
@@ -62,7 +63,7 @@ class DesktopItemView extends Component{
               ></FolderPlugin>
             </div>
           );
-        }else if(this.props.item.appType==='file'){
+        }else if(this.props.item.appType==='file' || this.props.item.appType==='file-personal'){
             return(<div className="desktop-item-view-file">
               <FilePlugin item={this.props.item}
               updatePayload={this.updatePayload.bind(this)}
@@ -75,7 +76,13 @@ class DesktopItemView extends Component{
               ></HistoryPlugin>
             </div>
             );
-        }
+        }else if(this.props.item.appType === 'admin'){
+          return(<div className="desktop-item-view-file">
+          <AdminPlugin item={this.props.item}
+          ></AdminPlugin>
+        </div>
+        );
+    }
 
       }
 

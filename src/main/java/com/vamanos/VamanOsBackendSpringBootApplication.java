@@ -97,14 +97,19 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 
 				userRepository.save(user);
 
-				AppInstanceData data = new AppInstanceData();
-				data.setName("Admin Console");
-				data.setType("folder");
+				AppInstanceData adminApp = new AppInstanceData();
+				adminApp.setName("Admin Console");
+				adminApp.setType("admin");
 
-				appInstanceDataRepository.save(data);
+				AppInstanceData personalFolder = new AppInstanceData();
+				personalFolder.setName("Personal Folder");
+				personalFolder.setType("folder-personal");
+
+				appInstanceDataRepository.save(adminApp);
+				appInstanceDataRepository.save(personalFolder);
 
 				AppInstancePayload payload = new AppInstancePayload();
-				payload.setAppId(data.getId());
+				payload.setAppId(adminApp.getId());
 				payload.setPayload("[]".getBytes());
 				payload.setVersionNumber(1);
 				payload.setUpdateComment("Application first time startup create.");
@@ -112,13 +117,28 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 				payload.setUpdatedUserName("Admin");
 				payload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
 
+				AppInstancePayload personalFolderPayload = new AppInstancePayload();
+				personalFolderPayload.setAppId(personalFolder.getId());
+				personalFolderPayload.setPayload("[]".getBytes());
+				personalFolderPayload.setVersionNumber(1);
+				personalFolderPayload.setUpdateComment("Application first time startup create.");
+				personalFolderPayload.setActiveVersion(true);
+				personalFolderPayload.setUpdatedUserName("Admin");
+				personalFolderPayload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
+
 				appInstancePayloadRepository.save(payload);
+				appInstancePayloadRepository.save(personalFolderPayload);
 
 				PersonalApps app = new PersonalApps();
 				app.setUserId(user.getId());
-				app.setAppId(data.getId());
+				app.setAppId(adminApp.getId());
+
+				PersonalApps personalApp = new PersonalApps();
+				personalApp.setUserId(user.getId());
+				personalApp.setAppId(personalFolder.getId());
 
 				personalAppsRepository.save(app);
+				personalAppsRepository.save(personalApp);
 
 
 			}
