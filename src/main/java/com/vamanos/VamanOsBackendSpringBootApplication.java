@@ -37,6 +37,12 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 	  private PersonalAppsRepository personalAppsRepository;
 	  @Autowired
 	  private PasswordEncoder encoder;
+	  @Autowired
+	  private TeamsRepository teamsRepository;
+	  @Autowired
+	  private UserTeamRelationRepository userTeamRelationRepository;
+	  @Autowired
+	  private TeamAppsRepository teamAppsRepository;
 	 
 
 	public static void main(String[] args) {
@@ -97,25 +103,16 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 
 				userRepository.save(user);
 
-				AppInstanceData adminApp = new AppInstanceData();
-				adminApp.setName("Admin Console");
-				adminApp.setType("admin");
+
 
 				AppInstanceData personalFolder = new AppInstanceData();
 				personalFolder.setName("Personal Folder");
 				personalFolder.setType("folder-personal");
 
-				appInstanceDataRepository.save(adminApp);
+
 				appInstanceDataRepository.save(personalFolder);
 
-				AppInstancePayload payload = new AppInstancePayload();
-				payload.setAppId(adminApp.getId());
-				payload.setPayload("[]".getBytes());
-				payload.setVersionNumber(1);
-				payload.setUpdateComment("Application first time startup create.");
-				payload.setActiveVersion(true);
-				payload.setUpdatedUserName("Admin");
-				payload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
+
 
 				AppInstancePayload personalFolderPayload = new AppInstancePayload();
 				personalFolderPayload.setAppId(personalFolder.getId());
@@ -126,19 +123,45 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 				personalFolderPayload.setUpdatedUserName("Admin");
 				personalFolderPayload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
 
-				appInstancePayloadRepository.save(payload);
+
 				appInstancePayloadRepository.save(personalFolderPayload);
 
-				PersonalApps app = new PersonalApps();
-				app.setUserId(user.getId());
-				app.setAppId(adminApp.getId());
 
 				PersonalApps personalApp = new PersonalApps();
 				personalApp.setUserId(user.getId());
 				personalApp.setAppId(personalFolder.getId());
 
-				personalAppsRepository.save(app);
 				personalAppsRepository.save(personalApp);
+
+				Teams adminTeam = new Teams();
+				adminTeam.setTeamDL("Admin Team");
+				adminTeam.setTeamDL("Doc Center Admin");
+				teamsRepository.save(adminTeam);
+
+				UserTeamRelation userTeamRelation = new UserTeamRelation();
+				userTeamRelation.setTeamId(adminTeam.getId());
+				userTeamRelation.setUserId(user.getId());
+				userTeamRelationRepository.save(userTeamRelation);
+
+				AppInstanceData adminApp = new AppInstanceData();
+				adminApp.setName("Admin Console");
+				adminApp.setType("admin");
+				appInstanceDataRepository.save(adminApp);
+
+				AppInstancePayload payload = new AppInstancePayload();
+				payload.setAppId(adminApp.getId());
+				payload.setPayload("[]".getBytes());
+				payload.setVersionNumber(1);
+				payload.setUpdateComment("Application first time startup create.");
+				payload.setActiveVersion(true);
+				payload.setUpdatedUserName("Admin");
+				payload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
+				appInstancePayloadRepository.save(payload);
+
+				TeamApps adminTeamApps = new TeamApps();
+				adminTeamApps.setTeamId(adminTeam.getId());
+				adminTeamApps.setAppId(adminApp.getId());
+				teamAppsRepository.save(adminTeamApps);
 
 
 			}
