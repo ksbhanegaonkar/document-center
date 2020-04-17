@@ -71,13 +71,13 @@ class DesktopItemView extends Component{
             </div>
             );
         }else if(this.props.item.appType === 'history'){
-              return(<div className="desktop-item-view-file">
+              return(<div className="desktop-item-view-history">
               <HistoryPlugin item={this.props.item}
               ></HistoryPlugin>
             </div>
             );
         }else if(this.props.item.appType === 'admin'){
-          return(<div className="desktop-item-view-file">
+          return(<div className="desktop-item-view-admin">
           <AdminPlugin item={this.props.item}
           ></AdminPlugin>
         </div>
