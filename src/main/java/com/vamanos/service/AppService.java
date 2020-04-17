@@ -218,7 +218,7 @@ public class AppService {
 
 
 		data.setName(name);
-		data.setType("folder");
+		data.setType("folder-personal");
 
 
 		payload.setPayload("[]".getBytes());
@@ -235,6 +235,8 @@ public class AppService {
 		appInstancePayloadRepository.save(payload);
 		return data;
 	}
+
+
 	
 	public void pasteApp(int appId) {
 		if(copiedAppInstanceData != null && copiedAppInstancePayload != null) {
@@ -358,6 +360,16 @@ public class AppService {
 		return folder;
 	}
 
+    public void createPersonalFolderForUser(int userId) {
+        PersonalApps app = null;
+        AppInstanceData folder;
+            folder = createPersonalFolder("Personal Folder");
+            app = new PersonalApps();
+            app.setUserId(userId);
+            app.setAppId(folder.getId());
+            personalAppsRepository.save(app);
+    }
+
 	public String updateAppVersion(int appId, MultipartFile file, String comment)  {
 		AppInstancePayload existingVersion = appInstancePayloadRepository.getAppPayloadByAppIdAndIsActiveVersion(appId,true).get(0);
 		existingVersion.setActiveVersion(false);
@@ -394,5 +406,7 @@ public class AppService {
 		user.setEmail(email);
 		user.setEnabled(true);
 		userRepository.save(user);
+        createPersonalFolderForUser(user.getId());
+
 	}
 }
