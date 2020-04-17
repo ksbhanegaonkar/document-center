@@ -1,6 +1,7 @@
 package com.vamanos.controller;
 
 import com.vamanos.entity.Users;
+import com.vamanos.model.PasswordResetRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -57,10 +58,10 @@ public class JwtAuthenticationController {
 	}
 
 	@RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
-	public ResponseEntity<?> resetPassword(@RequestParam("username") String userName, @RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) throws Exception {
-		Users user = userDetailsService.getUserByUserName(userName);
-		if(encoder.matches(user.getPassword(),encoder.encode(oldPassword))){
-			user.setPassword(encoder.encode(newPassword));
+	public ResponseEntity<?> resetPassword(@RequestBody PasswordResetRequest passwordResetRequest) throws Exception {
+		Users user = userDetailsService.getUserByUserName(passwordResetRequest.getUsername());
+		if(encoder.matches(user.getPassword(),encoder.encode(passwordResetRequest.getOldPassword()))){
+			user.setPassword(encoder.encode(passwordResetRequest.getNewPassword()));
 			user.setCredentialsNonExpired(false);
 			userDetailsService.updateUser(user);
 		}else{

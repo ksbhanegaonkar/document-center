@@ -106,7 +106,7 @@ export const passwordResetPostRequest =(data,onDataReceive) =>{
     },
      method: 'POST', // or 'PUT'
      //mode:"no-cors",
-     body: data // data can be `string` or {object}!
+     body: JSON.stringify(data) // data can be `string` or {object}!
     
   }
      )

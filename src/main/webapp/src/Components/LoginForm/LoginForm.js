@@ -57,13 +57,13 @@ class LoginForm extends Component{
                 localStorage.removeItem("jwtToken");
                 console.log('user is not valid...');
                 this.props.history.push("/");
+                this.setState({loading:false,loadingMsg:""});
                }
 
               }else{
                 localStorage.setItem("jwtToken","Bearer "+data.token);
                 console.log('redirecting to destkop');
                 this.props.history.push("/desktop");
-                this.setState({loading:false,loadingMsg:""});
               }
              
       }
@@ -110,11 +110,7 @@ class LoginForm extends Component{
         this.setState({errorMsg:"New password is not matching with confirmed password...!"})
     }else{
     this.setState({loading:true,loadingMsg:"Resetting password..."});
-    let formData = new FormData();
-    formData.append("username","test");
-    formData.append("oldPassword",this.state.pass);
-    formData.append("newPassword",this.state.newPassword);
-    passwordResetPostRequest(formData,
+    passwordResetPostRequest({username:this.state.userName,oldPassword:this.state.pass,newPassword:this.state.newPassword},
       (data) =>{
              if(data.status === 401){
                console.log("Login data object is :::::"+data.status);
