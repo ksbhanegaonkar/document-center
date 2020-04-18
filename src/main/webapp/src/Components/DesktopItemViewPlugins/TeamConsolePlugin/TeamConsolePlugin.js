@@ -9,7 +9,9 @@ class TeamConsolePlugin extends Component{
       teamDL:"",
         successMsg:'',
         errorMsg:'',
-        allUsers:[]
+        allUsers:[],
+        selectedUsers:[],
+        addedUser:[]
     }
   componentDidMount(){
     this.fetchAllUsers();
@@ -30,9 +32,18 @@ class TeamConsolePlugin extends Component{
 
                         <label className="team-console-label">Team Managers :</label>
                         <br></br>
-                            <select id="all-users" name="all-users" multiple>
+                            <select id="all-users" onClick={this.onUserNameSelect.bind(this)} name="all-users" multiple>
                               {this.state.allUsers.map(u=>{
-                                return (<option value={u}>{u}</option>);
+                                return (<option key={u} value={u}>{u}</option>);
+                              })}
+                            </select>
+
+                            <button onClick={this.addUserToTeam.bind(this)}>add</button>
+                            <button>remove</button>
+
+                            <select id="added-users" onClick={this.onUserNameSelect.bind(this)} name="selected-users" multiple>
+                              {this.state.addedUser.map(u=>{
+                                return (<option key={"selected_"+u} value={u}>{u}</option>);
                               })}
                             </select>
 
@@ -74,6 +85,17 @@ class TeamConsolePlugin extends Component{
           getRequest("/getallusers",(data)=>this.setState({allUsers:data}));
         }
 
+        onUserNameSelect(e){
+          let newSelectedUser = this.state.selectedUsers;
+          newSelectedUser.push(e.target.value);
+          this.setState({selectedUsers:newSelectedUser});
+        }
+
+        addUserToTeam(){
+          let newAddeddUser = this.state.addedUser;
+          newAddeddUser.push(this.state.selectedUsers);
+          this.setState({addedUser:newAddeddUser});
+        }
 
 }
 export default TeamConsolePlugin;

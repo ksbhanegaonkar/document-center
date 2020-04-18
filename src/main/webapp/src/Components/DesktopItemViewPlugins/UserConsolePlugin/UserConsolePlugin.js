@@ -33,7 +33,7 @@ class UserConsolePlugin extends Component{
                             <br></br>
                                 <select id="all-users" name="all-users" multiple>
                                 {this.state.allUsers.map(u=>{
-                                    return (<option value={u}>{u}</option>);
+                                    return (<option key={u} value={u}>{u}</option>);
                                 })}
                                 </select>
 
