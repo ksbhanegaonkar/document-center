@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class AppService {
@@ -464,6 +465,7 @@ public class AppService {
 				m -> {
 					Users user = userRepository.findByUsername(m);
 					personalAppsRepository.save(new PersonalApps(teamManagerApp.getId(),user.getId()));
+					userTeamRelationRepository.save(new UserTeamRelation(user.getId(),team.getId()));
 				}
 		);
 
@@ -493,4 +495,13 @@ public class AppService {
 
 			return data;
 		}
+
+	public void addTeamMembers(List<String> teamMembers) {
+		int userId = getUserId();
 	}
+
+	public List<String> getAllTeamsOfUser() {
+		Stream<Integer> allTeamIds = userTeamRelationRepository.getUserTeamRelatiionByUserId(getUserId()).stream().map(UserTeamRelation::getTeamId);
+		return allTeamIds.map(i->teamsRepository.findById(i).get().getTeamName()).collect(Collectors.toList());
+	}
+}

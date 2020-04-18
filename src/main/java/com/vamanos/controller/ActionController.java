@@ -105,6 +105,20 @@ public class ActionController {
 		return app;
 	}
 
+	@PostMapping("/addteammembers")
+	public ObjectNode addTeamMembers(@RequestBody ObjectNode app) {
+		ArrayNode array = (ArrayNode) app.get("teammembers");
+		List<String> teamMembers = new ArrayList<>();
+		array.forEach(n->teamMembers.add(n.textValue()));
+		util.addTeamMembers(teamMembers);
+		return app;
+	}
+
+	@GetMapping("/getteamsofuser")
+	public List<String> getTeamsOfUser() {
+		return util.getAllTeamsOfUser();
+	}
+
 	@PostMapping("/adduser")
 	public ObjectNode addUser(@RequestBody ObjectNode app) {
 

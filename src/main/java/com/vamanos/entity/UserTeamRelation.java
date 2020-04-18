@@ -22,6 +22,13 @@ public class UserTeamRelation extends BaseIdEntity{
 	public void setTeamId(int teamId) {
 		this.teamId = teamId;
 	}
-	
-	
+
+
+	public UserTeamRelation() {
+	}
+
+	public UserTeamRelation(int userId, int teamId) {
+		this.userId = userId;
+		this.teamId = teamId;
+	}
 }

@@ -12,10 +12,12 @@ class TeamManagerPlugin extends Component{
         allUsers:[],
         selectedUserFromAllUsers:"",
         selectedUserFromAddedUsers:"",
-        addedUser:[]
+        addedUser:[],
+        allTeams:[]
     }
   componentDidMount(){
     this.fetchAllUsers();
+    this.fetchAllTeams();
   }
     render() {
 
@@ -49,6 +51,13 @@ class TeamManagerPlugin extends Component{
                             </select>
 
                         </div>
+
+                                                <br></br>
+                            <select id="select-team"  name="select-team">
+                              {this.state.allTeams.map(u=>{
+                                return (<option key={u} value={u}>{u}</option>);
+                              })}
+                            </select>
     
                         <div className="team-added-success-message">
                             <span>{this.state.successMsg}</span>
@@ -85,6 +94,10 @@ class TeamManagerPlugin extends Component{
         fetchAllUsers(){
           getRequest("/getallusers",(data)=>this.setState({allUsers:data}));
         }
+
+        fetchAllTeams(){
+            getRequest("/getteamsofuser",(data)=>this.setState({allTeams:data}));
+          }
 
         onUserNameSelect(e){
           this.setState({selectedUserFromAllUsers:e.target.value});
