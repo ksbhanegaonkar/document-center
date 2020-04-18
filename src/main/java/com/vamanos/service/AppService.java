@@ -444,4 +444,53 @@ public class AppService {
 	public List<String> getAllUsers() {
 		return userRepository.findAll().stream().map(Users::getUsername).collect(Collectors.toList());
 	}
-}
+
+	public void addTeam(String teamName, String teamDL, List<String> managers) {
+
+		Teams team = new Teams();
+		team.setTeamName(teamName);
+		team.setTeamDL(teamDL);
+		teamsRepository.save(team);
+		AppInstanceData trashBin = createTrashBean();
+
+		TeamApps teamApp = new TeamApps();
+		teamApp.setTeamId(team.getId());
+		teamApp.setAppId(trashBin.getId());
+		teamAppsRepository.save(teamApp);
+
+		AppInstanceData teamManagerApp = createTeamManagerApp();
+
+		managers.stream().forEach(
+				m -> {
+					Users user = userRepository.findByUsername(m);
+					personalAppsRepository.save(new PersonalApps(teamManagerApp.getId(),user.getId()));
+				}
+		);
+
+	}
+
+	private AppInstanceData createTeamManagerApp() {
+
+			AppInstanceData data = new AppInstanceData();
+			AppInstancePayload payload = new AppInstancePayload();
+
+
+
+			data.setName("Team Manager");
+			data.setType("team-manager");
+
+
+			payload.setPayload("[]".getBytes());
+			payload.setVersionNumber(1);
+			payload.setUpdateComment("Initial Create...");
+			payload.setActiveVersion(true);
+			payload.setUpdatedUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+			payload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
+
+			appInstanceDataRepository.save(data);
+			payload.setAppId(data.getId());
+			appInstancePayloadRepository.save(payload);
+
+			return data;
+		}
+	}

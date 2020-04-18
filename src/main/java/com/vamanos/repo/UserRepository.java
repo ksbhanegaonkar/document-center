@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.vamanos.entity.Users;
 
+import java.util.List;
+
 @Repository
 @Transactional
 public interface UserRepository extends JpaRepository<Users, Integer> {

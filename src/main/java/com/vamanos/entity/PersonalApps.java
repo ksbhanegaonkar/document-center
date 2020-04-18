@@ -21,6 +21,12 @@ public class PersonalApps extends BaseIdEntity{
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	
-	
+
+	public PersonalApps() {
+	}
+
+	public PersonalApps(int appId, int userId) {
+		this.appId = appId;
+		this.userId = userId;
+	}
 }
