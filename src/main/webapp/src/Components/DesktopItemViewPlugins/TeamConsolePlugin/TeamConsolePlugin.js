@@ -74,7 +74,7 @@ class TeamConsolePlugin extends Component{
             }else if(this.state.teamdl===""){
                 this.setState({errorMsg:"Please add team DL...!",successMsg:""});
             }else{
-            postRequest("/addteam",{teamname:this.state.teamName,teamdl:this.state.teamDL},
+            postRequest("/addteam",{teamname:this.state.teamName,teamdl:this.state.teamDL,managers:this.state.addedUser},
             (data)=>{
                 this.setState({successMsg:"Team added successfully...!",errorMsg:""});
             });
