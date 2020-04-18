@@ -8,10 +8,11 @@ class UserConsolePlugin extends Component{
         userName:"",
         email:"",
         successMsg:'',
-        errorMsg:''
+        errorMsg:'',
+        allUsers:[]
     }
   componentDidMount(){
-    //this.getPayload(this.props.item.appId);
+    this.fetchAllUsers();
   }
     render() {
 
@@ -25,7 +26,19 @@ class UserConsolePlugin extends Component{
                         <br></br>
                         <button onClick={this.addUser.bind(this)}>Add User</button>
                         <br></br>
-    
+
+                         <div className="display-all-users">
+
+                            <label className="user-console-label">Team Managers :</label>
+                            <br></br>
+                                <select id="all-users" name="all-users" multiple>
+                                {this.state.allUsers.map(u=>{
+                                    return (<option value={u}>{u}</option>);
+                                })}
+                                </select>
+
+                            </div>
+                                
                         <div className="user-added-success-message">
                             <span>{this.state.successMsg}</span>
                         </div>
@@ -52,12 +65,16 @@ class UserConsolePlugin extends Component{
             }else{
             postRequest("/adduser",{username:this.state.userName,email:this.state.email},
             (data)=>{
+                this.fetchAllUsers();
                 this.setState({successMsg:"User added successfully...!",errorMsg:""});
             });
          }
            
         }
 
+        fetchAllUsers(){
+            getRequest("/getallusers",(data)=>this.setState({allUsers:data}));
+          }
 
 }
 export default UserConsolePlugin;

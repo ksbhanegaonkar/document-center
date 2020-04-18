@@ -440,4 +440,8 @@ public class AppService {
 		teamApp.setAppId(trashBin.getId());
 		teamAppsRepository.save(teamApp);
 	}
+
+	public List<String> getAllUsers() {
+		return userRepository.findAll().stream().map(Users::getUsername).collect(Collectors.toList());
+	}
 }

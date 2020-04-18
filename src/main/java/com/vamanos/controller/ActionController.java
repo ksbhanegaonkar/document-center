@@ -101,6 +101,10 @@ public class ActionController {
 		return app;
 	}
 
+	@GetMapping("/getallusers")
+	public List<String> addUser() {
+		return util.getAllUsers();
+	}
 
     @PostMapping("/updateappversion")
     public ObjectNode updateAppVersion(@RequestParam int appId, @RequestParam MultipartFile file, @RequestParam String comment) {

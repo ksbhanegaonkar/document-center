@@ -8,10 +8,11 @@ class TeamConsolePlugin extends Component{
       teamName:"",
       teamDL:"",
         successMsg:'',
-        errorMsg:''
+        errorMsg:'',
+        allUsers:[]
     }
   componentDidMount(){
-    //this.getPayload(this.props.item.appId);
+    this.fetchAllUsers();
   }
     render() {
 
@@ -29,11 +30,10 @@ class TeamConsolePlugin extends Component{
 
                         <label className="team-console-label">Team Managers :</label>
                         <br></br>
-                            <select id="cars" name="cars" multiple>
-                              <option value="volvo">Volvo</option>
-                              <option value="saab">Saab</option>
-                              <option value="opel">Opel</option>
-                              <option value="audi">Audi</option>
+                            <select id="all-users" name="all-users" multiple>
+                              {this.state.allUsers.map(u=>{
+                                return (<option value={u}>{u}</option>);
+                              })}
                             </select>
 
                         </div>
@@ -68,6 +68,10 @@ class TeamConsolePlugin extends Component{
             });
          }
            
+        }
+
+        fetchAllUsers(){
+          getRequest("/getallusers",(data)=>this.setState({allUsers:data}));
         }
 
 

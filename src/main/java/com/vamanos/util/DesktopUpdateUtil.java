@@ -228,4 +228,8 @@ public class DesktopUpdateUtil {
 	public void addTeam(String teamName, String teamDL) {
 		appService.addTeam(teamName,teamDL);
 	}
+
+	public List<String> getAllUsers() {
+		return appService.getAllUsers();
+	}
 }
