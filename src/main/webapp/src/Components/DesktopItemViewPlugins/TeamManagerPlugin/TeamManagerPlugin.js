@@ -5,7 +5,6 @@ import {getRequest,postRequest} from '../../Utils/RestUtil';
 class TeamManagerPlugin extends Component{
 
     state={
-      teamName:"",
       teamDL:"",
         successMsg:'',
         errorMsg:'',
@@ -13,7 +12,8 @@ class TeamManagerPlugin extends Component{
         selectedUserFromAllUsers:"",
         selectedUserFromAddedUsers:"",
         addedUser:[],
-        allTeams:[]
+        allTeams:[],
+        teamName:''
     }
   componentDidMount(){
     this.fetchAllUsers();
@@ -23,13 +23,7 @@ class TeamManagerPlugin extends Component{
 
 
             return (<div className='team-manager'>
-                        <label className="team-manager-label">Team Name :</label>
-                        <input className="teamuser-console-input" type="text" onChange={this.setTeamName.bind(this)} placeholder="User Name" name="username" required/>
-                        <br></br>
-                        <label className="team-manager-label">Team DL :</label>
-                        <input className="team-manager-input" type="text" onChange={this.setTeamDL.bind(this)} placeholder="Enter Email" name="email" required/>
-                        <br></br>
-                        <button onClick={this.addTeam.bind(this)}>Add Team</button>
+
                         <br></br>
                         <div className="multiple-team-manager-select">
 
@@ -53,12 +47,13 @@ class TeamManagerPlugin extends Component{
                         </div>
 
                                                 <br></br>
-                            <select id="select-team"  name="select-team">
+                            <select id="select-team" onClick={this.setTeamName.bind(this)} name="select-team">
                               {this.state.allTeams.map(u=>{
                                 return (<option key={u} value={u}>{u}</option>);
                               })}
                             </select>
-    
+                            <br></br>
+                            <button onClick={this.addTeamMembersToTeam.bind(this)}>Add Team Member</button>
                         <div className="team-added-success-message">
                             <span>{this.state.successMsg}</span>
                         </div>
@@ -69,25 +64,19 @@ class TeamManagerPlugin extends Component{
         }
 
     
-        setTeamName(e){
-            this.setState({teamName:e.target.value});
-        }
 
-        setTeamDL(e){
-            this.setState({teamDL:e.target.value});
-        }
 
-        addTeam(){
-            if(this.state.teamName===""){
-                this.setState({errorMsg:"Please add team name...!",successMsg:""});
-            }else if(this.state.teamdl===""){
-                this.setState({errorMsg:"Please add team DL...!",successMsg:""});
-            }else{
-            postRequest("/addteam",{teamname:this.state.teamName,teamdl:this.state.teamDL,managers:this.state.addedUser},
+        addTeamMembersToTeam(){
+            // if(this.state.teamName===""){
+            //     this.setState({errorMsg:"Please add team name...!",successMsg:""});
+            // }else if(this.state.teamdl===""){
+            //     this.setState({errorMsg:"Please add team DL...!",successMsg:""});
+            // }else{
+            postRequest("/addteammembers",{teammembers:this.state.addedUser,teamname:this.state.teamName},
             (data)=>{
                 this.setState({successMsg:"Team added successfully...!",errorMsg:""});
             });
-         }
+         //}
            
         }
 
@@ -98,6 +87,8 @@ class TeamManagerPlugin extends Component{
         fetchAllTeams(){
             getRequest("/getteamsofuser",(data)=>this.setState({allTeams:data}));
           }
+
+
 
         onUserNameSelect(e){
           this.setState({selectedUserFromAllUsers:e.target.value});
@@ -125,6 +116,9 @@ class TeamManagerPlugin extends Component{
           this.setState({addedUser:newAddedUsers});
         }
 
+        setTeamName(e){
+            this.setState({teamName:e.target.value});
+        }
 }
 export default TeamManagerPlugin;
 
