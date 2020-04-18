@@ -3,6 +3,7 @@ package com.vamanos;
 import com.vamanos.entity.*;
 import com.vamanos.filter.CORSResponseFilter;
 import com.vamanos.repo.*;
+import com.vamanos.util.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,6 +144,24 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 				userTeamRelation.setUserId(user.getId());
 				userTeamRelationRepository.save(userTeamRelation);
 
+				AppInstanceData adminTeamFolder = new AppInstanceData();
+				adminTeamFolder.setName("Admin Team");
+				adminTeamFolder.setType("folder");
+				appInstanceDataRepository.save(adminTeamFolder);
+
+				AppInstancePayload adminTeamFolderPayload = new AppInstancePayload();
+				adminTeamFolderPayload.setAppId(adminTeamFolder.getId());
+				adminTeamFolderPayload.setPayload("[]".getBytes());
+				adminTeamFolderPayload.setVersionNumber(1);
+				adminTeamFolderPayload.setUpdateComment("Application first time startup create.");
+				adminTeamFolderPayload.setActiveVersion(true);
+				adminTeamFolderPayload.setUpdatedUserName("Admin");
+				adminTeamFolderPayload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
+				appInstancePayloadRepository.save(adminTeamFolderPayload);
+
+				adminTeam.setTeamFolderId(adminTeamFolder.getId());
+				teamsRepository.save(adminTeam);
+
 				AppInstanceData adminApp = new AppInstanceData();
 				adminApp.setName("Admin Console");
 				adminApp.setType("admin");
@@ -204,25 +223,33 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 				iconConsolePayload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
 				appInstancePayloadRepository.save(iconConsolePayload);
 
-				TeamApps app1 = new TeamApps();
-				app1.setTeamId(adminTeam.getId());
-				app1.setAppId(adminApp.getId());
-				teamAppsRepository.save(app1);
+				String updatedAdminTeamFolderPayload = adminTeamFolderPayload.getPayload();
+				updatedAdminTeamFolderPayload = JsonUtil.getUpdatedFolderPayload(updatedAdminTeamFolderPayload,adminApp);
+				updatedAdminTeamFolderPayload = JsonUtil.getUpdatedFolderPayload(updatedAdminTeamFolderPayload,userConsole);
+				updatedAdminTeamFolderPayload = JsonUtil.getUpdatedFolderPayload(updatedAdminTeamFolderPayload,teamConsole);
+				updatedAdminTeamFolderPayload = JsonUtil.getUpdatedFolderPayload(updatedAdminTeamFolderPayload,iconConsole);
+				adminTeamFolderPayload.setPayload(updatedAdminTeamFolderPayload.getBytes());
+				appInstancePayloadRepository.save(adminTeamFolderPayload);
 
-				TeamApps app2 = new TeamApps();
-				app2.setTeamId(adminTeam.getId());
-				app2.setAppId(userConsole.getId());
-				teamAppsRepository.save(app2);
-
-				TeamApps app3 = new TeamApps();
-				app3.setTeamId(adminTeam.getId());
-				app3.setAppId(teamConsole.getId());
-				teamAppsRepository.save(app3);
-
-				TeamApps app4 = new TeamApps();
-				app4.setTeamId(adminTeam.getId());
-				app4.setAppId(iconConsole.getId());
-				teamAppsRepository.save(app4);
+//				TeamApps app1 = new TeamApps();
+//				app1.setTeamId(adminTeam.getId());
+//				app1.setAppId(adminApp.getId());
+//				teamAppsRepository.save(app1);
+//
+//				TeamApps app2 = new TeamApps();
+//				app2.setTeamId(adminTeam.getId());
+//				app2.setAppId(userConsole.getId());
+//				teamAppsRepository.save(app2);
+//
+//				TeamApps app3 = new TeamApps();
+//				app3.setTeamId(adminTeam.getId());
+//				app3.setAppId(teamConsole.getId());
+//				teamAppsRepository.save(app3);
+//
+//				TeamApps app4 = new TeamApps();
+//				app4.setTeamId(adminTeam.getId());
+//				app4.setAppId(iconConsole.getId());
+//				teamAppsRepository.save(app4);
 
 
 			}

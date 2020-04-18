@@ -82,8 +82,8 @@ public class AppService {
 	public List<Integer> getTeamApps(){
 		List<UserTeamRelation> assignedTeams = userTeamRelationRepository.getUserTeamRelatiionByUserId(getUserId());
 		List<Integer> teamIds = assignedTeams.stream().map(UserTeamRelation::getTeamId).collect(Collectors.toList());
-		List<TeamApps> teamApps = teamAppsRepository.findTeamAppsByTeamId(teamIds);
-		List<Integer> allTeamApps = teamApps.stream().map(TeamApps::getAppId).collect(Collectors.toList());
+		List<Teams> teamApps = teamsRepository.findAllById(teamIds);
+		List<Integer> allTeamApps = teamApps.stream().map(Teams::getTeamFolderId).collect(Collectors.toList());
 		return allTeamApps;
 	}
 
@@ -174,6 +174,24 @@ public class AppService {
 
 
 
+	}
+
+
+	public AppInstanceData createNewFolder(String name) {
+		AppInstanceData data = new AppInstanceData();
+		AppInstancePayload payload = new AppInstancePayload();
+		data.setName(name);
+		data.setType("folder");
+		payload.setPayload("[]".getBytes());
+		payload.setVersionNumber(1);
+		payload.setUpdateComment("Initial Create...");
+		payload.setActiveVersion(true);
+		payload.setUpdatedUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+		payload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
+		appInstanceDataRepository.save(data);
+		payload.setAppId(data.getId());
+		appInstancePayloadRepository.save(payload);
+		return data;
 	}
 
 	public AppInstanceData createTrashBean(){
@@ -451,13 +469,25 @@ public class AppService {
 		Teams team = new Teams();
 		team.setTeamName(teamName);
 		team.setTeamDL(teamDL);
-		teamsRepository.save(team);
+
 		AppInstanceData trashBin = createTrashBean();
 
-		TeamApps teamApp = new TeamApps();
-		teamApp.setTeamId(team.getId());
-		teamApp.setAppId(trashBin.getId());
-		teamAppsRepository.save(teamApp);
+		AppInstanceData data = new AppInstanceData();
+		AppInstancePayload payload = new AppInstancePayload();
+		data.setName(team.getTeamName());
+		data.setType("folder");
+		payload.setPayload(JsonUtil.getUpdatedFolderPayload("[]",trashBin).getBytes());
+		payload.setVersionNumber(1);
+		payload.setUpdateComment("Initial Create...");
+		payload.setActiveVersion(true);
+		payload.setUpdatedUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+		payload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
+		appInstanceDataRepository.save(data);
+		payload.setAppId(data.getId());
+		appInstancePayloadRepository.save(payload);
+		team.setTeamFolderId(data.getId());
+		teamsRepository.save(team);
+
 
 		AppInstanceData teamManagerApp = createTeamManagerApp();
 
@@ -468,6 +498,9 @@ public class AppService {
 					userTeamRelationRepository.save(new UserTeamRelation(user.getId(),team.getId()));
 				}
 		);
+
+
+
 
 	}
 

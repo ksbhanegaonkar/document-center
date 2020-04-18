@@ -9,6 +9,8 @@ public class Teams extends BaseIdEntity{
 	String teamName;
 	@Column(name = "TEAM_DL")
 	String teamDL;
+	@Column(name = "TEAM_FOLDER_ID")
+	int teamFolderId;
 	public String getTeamName() {
 		return teamName;
 	}
@@ -21,8 +23,12 @@ public class Teams extends BaseIdEntity{
 	public void setTeamDL(String string) {
 		this.teamDL = string;
 	}
-	
-	
 
-	
+	public int getTeamFolderId() {
+		return teamFolderId;
+	}
+
+	public void setTeamFolderId(int teamFolderId) {
+		this.teamFolderId = teamFolderId;
+	}
 }
