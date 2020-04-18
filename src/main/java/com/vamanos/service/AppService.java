@@ -496,8 +496,10 @@ public class AppService {
 			return data;
 		}
 
-	public void addTeamMembers(List<String> teamMembers) {
-		int userId = getUserId();
+	public void addTeamMembers(List<String> teamMembers, String teamName) {
+		Teams team = teamsRepository.getTeamsByTeamName(teamName);
+		List<Users> users = teamMembers.stream().map(userRepository::findByUsername).collect(Collectors.toList());
+		userTeamRelationRepository.saveAll(users.stream().map(u->new UserTeamRelation(u.getId(),team.getId())).collect(Collectors.toList()));
 	}
 
 	public List<String> getAllTeamsOfUser() {

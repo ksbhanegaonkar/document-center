@@ -74,7 +74,7 @@ class TeamManagerPlugin extends Component{
             // }else{
             postRequest("/addteammembers",{teammembers:this.state.addedUser,teamname:this.state.teamName},
             (data)=>{
-                this.setState({successMsg:"Team added successfully...!",errorMsg:""});
+                this.setState({successMsg:"Team member added successfully...!",errorMsg:""});
             });
          //}
            

@@ -8,4 +8,6 @@ import com.vamanos.entity.Teams;
 import java.util.List;
 
 public interface TeamsRepository extends JpaRepository<Teams, Integer>{
+
+    Teams getTeamsByTeamName(String teamName);
 }

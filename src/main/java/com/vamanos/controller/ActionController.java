@@ -108,9 +108,10 @@ public class ActionController {
 	@PostMapping("/addteammembers")
 	public ObjectNode addTeamMembers(@RequestBody ObjectNode app) {
 		ArrayNode array = (ArrayNode) app.get("teammembers");
+		String teamName = app.get("teamname").asText();
 		List<String> teamMembers = new ArrayList<>();
 		array.forEach(n->teamMembers.add(n.textValue()));
-		util.addTeamMembers(teamMembers);
+		util.addTeamMembers(teamMembers,teamName);
 		return app;
 	}
 
