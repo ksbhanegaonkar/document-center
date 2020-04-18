@@ -8,6 +8,7 @@ import AdminPlugin from '../DesktopItemViewPlugins/AdminPlugin/AdminPlugin';
 import UserConsolePlugin from '../DesktopItemViewPlugins/UserConsolePlugin/UserConsolePlugin';
 import TeamConsolePlugin from '../DesktopItemViewPlugins/TeamConsolePlugin/TeamConsolePlugin';
 import IconConsolePlugin from '../DesktopItemViewPlugins/IconConsolePlugin/IconConsolePlugin';
+import TeamManagerPlugin from '../DesktopItemViewPlugins/TeamManagerPlugin/TeamManagerPlugin';
 class DesktopItemView extends Component{
 
     state={
@@ -101,6 +102,12 @@ class DesktopItemView extends Component{
           return(<div className="desktop-item-view-icon-console">
           <IconConsolePlugin item={this.props.item}
           ></IconConsolePlugin>
+        </div>
+        );
+        }else if(this.props.item.appType === 'team-manager'){
+          return(<div className="desktop-item-view-team-manager">
+          <TeamManagerPlugin item={this.props.item}
+          ></TeamManagerPlugin>
         </div>
         );
         }
