@@ -1,0 +1,21 @@
+.team-console{
+    position: absolute;
+    top: 10%;
+    left: 10%;
+}
+.team-console-label{
+    color: green;
+}
+
+.team-console-input{
+    margin-left: 20px;
+}
+
+.team-added-success-message{
+    color: green;
+}
+
+
+.team-added-error-message{
+    color: red;
+}

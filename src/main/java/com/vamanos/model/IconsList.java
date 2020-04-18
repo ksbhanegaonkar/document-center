@@ -20,6 +20,7 @@ public class IconsList {
 	private static final String USER_CONSOLE_ICON = "static/icons/user_console.png";
 	private static final String TEAM_CONSOLE_ICON = "static/icons/team_console.png";
 	private static final String ICON_CONSOLE_ICON = "static/icons/icon_console.jpg";
+	private static final String TRASH_BIN_ICON = "static/icons/folder_trash_bin.png";
 	public ObjectNode getIconList(){
 		Map<String,String> iconMap = new HashMap<>();
 		iconMap.put("folder", Image2Base64StringConverter.convert(FOLDER_ICON));
@@ -34,6 +35,7 @@ public class IconsList {
 		iconMap.put("user-console", Image2Base64StringConverter.convert(USER_CONSOLE_ICON));
 		iconMap.put("team-console", Image2Base64StringConverter.convert(TEAM_CONSOLE_ICON));
 		iconMap.put("icon-console", Image2Base64StringConverter.convert(ICON_CONSOLE_ICON));
+		iconMap.put("folder-trash-bin", Image2Base64StringConverter.convert(TRASH_BIN_ICON));
 		return JsonUtil.getJsonObjectFromMap(iconMap);
 	}
 }

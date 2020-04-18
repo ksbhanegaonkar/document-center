@@ -175,6 +175,32 @@ public class AppService {
 
 	}
 
+	public AppInstanceData createTrashBean(){
+
+
+		AppInstanceData data = new AppInstanceData();
+		AppInstancePayload payload = new AppInstancePayload();
+
+
+
+		data.setName("Trash Bin");
+		data.setType("folder-trash-bin");
+
+
+		payload.setPayload("[]".getBytes());
+		payload.setVersionNumber(1);
+		payload.setUpdateComment("Initial Create...");
+		payload.setActiveVersion(true);
+		payload.setUpdatedUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+		payload.setUpdatedTimestamp(new Timestamp(System.currentTimeMillis()));
+
+		appInstanceDataRepository.save(data);
+		payload.setAppId(data.getId());
+		appInstancePayloadRepository.save(payload);
+
+		return data;
+	}
+
 	public void createFolder(String name, int parentAppId) {
 		AppInstanceData data = new AppInstanceData();
 		AppInstancePayload payload = new AppInstancePayload();
@@ -400,5 +426,18 @@ public class AppService {
 		userRepository.save(user);
         createPersonalFolderForUser(user.getId());
 
+	}
+
+	public void addTeam(String teamName, String teamDL) {
+		Teams team = new Teams();
+		team.setTeamName(teamName);
+		team.setTeamDL(teamDL);
+		teamsRepository.save(team);
+		AppInstanceData trashBin = createTrashBean();
+
+		TeamApps teamApp = new TeamApps();
+		teamApp.setTeamId(team.getId());
+		teamApp.setAppId(trashBin.getId());
+		teamAppsRepository.save(teamApp);
 	}
 }

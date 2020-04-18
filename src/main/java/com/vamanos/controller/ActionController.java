@@ -83,14 +83,24 @@ public class ActionController {
         return app;
     }
 
-    @PostMapping("/adduser")
-    public ObjectNode addUser(@RequestBody ObjectNode app) {
+    @PostMapping("/addteam")
+    public ObjectNode addTeam(@RequestBody ObjectNode app) {
 
-        String userName = app.get("username").asText();
-        String email = app.get("email").asText();
-        util.addUser(userName,email);
+        String teamName = app.get("teamname").asText();
+        String teamDL = app.get("teamdl").asText();
+        util.addTeam(teamName,teamDL);
         return app;
     }
+
+	@PostMapping("/adduser")
+	public ObjectNode addUser(@RequestBody ObjectNode app) {
+
+		String userName = app.get("username").asText();
+		String email = app.get("email").asText();
+		util.addUser(userName,email);
+		return app;
+	}
+
 
     @PostMapping("/updateappversion")
     public ObjectNode updateAppVersion(@RequestParam int appId, @RequestParam MultipartFile file, @RequestParam String comment) {

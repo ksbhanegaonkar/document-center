@@ -224,4 +224,8 @@ public class DesktopUpdateUtil {
 	public void addUser(String userName, String email) {
 		appService.addUser(userName,email);
 	}
+
+	public void addTeam(String teamName, String teamDL) {
+		appService.addTeam(teamName,teamDL);
+	}
 }

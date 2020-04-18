@@ -46,13 +46,13 @@ class UserConsolePlugin extends Component{
 
         addUser(){
             if(this.state.userName===""){
-                this.setState({errorMsg:"Please add user name...!"});
+                this.setState({errorMsg:"Please add user name...!",successMsg:""});
             }else if(this.state.email===""){
-                this.setState({errorMsg:"Please add email name...!"});
+                this.setState({errorMsg:"Please add email name...!",successMsg:""});
             }else{
             postRequest("/adduser",{username:this.state.userName,email:this.state.email},
             (data)=>{
-                this.setState({successMsg:"User added successfully...!"});
+                this.setState({successMsg:"User added successfully...!",errorMsg:""});
             });
          }
            
