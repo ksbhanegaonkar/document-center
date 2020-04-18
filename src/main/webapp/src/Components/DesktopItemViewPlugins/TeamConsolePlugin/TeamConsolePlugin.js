@@ -10,7 +10,8 @@ class TeamConsolePlugin extends Component{
         successMsg:'',
         errorMsg:'',
         allUsers:[],
-        selectedUsers:[],
+        selectedUserFromAllUsers:"",
+        selectedUserFromAddedUsers:"",
         addedUser:[]
     }
   componentDidMount(){
@@ -39,9 +40,9 @@ class TeamConsolePlugin extends Component{
                             </select>
 
                             <button onClick={this.addUserToTeam.bind(this)}>add</button>
-                            <button>remove</button>
+                            <button onClick={this.removeFromTeam.bind(this)}>remove</button>
 
-                            <select id="added-users" onClick={this.onUserNameSelect.bind(this)} name="selected-users" multiple>
+                            <select id="added-users" onClick={this.onUserNameSelectFromAddedUser.bind(this)} name="selected-users" multiple>
                               {this.state.addedUser.map(u=>{
                                 return (<option key={"selected_"+u} value={u}>{u}</option>);
                               })}
@@ -86,15 +87,29 @@ class TeamConsolePlugin extends Component{
         }
 
         onUserNameSelect(e){
-          let newSelectedUser = this.state.selectedUsers;
-          newSelectedUser.push(e.target.value);
-          this.setState({selectedUsers:newSelectedUser});
+          this.setState({selectedUserFromAllUsers:e.target.value});
+        }
+
+        onUserNameSelectFromAddedUser(e){
+          this.setState({selectedUserFromAddedUsers:e.target.value});
         }
 
         addUserToTeam(){
-          let newAddeddUser = this.state.addedUser;
-          newAddeddUser.push(this.state.selectedUsers);
-          this.setState({addedUser:newAddeddUser});
+          if(!this.state.addedUser.includes(this.state.selectedUserFromAllUsers)){
+              let newAddeddUser = this.state.addedUser;
+              newAddeddUser.push(this.state.selectedUserFromAllUsers);
+              this.setState({addedUser:newAddeddUser});
+          }
+        }
+
+        removeFromTeam(){
+          let newAddedUsers=[];
+          for(let i=0;i<this.state.addedUser.length;i++){
+            if(this.state.addedUser[i]!==this.state.selectedUserFromAddedUsers){
+              newAddedUsers.push(this.state.addedUser[i]);
+            }
+          }
+          this.setState({addedUser:newAddedUsers});
         }
 
 }
