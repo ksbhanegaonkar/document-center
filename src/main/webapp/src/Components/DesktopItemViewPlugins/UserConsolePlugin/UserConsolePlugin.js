@@ -67,6 +67,8 @@ class UserConsolePlugin extends Component{
                 this.setState({errorMsg:"Please add user name...!",successMsg:""});
             }else if(this.state.email===""){
                 this.setState({errorMsg:"Please add email name...!",successMsg:""});
+            }if(this.state.allUsers.includes(this.state.userName)){
+                this.setState({errorMsg:"User Already exists...!",successMsg:""});
             }else{
             postRequest("/adduser",{username:this.state.userName,email:this.state.email},
             (data)=>{  
