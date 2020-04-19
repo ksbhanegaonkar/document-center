@@ -9,9 +9,11 @@ class UserConsolePlugin extends Component{
         email:"",
         successMsg:'',
         errorMsg:'',
-        allUsers:[]
+        allUsers:[],
+        loadingMessage:""
     }
   componentDidMount(){
+    this.setState({loadingMessage:"Fetching all users..."});
     this.fetchAllUsers();
   }
     render() {
@@ -19,19 +21,19 @@ class UserConsolePlugin extends Component{
 
             return (<div className='user-console'>
                         <label className="user-console-label">User Name :</label>
-                        <input className="user-console-input" type="text" onChange={this.setUserName.bind(this)} placeholder="User Name" name="username" required/>
+                        <input className="user-console-input" disabled={this.state.loadingMessage} type="text" onChange={this.setUserName.bind(this)} placeholder="User Name" name="username" required/>
                         <br></br>
                         <label className="user-console-label">Email :</label>
-                        <input className="user-console-input" type="text" onChange={this.setEmail.bind(this)} placeholder="Enter Email" name="email" required/>
+                        <input className="user-console-input" disabled={this.state.loadingMessage} type="text" onChange={this.setEmail.bind(this)} placeholder="Enter Email" name="email" required/>
                         <br></br>
-                        <button onClick={this.addUser.bind(this)}>Add User</button>
+                        <button onClick={this.addUser.bind(this)} disabled={this.state.loadingMessage}>Add User</button>
                         <br></br>
 
                          <div className="display-all-users">
 
-                            <label className="user-console-label">Team Managers :</label>
+                            <label className="user-console-label">All User List :</label>
                             <br></br>
-                                <select id="all-users" name="all-users" multiple>
+                                <select id="all-users" disabled={this.state.loadingMessage} name="all-users" multiple>
                                 {this.state.allUsers.map(u=>{
                                     return (<option key={u} value={u}>{u}</option>);
                                 })}
@@ -44,6 +46,9 @@ class UserConsolePlugin extends Component{
                         </div>
                          <div className="user-added-error-message">
                             <span>{this.state.errorMsg}</span>
+                        </div>
+                        <div className="user-added-loading-message">
+                            <span>{this.state.loadingMessage}</span>
                         </div>
                      </div>);
         }
@@ -64,7 +69,8 @@ class UserConsolePlugin extends Component{
                 this.setState({errorMsg:"Please add email name...!",successMsg:""});
             }else{
             postRequest("/adduser",{username:this.state.userName,email:this.state.email},
-            (data)=>{
+            (data)=>{  
+                this.setState({loadingMessage:"Adding user..."});
                 this.fetchAllUsers();
                 this.setState({successMsg:"User added successfully...!",errorMsg:""});
             });
@@ -73,7 +79,7 @@ class UserConsolePlugin extends Component{
         }
 
         fetchAllUsers(){
-            getRequest("/getallusers",(data)=>this.setState({allUsers:data}));
+            getRequest("/getallusers",(data)=>this.setState({allUsers:data,loadingMessage:""}));
           }
 
 }
