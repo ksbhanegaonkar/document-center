@@ -85,7 +85,11 @@ class TeamManagerPlugin extends Component{
         }
 
         fetchAllTeams(){
-            getRequest("/getteamsofuser/"+this.props.item.appId,(data)=>this.setState({allTeams:data}));
+            getRequest("/getapppayload/"+this.props.item.appId,(data)=>{
+            console.log("Data is ::::");
+            console.dir(data);
+            this.setState({allTeams:JSON.parse(data.payload)});
+            });
           }
 
 
