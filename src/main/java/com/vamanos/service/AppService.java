@@ -489,13 +489,33 @@ public class AppService {
 		teamsRepository.save(team);
 
 
-		AppInstanceData teamManagerApp = createTeamManagerApp();
+
 
 		managers.stream().forEach(
 				m -> {
 					Users user = userRepository.findByUsername(m);
-					personalAppsRepository.save(new PersonalApps(teamManagerApp.getId(),user.getId()));
 					userTeamRelationRepository.save(new UserTeamRelation(user.getId(),team.getId()));
+
+					List<Integer> appIds = personalAppsRepository.getPersonalAppsByUserId(user.getId())
+							.stream()
+							.map(PersonalApps::getAppId)
+							.collect(Collectors.toList());
+
+					List<AppInstanceData> personalTeamManagerAppList = appInstanceDataRepository.findAllById(appIds)
+							.stream()
+							.filter(a->"team-manager".equals(a.getType()))
+							.collect(Collectors.toList());
+
+					if(personalTeamManagerAppList.isEmpty()){
+						AppInstanceData teamManagerApp = createTeamManagerApp(team.getTeamName());
+						personalAppsRepository.save(new PersonalApps(teamManagerApp.getId(),user.getId()));
+					}else{
+						AppInstancePayload managerAppPayload = appInstancePayloadRepository.getAppPayloadByAppIdAndIsActiveVersion(personalTeamManagerAppList.get(0).getId(),true).get(0);
+						String currentPayload = managerAppPayload.getPayload();
+						managerAppPayload.setPayload(JsonUtil.getUpdatedTeamManagerAppPayload(currentPayload,team.getTeamName()).getBytes());
+						appInstancePayloadRepository.save(managerAppPayload);
+					}
+
 				}
 		);
 
@@ -504,7 +524,7 @@ public class AppService {
 
 	}
 
-	private AppInstanceData createTeamManagerApp() {
+	private AppInstanceData createTeamManagerApp(String teamName) {
 
 			AppInstanceData data = new AppInstanceData();
 			AppInstancePayload payload = new AppInstancePayload();
@@ -515,7 +535,7 @@ public class AppService {
 			data.setType("team-manager");
 
 
-			payload.setPayload("[]".getBytes());
+			payload.setPayload(JsonUtil.getUpdatedTeamManagerAppPayload("[]",teamName).getBytes());
 			payload.setVersionNumber(1);
 			payload.setUpdateComment("Initial Create...");
 			payload.setActiveVersion(true);
@@ -535,8 +555,9 @@ public class AppService {
 		userTeamRelationRepository.saveAll(users.stream().map(u->new UserTeamRelation(u.getId(),team.getId())).collect(Collectors.toList()));
 	}
 
-	public List<String> getAllTeamsOfUser() {
-		Stream<Integer> allTeamIds = userTeamRelationRepository.getUserTeamRelatiionByUserId(getUserId()).stream().map(UserTeamRelation::getTeamId);
-		return allTeamIds.map(i->teamsRepository.findById(i).get().getTeamName()).collect(Collectors.toList());
+	public String getAllTeamsOfUser(int appId) {
+		//Stream<Integer> allTeamIds = userTeamRelationRepository.getUserTeamRelatiionByUserId(getUserId()).stream().map(UserTeamRelation::getTeamId);
+		//return allTeamIds.map(i->teamsRepository.findById(i).get().getTeamName()).collect(Collectors.toList());
+		return appInstancePayloadRepository.getAppPayloadByAppIdAndIsActiveVersion(appId,true).get(0).getPayload();
 	}
 }

@@ -115,9 +115,9 @@ public class ActionController {
 		return app;
 	}
 
-	@GetMapping("/getteamsofuser")
-	public List<String> getTeamsOfUser() {
-		return util.getAllTeamsOfUser();
+	@GetMapping("/getteamsofuser/{appId}")
+	public String getTeamsOfUser(@PathVariable int appId) {
+		return util.getAllTeamsOfUser(appId);
 	}
 
 	@PostMapping("/adduser")

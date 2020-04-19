@@ -241,7 +241,7 @@ public class DesktopUpdateUtil {
 		appService.addTeamMembers(teamMembers,teamName);
 	}
 
-	public List<String> getAllTeamsOfUser() {
-		return appService.getAllTeamsOfUser();
+	public String getAllTeamsOfUser(int appId) {
+		return appService.getAllTeamsOfUser(appId);
 	}
 }

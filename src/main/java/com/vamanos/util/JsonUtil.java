@@ -1,6 +1,7 @@
 package com.vamanos.util;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Map;
 
@@ -150,6 +151,16 @@ public class JsonUtil {
 			e.printStackTrace();
 		}
 		return payload!=null?payload.toString():null;
+	}
+
+	public static String getUpdatedTeamManagerAppPayload(String currentPayload,String teamName){
+		try {
+			ArrayNode node = (ArrayNode) mapper.readTree(currentPayload);
+			node.add(teamName);
+			return node.toString();
+		} catch (IOException e) {
+			return "[]";
+		}
 	}
 }
 
