@@ -98,7 +98,7 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 				user.setAccountNonExpired(false);
 				user.setAccountNonLocked(false);
 				user.setUsername("Admin");
-				user.setPassword(encoder.encode("Welcome@01"));
+				user.setPassword(encoder.encode("a"));
 				user.setEmail("admin@organization.com");
 				user.setEnabled(true);
 

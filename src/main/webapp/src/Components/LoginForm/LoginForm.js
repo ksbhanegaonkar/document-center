@@ -47,27 +47,22 @@ class LoginForm extends Component{
     this.setState({loading:true,loadingMsg:"Logging in...",errorMsg:"",successMsg:""});
     authPostRequest({username:this.state.userName,password:this.state.pass},
       (data) =>{
-             if(data.status === 401){
-               console.log("Login data object is :::::"+data.status);
-               console.dir(data);
-
-               if(data.trace.includes("User credentials have expired")){
-                this.setState({loading:false,loadingMsg:"",passwordReset:true,errorMsg:"Your password is expired, please reset password...!"});
-               }else{
+            console.dir(data);
+              if(data.status === 401 || data.message === "Invalid Credential" || data.message === "Error occurred"){
                 this.setState({errorMsg:'Invalid user credential !!!'});
                 localStorage.removeItem("jwtToken");
-                console.log('user is not valid...');
                 this.props.history.push("/");
                 this.setState({loading:false,loadingMsg:""});
-               }
-
+               }else  if(data.message === "Credential Expired") {
+                this.setState({loading:false,loadingMsg:"",passwordReset:true,errorMsg:"Your password is expired, please reset password...!"});
               }else{
                 localStorage.setItem("jwtToken","Bearer "+data.token);
                 console.log('redirecting to destkop');
                 this.props.history.push("/desktop");
               }
+            }
              
-      }
+      
       );
 
     // let headers = new Headers();
