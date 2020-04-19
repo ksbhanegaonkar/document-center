@@ -70,9 +70,9 @@ class UserConsolePlugin extends Component{
             }if(this.state.allUsers.includes(this.state.userName)){
                 this.setState({errorMsg:"User Already exists...!",successMsg:""});
             }else{
+            this.setState({loadingMessage:"Adding user...",successMsg:"",errorMsg:""});
             postRequest("/adduser",{username:this.state.userName,email:this.state.email},
             (data)=>{  
-                this.setState({loadingMessage:"Adding user..."});
                 this.fetchAllUsers();
                 this.setState({successMsg:"User added successfully...!",errorMsg:""});
             });
