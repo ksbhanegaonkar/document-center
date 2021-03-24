@@ -10,7 +10,7 @@ public class AppInstancePayload extends BaseIdEntity implements Comparable<AppIn
 	
 	@Column(name="APP_ID")
 	int appId;
-	@Column(name="PAYLOAD")
+	@Column(length = 100000000,name="PAYLOAD")
 	byte [] payload;
 	@Column(name = "VERSION_NUMBER")
 	int versionNumber;
