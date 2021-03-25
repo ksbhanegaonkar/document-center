@@ -8,10 +8,6 @@ class TaskBar extends Component{
     render() {
 
         return (<div className="task-bar">
-          <div className="developer-info">
-            <div className="os-info">Vaman-OS</div>
-            <div className="developer">Kedar Bhanegaonkar</div>
-          </div>
            {this.renderTaskBarItems()}
 
         </div>)
